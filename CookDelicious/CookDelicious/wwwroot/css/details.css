@@ -1,0 +1,126 @@
+/*
+Template Name:Private Chef
+File: Layout CSS
+Author: Templates On Web
+Author URI: http://templateonweb.com/
+Licence: <a href="http://www.templateonweb.com/terms.php?v=content&contentid=152">Website Template Licence</a>
+*/
+
+
+/********************* details_main ****************/
+#details_main{ 
+ background-image: url(../img/34.jpg);
+ background-repeat: no-repeat;
+ background-size: cover;
+}
+.details_inner{ 
+ padding-top:170px;
+ padding-bottom:150px;
+ background-color: #000000ab;
+}
+.details_main_1{ 
+ text-align:center;
+}
+.details_main_1 h1{ 
+ color:#fff;
+}
+.details_main_1 ul{ 
+ padding-top:10px;
+}
+.details_main_1 li{ 
+ display:inline;
+ padding-right:5px;
+ color: #fff;
+ font-size: 25px;
+}
+.details_main_1 li a{ 
+ color: #ffed00;
+}
+/********************* details_main_end ****************/
+/********************* details ****************/
+#details{ 
+ padding-top:30px;
+ padding-bottom:30px;
+}
+.details_1{ 
+ padding-bottom:30px;
+}
+.details_1 h3{ 
+ text-align:center;
+ color: #e42929;
+ font-weight:bold;
+}
+.content-top2 h4 {
+ font-size: 14px;
+ letter-spacing: 2px;
+ font-weight: bold;
+ color: #e22709;
+}
+.content-top2 h4:before {
+ display: inline-block;
+ width: 100px;
+ height: 2px;
+ background-color:#ff8f19;
+ vertical-align: middle;
+ margin-right: 1%;
+ content: "";
+}
+.content-top2 h4:after {
+ display: inline-block;
+ width: 100px;
+ height: 2px;
+ background-color:#ff8f19;
+ vertical-align: middle;
+ margin-left: 1%;
+ content: "";
+}
+.details_3 h3{ 
+ font-weight:bold;
+ padding-bottom:20px;
+ color: #e42929;
+}
+.details_4{ 
+ background: #f7f7f7;
+ padding: 24px 40px;
+ border-radius: 8px;
+}
+.details_4 i{ 
+ color: #09d405;
+ padding-right:10px;
+}
+.well_1{ 
+ font-size:18px;
+}
+.well_2{ 
+ padding-left:30px;
+ padding-bottom: 10px;
+}
+/********************* details_end ****************/
+
+
+
+@media screen and (max-width : 767px){
+.details_inner {
+ padding-top: 110px;
+ padding-bottom: 50px;
+}
+#details {
+ text-align: center;
+}
+}
+
+@media (min-width:470px) and (max-width:767px) { 
+
+}
+ 
+@media (min-width:768px) and (max-width:960px) { 
+
+} 
+ 
+@media (min-width:961px) and (max-width:1200px) {
+
+}
+
+@media (min-width:1201px) and (max-width:1320px) {
+
+}

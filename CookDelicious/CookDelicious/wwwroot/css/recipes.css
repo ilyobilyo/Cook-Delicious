@@ -1,0 +1,126 @@
+/*
+Template Name:Private Chef
+File: Layout CSS
+Author: Templates On Web
+Author URI: http://templateonweb.com/
+Licence: <a href="http://www.templateonweb.com/terms.php?v=content&contentid=152">Website Template Licence</a>
+*/
+
+
+/********************* recipes_main ****************/
+#recipes_main{ 
+ background-image: url(../img/24.jpg);
+ background-repeat: no-repeat;
+ background-size: cover;
+}
+.recipes_inner{ 
+ padding-top:170px;
+ padding-bottom:150px;
+ background-color: #000000ab;
+}
+.recipes_main_1{ 
+ text-align:center;
+}
+.recipes_main_1 h1{ 
+ color:#fff;
+}
+.recipes_main_1 ul{ 
+ padding-top:10px;
+}
+.recipes_main_1 li{ 
+ display:inline;
+ padding-right:5px;
+ color: #fff;
+ font-size: 25px;
+}
+.recipes_main_1 li a{ 
+ color: #ffed00;
+}
+/********************* recipes_main_end ****************/
+/********************* cooking ****************/
+#cooking{ 
+ padding-top:30px;
+ padding-bottom:30px;
+}
+#cooking .input-text {
+ display: block;
+ width: 100%;
+ color: #e42929;
+ height: 34px;
+ padding: 6px 12px;
+ font-size: 16px;
+ font-weight: 700;
+}
+#cooking select{
+ border: 1px solid #de1010!important;
+}
+.cooking_1{ 
+ background-color: #fff;
+}
+/********************* cooking_end ****************/
+/********************* recipes ****************/
+.recipes_1{ 
+ margin-bottom:10px;
+}
+.recipes_2{ 
+ text-align:center;
+ padding-bottom: 25px;
+ box-shadow: 0px 0 1px 1px #f1e006;
+ margin-bottom: 20px;
+}
+.recipes_2 h4{ 
+ padding-top:10px;
+ color: #e22709;
+}
+/********************* recipes_end ****************/
+
+
+
+@media screen and (max-width : 767px){
+.recipes_inner {
+ padding-bottom: 70px;
+ padding-top: 110px;
+}
+#cooking select {
+ margin-bottom: 5px;
+}
+#recipes{ 
+ text-align:center;
+}
+}
+
+@media (min-width:470px) and (max-width:767px) { 
+
+}
+ 
+@media (min-width:768px) and (max-width:960px) { 
+#cooking .input-text {
+ padding: 6px 12px;
+ font-size: 12px;
+}
+#cooking .input-text {
+ width: 100%;
+}
+#cooking {
+ padding-top: 15px;
+ padding-bottom: 15px;
+}
+} 
+ 
+@media (min-width:961px) and (max-width:1200px) {
+#cooking .input-text {
+ padding: 6px 12px;
+ font-size: 12px;
+}
+#cooking .input-text {
+ width: 100%;
+}
+#cooking {
+ padding-top: 15px;
+ padding-bottom: 15px;
+}
+}
+
+@media (min-width:1201px) and (max-width:1320px) {
+
+}

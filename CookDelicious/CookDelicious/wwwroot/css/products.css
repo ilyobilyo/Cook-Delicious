@@ -1,0 +1,126 @@
+/*
+Template Name:Private Chef
+File: Layout CSS
+Author: Templates On Web
+Author URI: http://templateonweb.com/
+Licence: <a href="http://www.templateonweb.com/terms.php?v=content&contentid=152">Website Template Licence</a>
+*/
+
+
+/********************* products_main ****************/
+#products_main{ 
+ background-image: url(../img/36.jpg);
+ background-repeat: no-repeat;
+ background-size: cover;
+}
+.products_inner{ 
+ padding-top:170px;
+ padding-bottom:150px;
+ background-color: #000000ab;
+}
+.products_main_1{ 
+ text-align:center;
+}
+.products_main_1 h1{ 
+ color:#fff;
+}
+.products_main_1 ul{ 
+ padding-top:10px;
+}
+.products_main_1 li{ 
+ display:inline;
+ padding-right:5px;
+ color: #fff;
+ font-size: 25px;
+}
+.products_main_1 li a{ 
+ color: #ffed00;
+}
+/********************* products_main_end ****************/
+/********************* products ****************/
+#products{ 
+ padding-top:30px;
+ padding-bottom:10px;
+}
+.products_1{ 
+ padding-bottom:30px;
+}
+.products_1 h3{ 
+ text-align:center;
+ color: #e42929;
+ font-weight:bold;
+}
+.content-top2 h4 {
+ font-size: 14px;
+ letter-spacing: 2px;
+ font-weight: bold;
+ color: #e22709;
+}
+.content-top2 h4:before {
+ display: inline-block;
+ width: 100px;
+ height: 2px;
+ background-color:#ff8f19;
+ vertical-align: middle;
+ margin-right: 1%;
+ content: "";
+}
+.content-top2 h4:after {
+ display: inline-block;
+ width: 100px;
+ height: 2px;
+ background-color:#ff8f19;
+ vertical-align: middle;
+ margin-left: 1%;
+ content: "";
+}
+.products_3{ 
+ padding: 10px;
+ box-shadow: 0px 0 1px 1px #f1e006;
+ margin-bottom: 30px;
+}
+.products_3 h4{ 
+ padding-top:10px;
+ padding-bottom:6px;
+ color: #e22706;
+ border-bottom: 5px solid #ffed00;
+ margin-bottom: 10px;
+}
+.products_3 p{ 
+ padding:0px;
+ margin:0px;
+}
+/********************* products_end ****************/
+
+
+
+
+
+@media screen and (max-width : 767px){
+.products_inner {
+ padding-top: 110px;
+ padding-bottom: 50px;
+}
+#products {
+ text-align: center;
+}
+#listing_details .carousel {
+ width: 100%;
+}
+}
+
+@media (min-width:470px) and (max-width:767px) { 
+
+}
+ 
+@media (min-width:768px) and (max-width:960px) { 
+
+} 
+ 
+@media (min-width:961px) and (max-width:1200px) {
+
+}
+
+@media (min-width:1201px) and (max-width:1320px) {
+
+}

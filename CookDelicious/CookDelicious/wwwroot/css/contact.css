@@ -1,0 +1,215 @@
+/*
+Template Name:Private Chef
+File: Layout CSS
+Author: Templates On Web
+Author URI: http://templateonweb.com/
+Licence: <a href="http://www.templateonweb.com/terms.php?v=content&contentid=152">Website Template Licence</a>
+*/
+
+
+/********************* contact_main ****************/
+#contact_main{ 
+ background-image: url(../img/55.jpg);
+ background-repeat: no-repeat;
+ background-size: cover;
+}
+.contact_inner{ 
+ padding-top:170px;
+ padding-bottom:150px;
+ background-color: #000000ab;
+}
+.contact_main_1{ 
+ text-align:center;
+}
+.contact_main_1 h1{ 
+ color:#fff;
+}
+.contact_main_1 ul{ 
+ padding-top:10px;
+}
+.contact_main_1 li{ 
+ display:inline;
+ padding-right:5px;
+ color: #fff;
+ font-size: 25px;
+}
+.contact_main_1 li a{ 
+ color: #ffed00;
+}
+/********************* contact_main_end ****************/
+/********************* contact****************/
+#contact{ 
+ padding-top:30px;
+ padding-bottom:30px;
+ }
+.contact_1 p {
+ text-align: center;
+ padding-bottom: 60px;
+}
+.contact_2 h4{
+ letter-spacing: 0.05em; 
+ padding-top:10px;
+ color: #e22709;
+             }
+.contact_2 h5{
+ font-size: 18px;
+ line-height: 30px;
+ color: #808085;
+ padding:0;
+ margin:0;
+ }
+.contact_2 h5 i{
+ font-size: 18px;
+ line-height: 20px;
+ color: #808085;
+             }
+.contact_2 a{
+ text-decoration:none;
+ color: #080808;
+ }
+.contact_2 a:hover{
+ color: #808085;
+ }
+.media_1{
+ margin:5px;
+ }
+.media_2{
+ margin:5px;
+}
+.contact_3 h2{   
+ letter-spacing: 0.05em;
+ color: #e22709;
+ }
+.contact_3 p{   
+ color:#999999;
+ padding-top:10px; 
+ font-size:20px; 
+}
+.contact_4 input{
+ padding-top:20px;
+ padding-bottom:20px;
+ margin-bottom:10px;
+             }
+.contact_5 textarea{
+ height:155px;
+ width:100%
+                  }
+.contact_5{
+ padding-bottom:5px;
+}
+.contact_6 ul{  
+ padding-top: 15px;
+}
+.contact_6 li{  
+ display:inline;
+  }
+.contact_6{
+ padding-top:0px;  
+ padding-bottom:10px; 
+}
+.popover_1{   
+padding-left:10px;
+}
+.contact_7 h2{ 
+ padding-bottom:5px;
+ color: #e22709;
+ }
+#contact .form-control {
+ font-size:20px;
+ background-color: #ffee0b94;
+ color: #0a0a0a;
+}
+#contact .form-control::placeholder{
+ color:#000;
+}
+.content-top2 h4 {
+ font-size: 14px;
+ letter-spacing: 2px;
+ font-weight: bold;
+ color: #e22709;
+}
+.content-top2 h4:before {
+ display: inline-block;
+ width: 100px;
+ height: 2px;
+ background-color:#ff8f19;
+ vertical-align: middle;
+ margin-right: 1%;
+ content: "";
+}
+.content-top2 h4:after {
+ display: inline-block;
+ width: 100px;
+ height: 2px;
+ background-color:#ff8f19;
+ vertical-align: middle;
+ margin-left: 1%;
+ content: "";
+}
+.contact_8{ 
+ text-align:center;
+}
+/********************* contact_end ****************/
+
+
+
+
+
+@media screen and (max-width : 767px){
+.contact_inner {
+ padding-top: 110px;
+ padding-bottom: 50px;
+}
+#contact {
+ text-align: center;
+}
+.contact_3 h2 {
+ font-size: 25px;
+}
+.contact_7 h2 {
+ padding-top: 20px;
+ font-size: 25px;
+}
+.content-top2 h4:before {
+ width: 89px;
+}
+}
+
+@media (min-width:470px) and (max-width:767px) { 
+
+}
+ 
+@media (min-width:768px) and (max-width:960px) { 
+.contact_3 h2 {
+ font-size: 28px;
+}
+.contact_7 h2 {
+ font-size: 26px;
+}
+.content-top2 h4:before {
+ width: 50px;
+}
+.content-top2 h4:after {
+ width: 50px;
+}
+} 
+
+ 
+@media (min-width:961px) and (max-width:1200px) {
+.contact_3 h2 {
+ font-size: 28px;
+}
+.contact_7 h2 {
+ font-size: 26px;
+}
+.content-top2 h4:before {
+ width: 50px;
+}
+.content-top2 h4:after {
+ width: 50px;
+}
+}
+
+@media (min-width:1201px) and (max-width:1320px) {
+
+}
