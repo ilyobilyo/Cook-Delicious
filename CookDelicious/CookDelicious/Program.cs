@@ -1,4 +1,6 @@
+using CookDelicious.Core.Constants;
 using CookDelicious.Data;
+using CookDelicious.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +14,11 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddMvcOptions(o =>
+    {
+        o.ModelBinderProviders.Insert(0, new DateTimeModelBinderProvider(FormatingConstants.DefaultFormat));
+    });
 
 var app = builder.Build();
 
