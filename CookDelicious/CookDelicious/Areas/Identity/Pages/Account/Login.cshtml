@@ -5,7 +5,71 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
+<!DOCTYPE html>
+<html>
+<head>
+<title>@ViewData["Title"]</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<partial name="_ValidationScriptsPartial" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="~/css/register.css" rel="stylesheet" type="text/css" media="all" />
+<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+</head>
+<body>
+	<!-- main -->
+	<div class="main-w3layouts wrapper">
+		<h1>Log in</h1>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<div class="main-agileinfo">
+			<div class="agileits-top">
+				<form action="#" method="post">
+					<div class="form-floating">
+                         <label asp-for="Input.Email"></label>
+                         <input asp-for="Input.Email" class="text email" autocomplete="username" aria-required="true" />
+                         <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+					<div class="form-floating">
+                        <label asp-for="Input.Password"></label>
+                        <input asp-for="Input.Password" class="text email" autocomplete="new-password" aria-required="true" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+					<div class="wthree-text">
+						<div class="clear"> </div>
+					</div>
+                    <div>
+                        <div class="checkbox">
+                            <label asp-for="Input.RememberMe" class="form-label">
+                                <input class="form-check-input" asp-for="Input.RememberMe" />
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+					<input type="submit" value="Log in">
+                    <div>
+                        <p>
+                            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        </p>
+                        <p>
+                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        </p>
+                        <p>
+                            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                        </p>
+                    </div>
+				</form>
+				<p>Don't have an Account? <a href="/Identity/Account/Register"> Register Now!</a></p>
+			</div>
+		</div>
+		<!-- copyright -->
+	</div>
+	<!-- //main -->
+</body>
+</html>
+
+
+
+@*<h1>@ViewData["Title"]</h1>
 <div class="row">
     <div class="col-md-4">
         <section>
@@ -78,8 +142,4 @@
             }
         </section>
     </div>
-</div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+</div>*@
