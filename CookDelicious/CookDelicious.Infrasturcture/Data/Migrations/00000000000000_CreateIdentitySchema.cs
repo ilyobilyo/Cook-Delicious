@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace CookDelicious.Data.Migrations
+namespace CookDelicious.Infrastructure.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
