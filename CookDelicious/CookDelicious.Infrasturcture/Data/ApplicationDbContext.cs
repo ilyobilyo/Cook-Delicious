@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CookDelicious.Data
+namespace CookDelicious.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

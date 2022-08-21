@@ -1,5 +1,5 @@
 using CookDelicious.Core.Constants;
-using CookDelicious.Data;
+using CookDelicious.Infrastructure.Data;
 using CookDelicious.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
