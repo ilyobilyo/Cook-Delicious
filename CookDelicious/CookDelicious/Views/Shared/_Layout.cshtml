@@ -1,220 +1,208 @@
 ﻿@{
     ViewData["Title"] = "CookDelicious";
 }
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
     <title>@ViewData["Title"]</title>
-    <link href="~/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/css/global.css" rel="stylesheet">
-	<link href="~/css/index.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="~/css/font-awesome.min.css" />
-	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
-    <link href="~/css/ken-burns.css" rel="stylesheet" type="text/css" media="all" />
-	<link type="text/css" rel="stylesheet" href="~/css/animate.css">
-    <link href="~/Plugins/toastr/toastr.min.css" rel="stylesheet" />
-  </head>
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/img/core-img/favicon.ico">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/animate.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/classy-nav.min.css">
+    <link rel="stylesheet" href="~/css/custom-icon.css">
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/css/nice-select.min.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/plugins/toastr/toastr.min.css">
+    @await RenderSectionAsync("Scripts", required: false)
+</head>
+
 <body>
-<section id="header">
- <nav class="navbar navbar-default navbar-fixed-top">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header page-scroll">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<div class="navbar-brand navbar-brand-centered"><a asp-area="" asp-controller="Home" asp-action="Index"><div class="ribbon  ribbon--red">Cook Delicious</div></a></div>
-		 </div>
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<div>
-			<ul class="nav navbar-nav navbar">
-				@if (User.Identity.IsAuthenticated)
-				{
-					<li>
-						<a class="active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-					</li>
-					<li>
-						<a class="active" asp-area="" asp-controller="Recipe" asp-action="All">Recipes</a>
-					</li>
-					<li>
-						<a class="active" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
-					</li>
-				}
-				else
-				{
-					<li>
-						<a class="active" href="/Identity/Account/Login">Login</a>
-					</li>
-					<li>
-						<a class="active" href="/Identity/Account/Register">Register</a>
-					</li>
-					<li>
-						<a class="active" asp-area="" asp-controller="Recipe" asp-action="All">Recipes</a>
-					</li>
-				}
-				@*<li class="active"><a href="index.html">HOME</a></li>
-				<li><a href="recipes.html">RECIPES</a></li>
-				<li><a href="details.html">DETAILS</a></li>
-                <li><a href="products.html">PRODUCTS</a></li>			
-				<li><a href="products-details.html">PRODUCTS DETAILS</a></li>
-				<li><a href="contact.html">CONTACT</a></li>*@
-			</ul>
-		</div>
-		<!-- /.navbar-collapse -->
-	</div>
-	<!-- /.container-fluid -->
-</nav>
-</section>
-<section id="center" class="center_home">
-<div class="banner">
-		<div id="kb" class="carousel kb_elastic animate_text kb_wrapper" data-ride="carousel" data-interval="6000" data-pause="hover">
-			<!-- Wrapper-for-Slides -->
-            <div class="carousel-inner" role="listbox">  
-                <div class="item active"><!-- First-Slide -->
-                    <img src="img/1.jpg" alt="" class="img-responsive">
-                    <div class="carousel-caption kb_caption kb_caption_right">
-                        <h1 data-animation="animated flipInX" class="">Lorem Ipsum Is Simply</h1>
-                        <p data-animation="animated flipInX" class="">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy  text ever since the when an unknown printer took a galley of type and scrambled [...]</p>
-						<h4>
-							@if(User.Identity.IsAuthenticated)
-							{
-								<a href="/Recipe/All"class="button hvr-shutter-out-horizontal">Recipes</a>
-							}
-							else
-							{
-								<a href="/Identity/Account/Login"class="button hvr-shutter-out-horizontal">Login</a>
-							}
-						</h4>
+    
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+
+        <!-- Top Header Area -->
+        <div class="top-header-area">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center justify-content-between">
+                    <!-- Breaking News -->
+                    <div class="col-12 col-sm-6">
+                        <div class="breaking-news">
+                            <div id="breakingNewsTicker" class="ticker">
+                                <ul>
+                                    <li><a href="/">Hello World!</a></li>
+                                    <li><a href="/">Welcome to Cook Delicious.</a></li>
+                                    <li><a href="/">Join our cooking community!</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>  
-                <div class="item"> <!-- Second-Slide -->
-                    <img src="img/2.jpg" alt="" class="img-responsive">
-                    <div class="carousel-caption kb_caption kb_caption_right">
-                        <h1 data-animation="animated fadeInDown">We Provide Our best</h1>
-                        <p data-animation="animated fadeInUp">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-						Lorem Ipsum has been the industry's standard dummy  text ever since the when an unknown printer took a galley of type and scrambled [...]</p>
-						<h4>
-							@if(User.Identity.IsAuthenticated)
-							{
-								<a href="/Recipe/All"class="button hvr-shutter-out-horizontal">Recipes</a>
-							}
-							else
-							{
-								<a href="/Identity/Account/Register"class="button hvr-shutter-out-horizontal">Register</a>
-							}
-						</h4>
+
+                    <!-- Top Social Info -->
+                    <div class="col-12 col-sm-6">
+                        <div class="top-social-info text-right">
+                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        </div>
                     </div>
-                </div> 
-                <div class="item"><!-- Third-Slide -->
-                    <img src="img/3.jpg" alt="" class="img-responsive">
-                    <div class="carousel-caption kb_caption kb_caption_right">
-                        <h1 data-animation="animated fadeInDown">Printing And Typesetting</h1>
-                        <p data-animation="animated fadeInUp">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy  text ever since the when an unknown printer took a galley of type and scrambled [...]</p>
-						<h4>
-							  <a href="/Recipe/All"class="button hvr-shutter-out-horizontal">Recipes</a>
-						</h4>
-                    </div>
-                </div> 
-            </div> 
-            <!-- Left-Button -->
-            <a class="left carousel-control kb_control_left" href="#kb" role="button" data-slide="prev">
-				<span class="fa fa-angle-left kb_icons" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a> 
-            <!-- Right-Button -->
-            <a class="right carousel-control kb_control_right" href="#kb" role="button" data-slide="next">
-                <span class="fa fa-angle-right kb_icons" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a> 
+                </div>
+            </div>
         </div>
-	</div>
-</section>
-<div class="container">
-        <main role="main">
-            @RenderBody()
-        </main>
-    </div>
-<section id="footer">
- <div class="container">
-  <div class="row">
-   <div class="footer_1 clearfix">
-    <div class="col-sm-2">
-	 <div class="footer_2">
-	  <h4>Home</h4>
-	  <ul>
-	       <li><a href="#">Our Range</a></li>
-	       <li><a href="#">FAQs</a></li>
-	       <li><a href="#">Privacy Policy</a></li>
-	       <li><a href="#">Terms of Use</a></li>
-	  </ul>
-	 </div>
-	</div>
-	<div class="col-sm-2">
-	 <div class="footer_2">
-	  <h4>Favourites</h4>
-	  <ul>
-	       <li><a href="#">Chicken Recipes</a></li>
-	       <li><a href="#">Aloo Recipes</a></li>
-	       <li><a href="#">MAGGI Noodle Recipes</a></li>
-	       <li><a href="#">Paneer Recipes</a></li>
-	       <li><a href="#">Small Meals Recipes</a></li>
-	       <li><a href="#">Breakfast Recipes</a></li>
-	  </ul>
-	 </div>
-	</div>
-	<div class="col-sm-2">
-	 <div class="footer_2">
-	  <h4>Recipes</h4>
-	  <ul>
-	       <li><a href="#">Palak Paneer Recipe</a></li>
-	       <li><a href="#">Matar Paneer Recipe</a></li>
-	       <li><a href="#">Chicken Biryani Recipe</a></li>
-	       <li><a href="#">Chilli Chicken Recipe</a></li>
-	       <li><a href="#">Aloo Matar Recipe</a></li>
-	       <li><a href="#">Aloo Gobhi Recipe</a></li>
-	  </ul>
-	 </div>
-	</div>
-	<div class="col-sm-3">
-	 <div class="footer_2">
-	  <h4>Talk To Us</h4>
-	  <ul>
-	       <li><a href="#">Copyright</a></li>
-	       <li><a href="#">Our Websites and Social Media</a></li>
-	       <li><a href="#">Contact Us</a></li>
-	  </ul>
-	 </div>
-	</div>
-	<div class="col-sm-3">
-	 <div class="footer_3">
-	  <h4>Follow Us</h4>
-	  <ul>
-	       <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-	       <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-	       <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-	       <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-	  </ul>
-	 </div>
-	</div>
-   </div>
-  </div>
- </div>
-</section>
-<section id="footer_main" class="clearfix">
-  <div class="footer_main_1">
-   <p class="text-center">© 2013 Your Website Name. All Rights Reserved. Design by<a href="http://www.TemplateOnWeb.com"> Template On Web</a> </p>
-  </div>
-</section>
-<script src="~/js/jquery-2.1.1.min.js"></script>
-<script src="~/js/bootstrap.min.js"></script>
-<script src="~/js/custom.js"></script>
-<script src="~/Plugins/toastr/toastr.min.js"></script>
-<partial name="_UserMessages" />
-@await RenderSectionAsync("Scripts", required: false)
+
+        <!-- Navbar Area -->
+        <div class="delicious-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="deliciousNav">
+
+                        <!-- Logo -->
+                        <a class="nav-brand" href="/"><img src="~/img/core-img/logo.png" alt=""></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- close btn -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <li class="active">
+                                            <a class="active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                        </li>
+                                        <li>
+						                    <a class="active" asp-area="" asp-controller="Recipe" asp-action="All">Recipes</a>
+					                    </li>
+					                    <li>
+						                    <a class="active" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
+					                    </li>
+                                        <li><a href="#">Mega Menu</a>
+                                        <div class="megamenu">
+                                            <ul class="single-mega cn-col-4">
+                                                <li class="title">Catagory</li>
+                                                <li><a href="index.html">Home</a></li>
+                                                <li><a href="about.html">About Us</a></li>
+                                                <li><a href="blog-post.html">Blog Post</a></li>
+                                                <li><a href="receipe-post.html">Receipe Post</a></li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                                <li><a href="elements.html">Elements</a></li>
+                                            </ul>
+                                            <ul class="single-mega cn-col-4">
+                                                <li class="title">Catagory</li>
+                                                <li><a href="index.html">Home</a></li>
+                                                <li><a href="about.html">About Us</a></li>
+                                                <li><a href="blog-post.html">Blog Post</a></li>
+                                                <li><a href="receipe-post.html">Receipe Post</a></li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                                <li><a href="elements.html">Elements</a></li>
+                                            </ul>
+                                            <ul class="single-mega cn-col-4">
+                                                <li class="title">Catagory</li>
+                                                <li><a href="index.html">Home</a></li>
+                                                <li><a href="about.html">About Us</a></li>
+                                                <li><a href="blog-post.html">Blog Post</a></li>
+                                                <li><a href="receipe-post.html">Receipe Post</a></li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                                <li><a href="elements.html">Elements</a></li>
+                                            </ul>
+                                            <div class="single-mega cn-col-4">
+                                                <div class="receipe-slider owl-carousel">
+                                                    <a href="#"><img src="img/bg-img/bg1.jpg" alt=""></a>
+                                                    <a href="#"><img src="img/bg-img/bg6.jpg" alt=""></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                    <li class="active">
+                                         <form class="active" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                            <button type="submit" class="custom-button">Logout</button>
+                                        </form>
+                                    </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="active">
+                                            <a class="active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                        </li>
+                                        <li>
+                                            <a class="active" asp-area="" asp-controller="Recipe" asp-action="All">Recipes</a>
+                                        </li>
+                                        <li>
+                                            <a class="active" href="/Identity/Account/Login">Login</a>
+                                        </li>
+                                         <li>
+                                            <a class="active" href="/Identity/Account/Register">Register</a>
+                                        </li>
+                                        <li><a href="contact.html">Contact</a></li>
+                                    }
+                                </ul>
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+    @RenderBody()
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
+                    <!-- Footer Social Info -->
+                    <div class="footer-social-info text-right">
+                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    </div>
+                    <!-- Footer Logo -->
+                    <div class="footer-logo">
+                        <a href="/"><img src="~/img/core-img/logo.png" alt=""></a>
+                    </div>
+                    <p>
+                        Copyright & copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
+<!-- jQuery -->
+<script src="~/js/jquery/jquery-2.2.4.min.js"></script>
+<script src="~/js/bootstrap/popper.min.js"></script>
+<script src="~/js/bootstrap/bootstrap.min.js"></script>
+<script src="~/js/plugins/plugins.js"></script>
+<script src="~/js/active.js"></script>
+
+<script src="~/plugins/toastr/toastr.min.js"></script>
+<partial name="_UserMessages" />
+@await RenderSectionAsync("Scripts", required: false)
+
