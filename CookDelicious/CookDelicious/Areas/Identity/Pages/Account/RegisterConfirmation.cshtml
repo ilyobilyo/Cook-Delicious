@@ -4,40 +4,29 @@
     ViewData["Title"] = "Register confirmation";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-<title>@ViewData["Title"]</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<link href="~/css/register.css" rel="stylesheet" type="text/css" media="all" />
-<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
-</head>
+<link rel="stylesheet" href="~/register-form-files/css/style.css">
+
 <body>
-    
-        <div class="main-w3layouts wrapper">
-		<div class="main-agileinfo">
-			<div class="agileits-top">
-                <h1>@ViewData["Title"]</h1>
-					@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">THESE DOCS</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">CLICK HERE TO CONFIRM YOUR ACCOUNT</a>
-</p>
-    }
-    else
-    {
-<p>
-        Please check your email to confirm your account.
-</p>
-    }
-}
-			</div>
-		</div>
-		<!-- copyright -->
-	</div>
+    <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h1>@ViewData["Title"]</h1>
+                        @if (@Model.DisplayConfirmAccountLink)
+                            {
+                                <p>
+                                    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">THESE DOCS</a> for how to configure a real email sender.
+                                    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">CLICK HERE TO CONFIRM YOUR ACCOUNT</a>
+                                </p>
+                            }
+                            else
+                            {
+                                <p>
+                                    Please check your email to confirm your account.
+                                </p>
+                            }
+                    </div>
+                  </div>
+                 </div>
+           </section>
 </body>
-</html>

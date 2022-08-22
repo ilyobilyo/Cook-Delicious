@@ -4,5 +4,17 @@
     ViewData["Title"] = "Confirm email change";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<link rel="stylesheet" href="~/register-form-files/css/style.css">
+
+<body>
+    <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h1>@ViewData["Title"]</h1>
+                        <partial name="_StatusMessage" model="Model.StatusMessage" />
+                    </div>
+                  </div>
+                 </div>
+           </section>
+</body>

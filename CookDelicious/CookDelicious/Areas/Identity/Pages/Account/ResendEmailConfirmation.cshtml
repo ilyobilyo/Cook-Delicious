@@ -4,40 +4,29 @@
     ViewData["Title"] = "Resend email confirmation";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-<title>@ViewData["Title"]</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <partial name="_ValidationScriptsPartial" />
-<link href="~/css/register.css" rel="stylesheet" type="text/css" media="all" />
-<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
-</head>
+<link rel="stylesheet" href="~/register-form-files/css/style.css">
+
 <body>
-	<!-- main -->
-	<div class="main-w3layouts wrapper">
-		<h1>@ViewData["Title"]</h1>
-		<div class="main-agileinfo">
-			<div class="agileits-top">
-			<h1>Enter your email</h1>
-				<form form method="post">
-					<div asp-validation-summary="All" class="text-danger"></div>
-					<div class="form-floating">
-                         <label asp-for="Input.Email"></label>
-                         <input asp-for="Input.Email" class="text" autocomplete="username" aria-required="true" />
-                         <span asp-validation-for="Input.Email" class="text-danger"></span>
+	<section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h1>@ViewData["Title"]</h1>
+                        <h3>Enter your email</h3>
+						<form form method="post">
+							<div asp-validation-summary="All" class="text-danger"></div>
+							<div class="form-group">
+                                <input asp-for="Input.Email" class="text email" autocomplete="username" aria-required="true" placeholder="Email"/>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+							<div class="wthree-text">
+								<div class="clear"> </div>
+							</div>
+							<input type="submit" class="form-submit" value="Resend">
+						</form>
                     </div>
-					<div class="wthree-text">
-						<div class="clear"> </div>
-					</div>
-					<input type="submit" value="Resend">
-				</form>
-			</div>
-		</div>
-		<!-- copyright -->
-	</div>
-	<!-- //main -->
+                  </div>
+                 </div>
+           </section>
 </body>
-</html>

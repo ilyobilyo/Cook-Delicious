@@ -4,50 +4,50 @@
     ViewData["Title"] = "Register";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-<title>@ViewData["Title"]</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<partial name="_ValidationScriptsPartial" />
-<link href="~/css/register.css" rel="stylesheet" type="text/css" media="all" />
-<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
-</head>
+<link rel="stylesheet" href="~/register-form-files/css/style.css">
+
 <body>
-	<!-- main -->
-	<div class="main-w3layouts wrapper">
-		<h1>Register</h1>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-		<div class="main-agileinfo">
-			<div class="agileits-top">
-				<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-					<div class="form-floating">
-                         <label asp-for="Input.Email"></label>
-                         <input asp-for="Input.Email" class="text email" autocomplete="username" aria-required="true" />
-                         <span asp-validation-for="Input.Email" class="text-danger"></span>
+	<section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">@ViewData["Title"]</h2>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <partial name="_ValidationScriptsPartial" />
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="Username" id="name" placeholder="Username"/>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.Email" class="text email" autocomplete="username" aria-required="true" placeholder="Email"/>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.Password" class="text email" autocomplete="new-password" aria-required="true" placeholder="Password"/>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.ConfirmPassword" class="text email" autocomplete="new-password" aria-required="true" placeholder="ConfirmPassword"/>
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                            </div>
+                        </form>
                     </div>
-					<div class="form-floating">
-                        <label asp-for="Input.Password"></label>
-                        <input asp-for="Input.Password" class="text email" autocomplete="new-password" aria-required="true" />
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <div class="signup-image">
+                        <figure><img src="~/register-form-files/images/register.jpg" alt="sing up image"></figure>
+                        <a href="/Identity/Account/Login" class="signup-image-link">I am already member</a>
                     </div>
-					<div class="form-floating">
-                        <label asp-for="Input.ConfirmPassword"></label>
-                        <input asp-for="Input.ConfirmPassword" class="text email" autocomplete="new-password" aria-required="true" />
-                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                    </div>
-					<div class="wthree-text">
-						<div class="clear"> </div>
-					</div>
-					<input type="submit" value="SIGNUP">
-				</form>
-				<p>You already have an Account? <a href="/Identity/Account/Login"> Login Now!</a></p>
-			</div>
-		</div>
-		<!-- copyright -->
-	</div>
-	<!-- //main -->
+                </div>
+            </div>
+        </section>
 </body>
-</html>
+
+<script src="~/register-form-files/js/jquery.min.js"></script>
+<script src="~/register-form-files/js/main.js"></script>
