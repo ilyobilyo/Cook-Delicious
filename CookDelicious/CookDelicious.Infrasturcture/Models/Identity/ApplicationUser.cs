@@ -14,7 +14,7 @@ namespace CookDelicious.Infrasturcture.Models.Identity
             ForumComments = new HashSet<ForumComment>();
         }
 
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         public ICollection<Recipe> Recipes { get; set; }
 
