@@ -4,6 +4,7 @@ using CookDelicious.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CookDelicious.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220824140207_AddModelsToDb")]
+    partial class AddModelsToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,6 +290,9 @@ namespace CookDelicious.Infrastructure.Data.Migrations
                     b.Property<Guid>("SubCaregoryId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("SubCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -303,7 +308,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasIndex("DishTypeId");
 
-                    b.HasIndex("SubCaregoryId");
+                    b.HasIndex("SubCategoryId");
 
                     b.ToTable("Recipes");
                 });
@@ -552,7 +557,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasOne("CookDelicious.Infrasturcture.Models.Common.SubCategory", "SubCategory")
                         .WithMany("Recipes")
-                        .HasForeignKey("SubCaregoryId")
+                        .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
