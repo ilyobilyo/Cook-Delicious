@@ -1,5 +1,7 @@
 using CookDelicious.Core.Constants;
 using CookDelicious.Infrastructure.Data;
+using CookDelicious.Infrasturcture.Models.Identity;
+using CookDelicious.Infrasturcture.Repositories;
 using CookDelicious.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +14,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>();
+
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(o =>
     {
