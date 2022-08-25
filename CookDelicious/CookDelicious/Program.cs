@@ -1,4 +1,6 @@
 using CookDelicious.Core.Constants;
+using CookDelicious.Core.Contracts;
+using CookDelicious.Core.Services;
 using CookDelicious.Infrastructure.Data;
 using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Repositories;
@@ -15,9 +17,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>();
+builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
+    .AddScoped<IUserService, UserService>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(o =>
@@ -46,6 +50,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "Area",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
