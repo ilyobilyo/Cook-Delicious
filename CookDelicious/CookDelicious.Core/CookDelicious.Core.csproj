@@ -10,10 +10,4 @@
     <ProjectReference Include="..\CookDelicious.Infrasturcture\CookDelicious.Infrasturcture.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\User\" />
-    <Folder Include="Models\User\" />
-    <Folder Include="Services\User\" />
-  </ItemGroup>
-
 </Project>

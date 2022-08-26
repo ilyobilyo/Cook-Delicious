@@ -24,8 +24,4 @@
     <ProjectReference Include="..\CookDelicious.Core\CookDelicious.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\User\" />
-  </ItemGroup>
-
 </Project>

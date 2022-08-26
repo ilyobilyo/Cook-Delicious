@@ -1,6 +1,8 @@
 using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
+using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Services.Admin;
+using CookDelicious.Core.Services.User;
 using CookDelicious.Infrastructure.Data;
 using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Repositories;
@@ -21,6 +23,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
+    .AddScoped<IUserServiceAdmin, UserServiceAdmin>()
     .AddScoped<IUserService, UserService>();
 
 builder.Services.AddControllersWithViews()
