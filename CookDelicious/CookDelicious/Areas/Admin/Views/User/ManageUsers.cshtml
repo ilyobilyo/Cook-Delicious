@@ -1,7 +1,10 @@
 ﻿@using CookDelicious.Core.Models.Admin
-@model IEnumerable<UserListViewModel>
+@using CookDelicious.Core.Models.Paiging
+@model PagingList<UserListViewModel>
 
-<div class="row">
+<section class="best-receipe-area">
+    <div class="container">
+        <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
@@ -42,10 +45,19 @@
                             </tr>
                         }
                     </tbody>
+                    @{
+                        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                    }
                 </table>
               </div>
+                    <a asp-action="ManageUsers" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-block btn-outline-primary btn-sm @prevDisabled">Previous</a>
+                    <a asp-action="ManageUsers" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-block btn-outline-primary btn-sm @nextDisabled">Next</a>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
           </div>
         </div>
+    </div>
+</section>
+

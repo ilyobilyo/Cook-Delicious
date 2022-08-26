@@ -9,6 +9,6 @@ namespace CookDelicious.Core.Contracts
 {
     public interface IUserService
     {
-        Task<IEnumerable<UserListViewModel>> GetUsers();
+        Task<IEnumerable<UserListViewModel>> GetUsers(int pageNumber);
     }
 }

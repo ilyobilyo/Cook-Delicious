@@ -1,5 +1,6 @@
 ﻿using CookDelicious.Core.Contracts;
 using CookDelicious.Core.Models.Admin;
+using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -20,16 +21,25 @@ namespace CookDelicious.Core.Services
             this.repo = repo;
         }
 
-        public async Task<IEnumerable<UserListViewModel>> GetUsers()
+        public async Task<IEnumerable<UserListViewModel>> GetUsers(int pageNumber)
         {
-            return await repo.All<ApplicationUser>()
-                .Select(x => new UserListViewModel()
+
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
+
+            int pageSize = 2;
+
+            return await PagingList<UserListViewModel>.CreateAsync(repo.All<ApplicationUser>()
+                .Select(x => new UserListViewModel() 
                 {
-                    Id = x.Id,
                     Email = x.Email,
+                    Id = x.Id,
                     Username = x.UserName
-                })
-                .ToListAsync();
+                }),
+                pageNumber,
+                pageSize);
         }
     }
 }
