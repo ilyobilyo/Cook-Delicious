@@ -1,6 +1,6 @@
 using CookDelicious.Core.Constants;
-using CookDelicious.Core.Contracts;
-using CookDelicious.Core.Services;
+using CookDelicious.Core.Contracts.Admin;
+using CookDelicious.Core.Services.Admin;
 using CookDelicious.Infrastructure.Data;
 using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Repositories;

@@ -1,10 +1,12 @@
 ﻿using CookDelicious.Core.Constants;
 using CookDelicious.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace CookDelicious.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
@@ -16,7 +18,6 @@ namespace CookDelicious.Controllers
 
         public IActionResult Index()
         {
-            ViewData[MessageConstant.SuccessMessage] = "Neshto se schupi";
 
             return View();
         }
