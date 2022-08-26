@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace CookDelicious.Core.Services.Admin
 {
-    public class UserService : IUserService
+    public class UserServiceAdmin : IUserServiceAdmin
     {
         private readonly IApplicationDbRepository repo;
 
-        public UserService(IApplicationDbRepository repo)
+        public UserServiceAdmin(IApplicationDbRepository repo)
         {
             this.repo = repo;
         }

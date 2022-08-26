@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CookDelicious.Core.Contracts.Admin
 {
-    public interface IUserService
+    public interface IUserServiceAdmin
     {
         Task<IEnumerable<UserListViewModel>> GetUsersInManageUsers(int pageNumber);
         Task<ApplicationUser> GetUserByIdRoles(string id);

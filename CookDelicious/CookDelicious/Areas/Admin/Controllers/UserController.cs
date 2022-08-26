@@ -16,9 +16,9 @@ namespace CookDelicious.Areas.Admin.Controllers
 
         private readonly UserManager<ApplicationUser> userManager;
 
-        private readonly IUserService userService;
+        private readonly IUserServiceAdmin userService;
 
-        public UserController(RoleManager<IdentityRole> roleManager, IUserService userService, UserManager<ApplicationUser> userManager)
+        public UserController(RoleManager<IdentityRole> roleManager, IUserServiceAdmin userService, UserManager<ApplicationUser> userManager)
         {
             this.roleManager = roleManager;
             this.userService = userService;
