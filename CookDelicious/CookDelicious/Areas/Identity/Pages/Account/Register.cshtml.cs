@@ -83,6 +83,12 @@ namespace CookDelicious.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Range(10, 100)]
+            public int Age { get; set; }
+
+            [Display(Name = "Home Town")]
+            public string? Town { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -117,6 +123,9 @@ namespace CookDelicious.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+
+                user.Age = Input.Age;
+                user.Town = Input.Town;
 
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

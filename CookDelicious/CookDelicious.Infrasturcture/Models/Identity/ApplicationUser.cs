@@ -1,6 +1,7 @@
 ﻿using CookDelicious.Infrasturcture.Models.Forum;
 using CookDelicious.Infrasturcture.Models.Recipes;
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace CookDelicious.Infrasturcture.Models.Identity
 {
@@ -15,6 +16,11 @@ namespace CookDelicious.Infrasturcture.Models.Identity
         }
 
         public string? ImageUrl { get; set; }
+
+        public int? Age { get; set; }
+
+        [MaxLength(50)]
+        public string? Town { get; set; }
 
         public ICollection<Recipe> Recipes { get; set; }
 
