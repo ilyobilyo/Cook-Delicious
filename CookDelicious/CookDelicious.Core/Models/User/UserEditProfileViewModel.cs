@@ -1,8 +1,9 @@
 ﻿namespace CookDelicious.Core.Models.User
 {
-    public class UserProfileViewModel
+    public class UserEditProfileViewModel
     {
         public string Id { get; set; }
+
         public string Username { get; set; }
 
         public string? FirstName { get; set; }
@@ -21,6 +22,5 @@
 
         public string? Address { get; set; }
 
-        public List<MyRecipesViewModel>? MyRecipes { get; set; }
     }
 }

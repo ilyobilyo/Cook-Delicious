@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CookDelicious.Core.Models.User;
 
 namespace CookDelicious.Core.Contracts.User
 {
     public interface IUserService
     {
+        Task<UserProfileViewModel> GetUserProfile(string userName);
+        Task<UserEditProfileViewModel> GetUserProfileEdit(string userName);
+        Task<bool> UpdateUser(UserEditProfileViewModel model);
     }
 }
