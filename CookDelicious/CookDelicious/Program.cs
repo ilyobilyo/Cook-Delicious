@@ -1,7 +1,11 @@
 using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
+using CookDelicious.Core.Contracts.Product;
+using CookDelicious.Core.Contracts.Recipe;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Services.Admin;
+using CookDelicious.Core.Services.Products;
+using CookDelicious.Core.Services.Recipe;
 using CookDelicious.Core.Services.User;
 using CookDelicious.Infrastructure.Data;
 using CookDelicious.Infrasturcture.Models.Identity;
@@ -24,7 +28,9 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 
 builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<IUserServiceAdmin, UserServiceAdmin>()
-    .AddScoped<IUserService, UserService>();
+    .AddScoped<IUserService, UserService>()
+    .AddScoped<IRecipeService, RecipeService>()
+    .AddScoped<IProductService, ProductService>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(o =>
