@@ -15,12 +15,24 @@ namespace CookDelicious.Infrasturcture.Models.Identity
             ForumComments = new HashSet<ForumComment>();
         }
 
+        [MaxLength(100)]
+        public string? FirsName { get; set; }
+
+        [MaxLength(100)]
+        public string? LastName { get; set; }
+
         public string? ImageUrl { get; set; }
 
         public int? Age { get; set; }
 
         [MaxLength(50)]
         public string? Town { get; set; }
+
+        [MaxLength(200)]
+        public string? Job { get; set; }
+
+        [MaxLength(250)]
+        public string? Address { get; set; }
 
         public ICollection<Recipe> Recipes { get; set; }
 
