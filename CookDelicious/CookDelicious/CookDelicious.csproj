@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-CookDelicious-CF49E140-FDBA-4D33-8C5C-A1BF5DCA18BC</UserSecretsId>
   </PropertyGroup>
