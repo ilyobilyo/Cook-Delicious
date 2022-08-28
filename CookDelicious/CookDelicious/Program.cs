@@ -1,5 +1,6 @@
 using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
+using CookDelicious.Core.Contracts.Admin.Product;
 using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Contracts.Recipe;
 using CookDelicious.Core.Contracts.User;
@@ -30,7 +31,10 @@ builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<IUserServiceAdmin, UserServiceAdmin>()
     .AddScoped<IUserService, UserService>()
     .AddScoped<IRecipeService, RecipeService>()
-    .AddScoped<IProductService, ProductService>();
+    .AddScoped<IProductService, ProductService>()
+    .AddScoped<IProductServiceAdmin, ProductServiceAdmin>()
+    .AddScoped<ICategoryServiceAdmin, CategoryServiceAdmin>()
+    .AddScoped<IDishTypeService, DishTypeService>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(o =>

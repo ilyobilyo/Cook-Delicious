@@ -20,15 +20,10 @@ namespace CookDelicious.Controllers
             return Ok();
         }
 
-        public async Task<IActionResult> CreateRecipe()
+        public IActionResult CreateRecipe()
         {
-            return Ok();
+            return View();
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateRecipe()
-        //{
-        //    List<ErrorViewModel> errors = recipeService.CreateRecipe();
-        //}
     }
 }

@@ -4,11 +4,6 @@ using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Repositories;
 using CookDelicious.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CookDelicious.Core.Services.Admin
 {
@@ -31,6 +26,7 @@ namespace CookDelicious.Core.Services.Admin
                 return error;
             }
 
+
             if (await IsCategoryExists(model))
             {
                 error.Messages = $"{model.Name} is already exist.";
@@ -41,6 +37,7 @@ namespace CookDelicious.Core.Services.Admin
             {
                 Name = model.Name,
             };
+
 
             try
             {
