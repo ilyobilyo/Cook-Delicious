@@ -27,8 +27,8 @@
     <link rel="stylesheet" href="~/css/magnific-popup.css">
     <link rel="stylesheet" href="~/css/nice-select.min.css">
     <link rel="stylesheet" href="~/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/Plugins/toastr/toastr.min.css">
-    <link rel="stylesheet" href="~/Plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="~/plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="~/adminlte/css/adminlte.min.css">
 
     @await RenderSectionAsync("Scripts", required: false)
@@ -96,13 +96,37 @@
                                         <li class="active">
                                             <a class="active" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
                                         </li>
-                                        <li>
-						                    <a class="active" asp-area="Admin" asp-controller="Recipe" asp-action="All">Recipes</a>
-					                    </li>
-					                    <li>
-						                    <a class="active" asp-area="Admin" asp-controller="User" asp-action="ManageUsers">Manage Users</a>
-					                    </li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a href="/Admin">Manage Menu</a>
+                                            <div class="megamenu">
+                                                <ul class="single-mega cn-col-4">
+                                                    <li class="title">Manage</li>
+                                                    <li>
+						                                <a class="active" asp-area="Admin" asp-controller="User" asp-action="ManageUsers">Users</a>
+					                                </li>
+                                                    <li>
+						                                <a class="active" asp-area="Admin" asp-controller="Product" asp-action="All">Products</a>
+					                                </li>
+                                                </ul>
+                                                <ul class="single-mega cn-col-4">
+                                                    <li class="title">Add</li>
+                                                    <li>
+						                                <a class="active" asp-area="Admin" asp-controller="Category" asp-action="Add">Category</a>
+					                                </li>
+                                                    <li>
+						                                <a class="active" asp-area="Admin" asp-controller="Product" asp-action="CreateProduct">Product</a>
+					                                </li>
+                                                    <li>
+						                                <a class="active" asp-area="Admin" asp-controller="DishType" asp-action="Add">DishType</a>
+					                                </li>
+                                                </ul>
+                                                <div class="single-mega cn-col-4">
+                                                    <div class="receipe-slider owl-carousel">
+                                                        <a href="#"><img src="img/bg-img/bg1.jpg" alt=""></a>
+                                                        <a href="#"><img src="img/bg-img/bg6.jpg" alt=""></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
                                         <li>
 						                    <a class="active" asp-area="" asp-controller="Home" asp-action="Index">User Menu</a>
 					                    </li>
@@ -152,11 +176,11 @@
 <script src="~/js/bootstrap/bootstrap.min.js"></script>
 <script src="~/js/plugins/plugins.js"></script>
 <script src="~/js/active.js"></script>
-<script src="~/Plugins/jquery/jquery.min.js"></script>
-<script src="~/Plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="~/adminlte/js/adminlte.min.js"></script>
 <script src="~/adminlte/js/demo.js"></script>
-<script src="~/Plugins/toastr/toastr.min.js"></script>
+<script src="~/plugins/toastr/toastr.min.js"></script>
 <partial name="_UserMessages" />
 @await RenderSectionAsync("Scripts", required: false)
 
