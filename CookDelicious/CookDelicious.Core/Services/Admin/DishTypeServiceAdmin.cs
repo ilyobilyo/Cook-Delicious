@@ -4,19 +4,14 @@ using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Repositories;
 using CookDelicious.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CookDelicious.Core.Services.Admin
 {
-    public class DishTypeService : IDishTypeService
+    public class DishTypeServiceAdmin : IDishTypeServiceAdmin
     {
         private readonly IApplicationDbRepository repo;
 
-        public DishTypeService(IApplicationDbRepository repo)
+        public DishTypeServiceAdmin(IApplicationDbRepository repo)
         {
             this.repo = repo;
         }
