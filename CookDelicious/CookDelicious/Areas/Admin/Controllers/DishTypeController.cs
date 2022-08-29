@@ -7,9 +7,9 @@ namespace CookDelicious.Areas.Admin.Controllers
 {
     public class DishTypeController : BaseController
     {
-        private readonly IDishTypeService dishTypeService;
+        private readonly IDishTypeServiceAdmin dishTypeService;
 
-        public DishTypeController(IDishTypeService dishTypeService)
+        public DishTypeController(IDishTypeServiceAdmin dishTypeService)
         {
             this.dishTypeService = dishTypeService;
         }
