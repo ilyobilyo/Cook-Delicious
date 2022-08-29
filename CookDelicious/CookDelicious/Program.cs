@@ -1,12 +1,16 @@
 using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Contracts.Admin.Product;
+using CookDelicious.Core.Contracts.Common.Categories;
+using CookDelicious.Core.Contracts.Common.DishTypes;
 using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Contracts.Recipe;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Services.Admin;
+using CookDelicious.Core.Services.Common.Categories;
+using CookDelicious.Core.Services.Common.DishTypes;
 using CookDelicious.Core.Services.Products;
-using CookDelicious.Core.Services.Recipe;
+using CookDelicious.Core.Services.Recipes;
 using CookDelicious.Core.Services.User;
 using CookDelicious.Infrastructure.Data;
 using CookDelicious.Infrasturcture.Models.Identity;
@@ -30,11 +34,13 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<IUserServiceAdmin, UserServiceAdmin>()
     .AddScoped<IUserService, UserService>()
-    .AddScoped<IRecipeService, RecipeService>()
+    .AddScoped<IDishTypeServiceAdmin, DishTypeServiceAdmin>()
     .AddScoped<IProductService, ProductService>()
     .AddScoped<IProductServiceAdmin, ProductServiceAdmin>()
     .AddScoped<ICategoryServiceAdmin, CategoryServiceAdmin>()
-    .AddScoped<IDishTypeService, DishTypeService>();
+    .AddScoped<ICategoryService, CategoryService>()
+    .AddScoped<IDishTypeService, DishTypeService>()
+    .AddScoped<IRecipeService, RecipeService>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(o =>
