@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CookDelicious.Core.Contracts.Admin
 {
-    public interface IDishTypeService
+    public interface IDishTypeServiceAdmin
     {
         Task<ErrorViewModel> CreateDishType(CreateDishTypeViewModel model);
     }
