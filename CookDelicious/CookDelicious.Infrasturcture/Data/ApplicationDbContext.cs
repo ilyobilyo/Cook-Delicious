@@ -16,10 +16,6 @@ namespace CookDelicious.Infrastructure.Data
 
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<SubCategory> SubCategories { get; set; }
-
-        public DbSet<CookingTime> CookingTimes { get; set; }
-
         public DbSet<DishType> DishTypes { get; set; }
 
         public DbSet<Product> Products { get; set; }
