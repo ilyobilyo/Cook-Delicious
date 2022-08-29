@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CookDelicious.Core.Models.Recipe;
+using CookDelicious.Models;
 
 namespace CookDelicious.Core.Contracts.Recipe
 {
     public interface IRecipeService
     {
+        Task<IEnumerable<AllRecipeViewModel>> GetAllRecipes(int pageNumber);
+        Task<IEnumerable<ErrorViewModel>> CreateRecipe(CreateRecipeViewModel model);
     }
 }
