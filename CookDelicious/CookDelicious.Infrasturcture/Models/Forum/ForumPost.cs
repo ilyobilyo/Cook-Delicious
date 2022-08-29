@@ -33,6 +33,9 @@ namespace CookDelicious.Infrasturcture.Models.Forum
         [ForeignKey(nameof(AuthorId))]
         public ApplicationUser Author { get; set; }
 
+        public bool? IsDeleted { get; set; }
+
+
         public ICollection<ForumComment> ForumComments { get; set; }
     }
 }

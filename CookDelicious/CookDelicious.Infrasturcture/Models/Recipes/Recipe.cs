@@ -43,24 +43,20 @@ namespace CookDelicious.Infrasturcture.Models.Recipes
         public double Rating { get; set; }
 
         [Required]
-        public Guid CookingTimeId { get; set; }
-
-        public CookingTime CookingTime { get; set; }
+        public string CookingTime { get; set; }
 
         [Required]
         public Guid CategoryId { get; set; }
 
         public Category Catrgory { get; set; }
 
-        public Guid SubCaregoryId { get; set; }
-
-        [ForeignKey(nameof(SubCaregoryId))]
-        public SubCategory SubCategory { get; set; }
-
         [Required]
         public Guid DishTypeId { get; set; }
 
         public DishType DishType { get; set; }
+
+        public bool? IsDeleted { get; set; }
+
 
         public ICollection<RecipeProduct> RecipeProducts { get; set; }
 

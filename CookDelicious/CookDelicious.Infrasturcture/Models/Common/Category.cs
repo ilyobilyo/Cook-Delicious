@@ -17,6 +17,8 @@ namespace CookDelicious.Infrasturcture.Models.Common
         [MaxLength(100)]
         public string Name { get; set; }
 
+        public bool? IsDeleted { get; set; }
+
         public ICollection<Recipe> Recipes { get; set; }
     }
 }
