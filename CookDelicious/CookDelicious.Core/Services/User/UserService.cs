@@ -15,6 +15,13 @@ namespace CookDelicious.Core.Services.User
             this.repo = repo;
         }
 
+        public async Task<ApplicationUser> GetUserByUsername(string author)
+        {
+            return await repo.All<ApplicationUser>()
+                .Where(x => x.UserName == author)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<UserProfileViewModel> GetUserProfile(string userName)
         {
             return await repo.All<ApplicationUser>()
@@ -54,6 +61,7 @@ namespace CookDelicious.Core.Services.User
                 })
                 .FirstOrDefaultAsync();
         }
+
 
         public async Task<bool> UpdateUser(UserEditProfileViewModel model)
         {
