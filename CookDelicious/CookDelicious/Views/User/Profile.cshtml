@@ -36,7 +36,7 @@
                       <input type="hidden" name="Id" value="@Model.Id" />
                       <p class="text-secondary mb-1">@Model.CurrentJob</p>
                       <p class="text-muted font-size-sm">@Model.Town</p>
-                      <a class="btn btn-primary" asp-action="CreateRecipe" asp-controller="Recipe">Create Recipe</a>
+                      <a class="btn btn-primary" asp-action="CreateRecipe" asp-route-id="@Model.Id" asp-controller="Recipe">Create Recipe</a>
                     </div>
                   </div>
                 </div>
