@@ -40,11 +40,13 @@ namespace CookDelicious.Core.Services.Products
 
         public async Task<ICollection<RecipeProduct>> GetProductsForCreatingRecipe(string products, Guid recipeId)
         {
-            var splitedProductsNames = products.Split(", ", StringSplitOptions.RemoveEmptyEntries);
+            var splitedProductsWithQuantity = products.Split(", ", StringSplitOptions.RemoveEmptyEntries);
+            var splitedProductsNames = products.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var productDict = Enumerable.Range(0, splitedProductsNames.Length / 2).ToDictionary(i => splitedProductsNames[2 * i] , i => splitedProductsNames[2 * i + 1]);
 
             List<RecipeProduct> recipeProducts = new List<RecipeProduct>();
 
-            foreach (var recipeProduct in splitedProductsNames)
+            foreach (var (quantity, recipeProduct) in productDict)
             {
                 var isExist = await IsProductExists(recipeProduct);
 
@@ -58,7 +60,8 @@ namespace CookDelicious.Core.Services.Products
                     {
                         Product = product,
                         ProductId = product.Id,
-                        RecipeId = recipeId
+                        RecipeId = recipeId,
+                        Quantity = quantity,
                     });
                 }
                 else
@@ -69,13 +72,27 @@ namespace CookDelicious.Core.Services.Products
                     {
                         Product = product,
                         ProductId = product.Id,
-                        RecipeId = recipeId
+                        RecipeId = recipeId,
+                        Quantity = quantity,
                     });
                 }
             }
-            
+
 
             return recipeProducts;
+        }
+
+        public async Task<IList<RecipeProductViewModel>> GetProductsForRecipePost(Guid id)
+        {
+            return await repo.All<RecipeProduct>()
+                .Where(x => x.RecipeId == id)
+                .Select(x => new RecipeProductViewModel()
+                {
+                    Id = x.ProductId,
+                    Name = x.Product.Name,
+                    Quantity = x.Quantity
+                })
+                .ToListAsync();
         }
 
         private async Task<Product> CreateProduct(string name)

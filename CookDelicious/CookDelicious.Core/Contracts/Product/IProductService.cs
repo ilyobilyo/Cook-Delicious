@@ -8,5 +8,6 @@ namespace CookDelicious.Core.Contracts.Product
     {
         Task<IEnumerable<AllProductViewModel>> GetAllProducts(int pageNumber);
         Task<ICollection<RecipeProduct>> GetProductsForCreatingRecipe(string products, Guid recipeId);
+        Task<IList<RecipeProductViewModel>> GetProductsForRecipePost(Guid id);
     }
 }
