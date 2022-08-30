@@ -1,0 +1,55 @@
+﻿@using CookDelicious.Core.Models.Paiging
+@using CookDelicious.Core.Models.Recipe
+@model PagingList<AllRecipeViewModel>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<section class="best-receipe-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading">
+                        <h3>@ViewData["Title"]</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @foreach(var recipe in Model)
+            {
+                <!-- Single Best Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-best-receipe-area mb-30">
+                        <img src="~/img/bg-img/@recipe.ImageUrl" alt="">
+                        <div class="receipe-content">
+                            <a asp-action="RecipePost" asp-controller="Recipe" asp-route-id="@recipe.Id" >
+                                <h5>@recipe.Title</h5>
+                            </a>
+                            <div class="ratings">
+                                @{
+                                    var emptyStars = 5 - recipe.Rating;
+                                }
+                                @for(int i = 1; i <= recipe.Rating; i++)
+                                {
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                }
+                                @for(int i = 1; i <= emptyStars; i++)
+                                {
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+            
+            @{
+              var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+              var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
+            <a asp-action="All" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
+            <a asp-action="All" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+        </div>
+    </section>

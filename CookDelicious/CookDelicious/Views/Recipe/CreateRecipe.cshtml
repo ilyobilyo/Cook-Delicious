@@ -1,5 +1,4 @@
 ﻿@using CookDelicious.Core.Models.Recipe
-
 @model CreateRecipeViewModel
 
 <head>
@@ -33,7 +32,6 @@
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
                     <img src="~/img/bg-img/defaultRecipe.jpg" alt="Admin" class="rounded-circle" width="150">
-                    <input type="hidden" asp-for="AuthorId" name="AuthorId" value="" />
                   </div>
                 </div>
               </div>
@@ -74,15 +72,17 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Category</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                        <input asp-for="Category" class="form-control" aria-required="true" />
-                        <span asp-validation-for="Category" class="text-danger"></span>
-                    </div>
+                  <div class="row" data-select2-id="29">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Category</h6>
                   </div>
+                  <select class="col-sm-9  text-secondary" asp-for="Category" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                      @foreach(var category in  Model.Categories)
+                      {
+                        <option data-select2-id="35">@category</option>
+                      }
+                  </select>
+                </div>
                   <hr>
                   <div class="row" data-select2-id="29">
                   <div class="col-sm-3">
