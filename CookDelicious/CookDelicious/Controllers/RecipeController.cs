@@ -1,4 +1,5 @@
 ﻿using CookDelicious.Core.Constants;
+using CookDelicious.Core.Contracts.Common.Categories;
 using CookDelicious.Core.Contracts.Recipe;
 using CookDelicious.Core.Models.Recipe;
 using CookDelicious.Models;
@@ -11,10 +12,12 @@ namespace CookDelicious.Controllers
     public class RecipeController : BaseController
     {
         private readonly IRecipeService recipeService;
+        private readonly ICategoryService categoryService;
 
-        public RecipeController(IRecipeService recipeService)
+        public RecipeController(IRecipeService recipeService, ICategoryService categoryService)
         {
             this.recipeService = recipeService;
+            this.categoryService = categoryService;
         }
 
         public async Task<IActionResult> All(int pageNumber)
@@ -24,9 +27,16 @@ namespace CookDelicious.Controllers
             return View(recipes);
         }
 
-        public IActionResult CreateRecipe([FromRoute]string Id)
+        public async Task<IActionResult> CreateRecipe([FromRoute]string Id)
         {
-            return View();
+            var categories = await categoryService.GetAllCategoryNames();
+
+            var model = new CreateRecipeViewModel()
+            {
+                Categories = categories
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -40,18 +50,25 @@ namespace CookDelicious.Controllers
 
             model.AuthorId = Id;
 
-            var errors = await recipeService.CreateRecipe(model);
+            var error = await recipeService.CreateRecipe(model);
 
-            if (errors.Count() > 0)
+            if (error.Messages != null)
             {
-                ViewData[MessageConstant.ErrorMessage] = errors.Select(x => x.Messages);
+                ViewData[MessageConstant.ErrorMessage] = error.Messages;
                 return View(model);
             }
             else
             {
                 ViewData[MessageConstant.SuccessMessage] = "Вие създадохте рецептата успешно!";
-                return Redirect("/");
+                return View(model);
             }
+        }
+
+        public async Task<IActionResult> RecipePost([FromRoute] Guid Id)
+        {
+            var model = await recipeService.GetRecipeForPost(Id);
+
+            return View(model);
         }
     }
 }
