@@ -5,10 +5,12 @@ using CookDelicious.Core.Contracts.Recipe;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Recipe;
+using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Models.Recipes;
 using CookDelicious.Infrasturcture.Repositories;
 using CookDelicious.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CookDelicious.Core.Services.Recipes
 {
@@ -18,41 +20,44 @@ namespace CookDelicious.Core.Services.Recipes
         private readonly ICategoryService categoryService;
         private readonly IDishTypeService dishTypeService;
         private readonly IProductService productService;
+        private readonly IUserService userService;
 
         public RecipeService(IApplicationDbRepository repo,
             ICategoryService categoryService,
             IDishTypeService dishTypeService,
-            IProductService productService)
+            IProductService productService,
+            IUserService userService)
         {
             this.repo = repo;
             this.categoryService = categoryService;
             this.dishTypeService = dishTypeService;
             this.productService = productService;
+            this.userService = userService;
         }
 
-        public async Task<IEnumerable<ErrorViewModel>> CreateRecipe(CreateRecipeViewModel model)
+        public async Task<ErrorViewModel> CreateRecipe(CreateRecipeViewModel model)
         {
-            List<ErrorViewModel> errors = new List<ErrorViewModel>();
+            ApplicationUser author;
+            Category category;
+            var error = new ErrorViewModel();
 
-
-            var author = await repo.GetByIdAsync<ApplicationUser>(model.AuthorId);
+            author = await repo.GetByIdAsync<ApplicationUser>(model.AuthorId);
 
             if (author == null)
             {
-                errors.Add(new ErrorViewModel() { Messages = "Потребителят не е валиден. Опитайте пак!" });
-                return errors;
+                error.Messages = "Потребителят не е валиден. Опитайте пак!";
+                return error;
             }
 
-            var category = await categoryService.GetCategoryByName(model.Category);
+            category = await categoryService.GetCategoryByName(model.Category);
 
             if (category == null)
             {
-                errors.Add(new ErrorViewModel() { Messages = "Категорията не съществува!" });
-                return errors;
+                error.Messages = "Категорията не съществува!";
+                return error;
             }
 
             var dishType = await dishTypeService.GetDishTypeByName(model.DishType);
-
 
             var recipe = new Recipe()
             {
@@ -71,6 +76,10 @@ namespace CookDelicious.Core.Services.Recipes
 
             recipe.RecipeProducts = await productService.GetProductsForCreatingRecipe(model.Products, recipe.Id);
 
+            var categories = await categoryService.GetAllCategoryNames();
+
+            model.Categories = categories;
+           
             try
             {
                 await repo.AddAsync(recipe);
@@ -78,10 +87,10 @@ namespace CookDelicious.Core.Services.Recipes
             }
             catch (Exception)
             {
-                errors.Add(new ErrorViewModel() { Messages = "Unexpected error. You cant add this recipe!" });
+                error.Messages = "Unexpected error. You cant add this recipe!";
             }
 
-            return errors;
+            return error;
         }
 
         public async Task<IEnumerable<AllRecipeViewModel>> GetAllRecipes(int pageNumber)
@@ -103,6 +112,28 @@ namespace CookDelicious.Core.Services.Recipes
                 }),
                 pageNumber,
                 pageSize);
+        }
+
+        public async Task<RecipePostViewModel> GetRecipeForPost(Guid id)
+        {
+            var products = await productService.GetProductsForRecipePost(id);
+
+            return await repo.All<Recipe>()
+                .Where(x => x.Id == id)
+                .Select(x => new RecipePostViewModel()
+                {
+                    Id = id,
+                    ImageUrl = x.ImageUrl,
+                    Author = x.Author,
+                    Category = x.Catrgory.Name,
+                    CookingTime = x.CookingTime,
+                    Description = x.Description,
+                    Title = x.Title,
+                    PublishedOn = x.PublishedOn.ToString("dd/MM/yyyy"),
+                    DishType = x.DishType.Name,
+                    Products = products
+                })
+                .FirstOrDefaultAsync();
         }
     }
 }

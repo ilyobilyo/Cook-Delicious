@@ -6,6 +6,7 @@ namespace CookDelicious.Core.Contracts.Recipe
     public interface IRecipeService
     {
         Task<IEnumerable<AllRecipeViewModel>> GetAllRecipes(int pageNumber);
-        Task<IEnumerable<ErrorViewModel>> CreateRecipe(CreateRecipeViewModel model);
+        Task<ErrorViewModel> CreateRecipe(CreateRecipeViewModel model);
+        Task<RecipePostViewModel> GetRecipeForPost(Guid id);
     }
 }
