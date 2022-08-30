@@ -55,7 +55,7 @@ namespace CookDelicious.Infrasturcture.Models.Recipes
 
         public DishType DishType { get; set; }
 
-        public bool? IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; } = false;
 
 
         public ICollection<RecipeProduct> RecipeProducts { get; set; }

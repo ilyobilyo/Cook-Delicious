@@ -28,6 +28,6 @@ namespace CookDelicious.Infrasturcture.Models.Recipes
         [ForeignKey(nameof(RecipeId))]
         public Recipe Recipe { get; set; }
 
-        public bool? IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; } = false;
     }
 }
