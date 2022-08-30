@@ -14,6 +14,13 @@ namespace CookDelicious.Core.Services.Common.Categories
             this.repo = repo;
         }
 
+        public async Task<IList<string>> GetAllCategoryNames()
+        {
+           return await repo.All<Category>()
+                .Select(c => c.Name)
+                .ToListAsync();
+        }
+
         public async Task<Category> GetCategoryByName(string categoryName)
         {
             return await repo.All<Category>()
