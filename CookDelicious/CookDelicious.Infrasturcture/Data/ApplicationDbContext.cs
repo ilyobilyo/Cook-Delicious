@@ -30,6 +30,8 @@ namespace CookDelicious.Infrastructure.Data
 
         public DbSet<RecipeComment> RecipeComments { get; set; }
 
+        public DbSet<Rating> Ratings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<RecipeProduct>()
