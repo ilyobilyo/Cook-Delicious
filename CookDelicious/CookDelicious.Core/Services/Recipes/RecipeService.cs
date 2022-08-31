@@ -102,17 +102,20 @@ namespace CookDelicious.Core.Services.Recipes
 
             int pageSize = 12;
 
+
             return await PagingList<AllRecipeViewModel>.CreateAsync(repo.All<Recipe>()
                 .Select(p => new AllRecipeViewModel
                 {
                     Id = p.Id.ToString(),
                     ImageUrl = p.ImageUrl,
-                    Rating = p.Rating,
+                    Ratings = p.Ratings,
                     Title = p.Title,
                 }),
                 pageNumber,
                 pageSize);
         }
+
+        
 
         public async Task<RecipePostViewModel> GetRecipeForPost(Guid id)
         {
@@ -128,12 +131,86 @@ namespace CookDelicious.Core.Services.Recipes
                     Category = x.Catrgory.Name,
                     CookingTime = x.CookingTime,
                     Description = x.Description,
+                    Ratings = x.Ratings,
                     Title = x.Title,
                     PublishedOn = x.PublishedOn.ToString("dd/MM/yyyy"),
                     DishType = x.DishType.Name,
                     Products = products
                 })
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<RatingViewModel> GetRecipeForSetRating(Guid id)
+        {
+            return await repo.All<Recipe>()
+                .Where(x => x.Id == id)
+                .Select(x => new RatingViewModel()
+                {
+                    Id = id,
+                    ImageUrl = x.ImageUrl,
+                    Title = x.Title,
+                    DatePublishedOn = x.PublishedOn.ToString("dd"),
+                    MonthPublishedOn = x.PublishedOn.ToString("MMMM"),
+                    YearPublishedOn = x.PublishedOn.ToString("yyyy"),
+                }).FirstOrDefaultAsync();
+
+        }
+
+        public async Task<bool> IsRatingSet(RatingViewModel model)
+        {
+            var recipe = await repo.GetByIdAsync<Recipe>(model.Id);
+
+            var ratingDigit = GetRatingDigit(model);
+
+            if (ratingDigit == 0)
+            {
+                return false;
+            }
+
+            recipe.Ratings.Add(new Rating()
+            {
+                RecipeId = model.Id,
+                RatingDigit = ratingDigit
+            });
+
+            try
+            {
+                 await repo.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private int GetRatingDigit(RatingViewModel model)
+        {
+            var digit = 0;
+
+            if (model.RatingOneCheck)
+            {
+                digit = 1;
+            }
+            else if (model.RatingTwoCheck)
+            {
+                digit = 2;
+            }
+            else if (model.RatingThreeCheck)
+            {
+                digit = 3;
+            }
+            else if (model.RatingFourCheck)
+            {
+                digit = 4;
+            }
+            else if (model.RatingFiveCheck)
+            {
+                digit = 5;
+            }
+
+            return digit;
         }
     }
 }

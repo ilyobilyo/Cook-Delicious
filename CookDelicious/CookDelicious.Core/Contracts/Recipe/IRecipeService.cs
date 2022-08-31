@@ -8,5 +8,7 @@ namespace CookDelicious.Core.Contracts.Recipe
         Task<IEnumerable<AllRecipeViewModel>> GetAllRecipes(int pageNumber);
         Task<ErrorViewModel> CreateRecipe(CreateRecipeViewModel model);
         Task<RecipePostViewModel> GetRecipeForPost(Guid id);
+        Task<RatingViewModel> GetRecipeForSetRating(Guid id);
+        Task<bool> IsRatingSet(RatingViewModel model);
     }
 }
