@@ -14,6 +14,8 @@ namespace CookDelicious.Infrasturcture.Models.Recipes
     {
         public Recipe()
         {
+
+            Ratings = new List<Rating>();
             RecipeProducts = new HashSet<RecipeProduct>();
             Comments = new HashSet<RecipeComment>();
         }
@@ -40,8 +42,6 @@ namespace CookDelicious.Infrasturcture.Models.Recipes
         [Required]
         public string Description { get; set; }
 
-        public double Rating { get; set; }
-
         [Required]
         public string CookingTime { get; set; }
 
@@ -57,6 +57,8 @@ namespace CookDelicious.Infrasturcture.Models.Recipes
 
         public bool? IsDeleted { get; set; } = false;
 
+
+        public ICollection<Rating> Ratings { get; set; }
 
         public ICollection<RecipeProduct> RecipeProducts { get; set; }
 
