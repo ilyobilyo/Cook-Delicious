@@ -1,20 +1,20 @@
 ﻿@using CookDelicious.Core.Models.Recipe
 @model RecipePostViewModel
 
+
+
 <div class="receipe-post-area section-padding-80">
         <!-- Receipe Post Search -->
+        
         <!-- Receipe Slider -->
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="receipe-slider owl-carousel owl-loaded owl-drag">
-                    <div class="owl-stage-outer">
                         <div class="owl-stage ">
-                            <div class="owl-item cloned" style="width: 1000px;">
+                            <div class="owl-item cloned" style="width: 500px;">
                                 <img src="~/img/bg-img/@Model.ImageUrl" alt="">
                                 </div>
                                 </div>
-                               </div>
                            <div class="owl-dots">
                            <div class="owl-dot">
                            <span></span>
@@ -26,7 +26,6 @@
                             <span></span>
                             </div>
                             </div>
-                       </div>
                 </div>
             </div>
         </div>
@@ -48,14 +47,20 @@
 
                     <div class="col-12 col-md-4">
                         <div class="receipe-ratings text-right my-5">
-                            <div class="ratings">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                            </div>
-                            <a href="#" class="btn delicious-btn">For Begginers</a>
+                             @{
+                                    var emptyStars = 5 - Model.Rating;
+                                }
+                                @for(int i = 1; i <= Model.Rating; i++)
+                                {
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                }
+                                @for(int i = 1; i <= emptyStars; i++)
+                                {
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                }
+                            <form class="ratings custom-chekbox" method="get">
+                                <a id="rating-submit" type="submit" class="custom-button" asp-action="Rating" asp-controller="Recipe" asp-route-id="@Model.Id">Остави рейтинг</a>
+                            </form>
                         </div>
                     </div>
                 </div>
