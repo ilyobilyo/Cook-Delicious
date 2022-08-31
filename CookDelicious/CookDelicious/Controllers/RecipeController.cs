@@ -70,5 +70,32 @@ namespace CookDelicious.Controllers
 
             return View(model);
         }
+
+        public async Task<IActionResult> Rating([FromRoute] Guid Id)
+        {
+            var model = await recipeService.GetRecipeForSetRating(Id);
+
+            ViewData[MessageConstant.WarningMessage] = "Изберете звезда от 1 до 5 за успешен вод !";
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Rating(RatingViewModel model)
+        {
+
+            if (await recipeService.IsRatingSet(model))
+            {
+                ViewData[MessageConstant.SuccessMessage] = "Вашият вот е успешен!";
+            }
+            else
+            {
+                ViewData[MessageConstant.ErrorMessage] = "Вашият вот не е успешен! Опитайте пак.";
+            }
+
+            model = await recipeService.GetRecipeForSetRating(model.Id);
+
+            return View(model);
+        }
+
     }
 }

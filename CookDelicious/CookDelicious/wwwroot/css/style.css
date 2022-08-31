@@ -307,6 +307,29 @@ textarea:focus {
       right: 30px; } }
 
 /* Button */
+.custom-button-rating {
+    display: inline-block;
+    min-width: 70px;
+    height: 35px;
+    color: #ffffff;
+    border: none;
+    border-left: 3px solid #1c8314;
+    border-radius: 0;
+    padding: 0 30px;
+    font-size: 16px;
+    line-height: inherit;
+    font-weight: 600;
+    -webkit-transition-duration: 500ms;
+    transition-duration: 500ms;
+    text-transform: capitalize;
+    background-color: #40ba37;
+}
+
+    .custom-button-rating, .custom-button-rating:hover, .custom-button-rating:focus {
+        background-color: #40ba37;
+        border-color: #1c8314;
+    }
+
 .custom-button {
     display: inline-block;
     min-width: 70px;
