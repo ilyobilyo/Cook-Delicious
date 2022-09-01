@@ -18,8 +18,7 @@ namespace CookDelicious.Infrasturcture.Models.Forum
         [StringLength(100)]
         public string Title { get; set; }
 
-        [Required]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         [Required]
         public DateTime PublishedOn { get; set; }
@@ -33,8 +32,13 @@ namespace CookDelicious.Infrasturcture.Models.Forum
         [ForeignKey(nameof(AuthorId))]
         public ApplicationUser Author { get; set; }
 
-        public bool? IsDeleted { get; set; } = false;
+        [Required]
+        public Guid PostCategoryId { get; set; }
 
+        [ForeignKey(nameof(PostCategoryId))]
+        public PostCategory PostCategory { get; set; }
+
+        public bool? IsDeleted { get; set; } = false;
 
         public ICollection<ForumComment> ForumComments { get; set; }
     }
