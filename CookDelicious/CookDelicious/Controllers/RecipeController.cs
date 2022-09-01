@@ -20,6 +20,7 @@ namespace CookDelicious.Controllers
             this.categoryService = categoryService;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> All(int pageNumber)
         {
             var recipes = await recipeService.GetAllRecipes(pageNumber);
@@ -64,6 +65,7 @@ namespace CookDelicious.Controllers
             }
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> RecipePost([FromRoute] Guid Id)
         {
             var model = await recipeService.GetRecipeForPost(Id);
