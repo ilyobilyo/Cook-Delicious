@@ -24,6 +24,14 @@ namespace CookDelicious.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> UserProfile([FromQuery]string AuthorName)
+        {
+            var model = await userService.GetUserProfile(AuthorName);
+
+            return View(model);
+        }
+
         public async Task<IActionResult> EditProfile()
         {
             var model = await userService.GetUserProfileEdit(User.Identity.Name);
