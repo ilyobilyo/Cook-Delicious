@@ -1,0 +1,94 @@
+﻿@using CookDelicious.Core.Models.Forum
+@model ForumPostViewModel
+
+
+
+<div class="receipe-post-area section-padding-80">
+        <!-- Receipe Post Search -->
+        
+        <!-- Receipe Slider -->
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                   <div class="owl-stage ">
+                       <div class="owl-item cloned" style="width: 1100px; height: 500px;">
+                           <img src="~/img/blog-img/3.jpg" alt="" style="width: 1100px; height: 500px;">
+                       </div>
+                   </div>
+                   <div class="owl-dots">
+                     <div class="owl-dot">
+                      <span></span>
+                     </div>
+                     <div class="owl-dot active">
+                          <span></span>
+                     </div>
+                     <div class="owl-dot">
+                       <span></span>
+                     </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Receipe Content Area -->
+        <div class="receipe-content-area">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-12 col-md-8">
+                        <div class="receipe-headline my-5">
+                            <span>@Model.DatePublishedOn @Model.MonthPublishedOn @Model.YearPublishedOn</span>
+                            <h1>@Model.Title</h1>
+                            <div class="receipe-duration">
+                                <h4>Автор: @Model.AuthorName</h4>
+                                <h4>Категория: @Model.CategoryName</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <!-- Single Preparation Step -->
+                        <div class="single-preparation-step d-flex">
+                            <p style="word-wrap: break-word;">@Model.Content</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-heading text-left">
+                            <h3>Leave a comment</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="contact-form-area">
+                            <form action="#" method="post">
+                                <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <input type="text" class="form-control" id="name" placeholder="Name">
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <input type="email" class="form-control" id="email" placeholder="E-mail">
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn delicious-btn mt-30" type="submit">Post Comments</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
