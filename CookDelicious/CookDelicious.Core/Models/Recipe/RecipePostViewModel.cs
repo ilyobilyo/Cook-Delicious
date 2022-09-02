@@ -1,4 +1,6 @@
-﻿using CookDelicious.Core.Models.Product;
+﻿using CookDelicious.Core.Models.Comments;
+using CookDelicious.Core.Models.Paiging;
+using CookDelicious.Core.Models.Product;
 using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Models.Identity;
 
@@ -47,5 +49,9 @@ namespace CookDelicious.Core.Models.Recipe
         public ICollection<Rating> Ratings { get; set; }
 
         public IList<RecipeProductViewModel> Products { get; set; }
+
+        public PagingList<CommentViewModel> Comments { get; set; }
+
+        public CommentViewModel Comment { get; set; }
     }
 }

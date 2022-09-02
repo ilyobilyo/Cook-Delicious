@@ -1,6 +1,8 @@
 ﻿using CookDelicious.Core.Constants;
+using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Common.Categories;
-using CookDelicious.Core.Contracts.Recipe;
+using CookDelicious.Core.Contracts.Recipes;
+using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Recipe;
 using CookDelicious.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -13,11 +15,13 @@ namespace CookDelicious.Controllers
     {
         private readonly IRecipeService recipeService;
         private readonly ICategoryService categoryService;
+        private readonly ICommentService commentService;
 
-        public RecipeController(IRecipeService recipeService, ICategoryService categoryService)
+        public RecipeController(IRecipeService recipeService, ICategoryService categoryService, ICommentService commentService)
         {
             this.recipeService = recipeService;
             this.categoryService = categoryService;
+            this.commentService = commentService;
         }
 
         [AllowAnonymous]
@@ -66,9 +70,9 @@ namespace CookDelicious.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> RecipePost([FromRoute] Guid Id)
+        public async Task<IActionResult> RecipePost([FromRoute] Guid Id, int commentPage)
         {
-            var model = await recipeService.GetRecipeForPost(Id);
+            var model = await recipeService.GetRecipeForPost(Id, commentPage);
 
             return View(model);
         }
@@ -99,5 +103,26 @@ namespace CookDelicious.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Administrator, User")]
+        public async Task<IActionResult> PostComment([FromRoute] Guid Id, CommentViewModel model)
+        {
+            var comment = await commentService.PostCommentForRecipe(Id, model);
+
+            return RedirectToAction(nameof(RecipePost), new { Id = Id });
+        }
+
+        [Authorize(Roles = "Administrator, User")]
+        public async Task<IActionResult> DeleteRecipeComment([FromRoute] Guid Id, [FromQuery] Guid recipeId)
+        {
+            var IsDeleted = await commentService.DeleteRecipeComment(Id);
+
+            if (!IsDeleted)
+            {
+                return BadRequest("Неуспешно изтриване!");
+            }
+
+            return RedirectToAction(nameof(RecipePost), new { Id = recipeId });
+        }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using CookDelicious.Core.Contracts.Common.Categories;
 using CookDelicious.Core.Contracts.Common.DishTypes;
 using CookDelicious.Core.Contracts.Product;
-using CookDelicious.Core.Contracts.Recipe;
+using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Contracts.User;
+using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Recipe;
 using CookDelicious.Infrasturcture.Models.Common;
@@ -115,13 +116,23 @@ namespace CookDelicious.Core.Services.Recipes
                 pageSize);
         }
 
-        
-
-        public async Task<RecipePostViewModel> GetRecipeForPost(Guid id)
+        public async Task<Recipe> GetById(Guid id)
         {
+            return await repo.GetByIdAsync<Recipe>(id);
+        }
+
+        public async Task<RecipePostViewModel> GetRecipeForPost(Guid id, int commentPage)
+        {
+            if (commentPage == 0)
+            {
+                commentPage = 1;
+            }
+
+            int pageSize = 5;
+
             var products = await productService.GetProductsForRecipePost(id);
 
-            return await repo.All<Recipe>()
+             var recipe = await repo.All<Recipe>()
                 .Where(x => x.Id == id)
                 .Select(x => new RecipePostViewModel()
                 {
@@ -138,6 +149,19 @@ namespace CookDelicious.Core.Services.Recipes
                     Products = products
                 })
                 .FirstOrDefaultAsync();
+
+            recipe.Comments = await PagingList<CommentViewModel>.CreateAsync(repo.All<RecipeComment>()
+                .Where(x => x.IsDeleted == false && x.RecipeId == recipe.Id)
+                .Select(x => new CommentViewModel
+                {
+                    Id = x.Id,
+                    AuthorName = x.Author.UserName,
+                    Content = x.Content,
+                }),
+                commentPage,
+                pageSize);
+
+            return recipe;
         }
 
         public async Task<RatingViewModel> GetRecipeForSetRating(Guid id)
