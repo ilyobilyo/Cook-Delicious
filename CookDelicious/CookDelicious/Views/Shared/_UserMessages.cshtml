@@ -25,3 +25,11 @@
 		});
 	</script>
 }
+
+@if (TempData[MessageConstant.SuccessMessage] != null){
+	<script>
+		$(function() {
+			toastr.success('@TempData[MessageConstant.SuccessMessage]?.ToString()')
+		});
+	</script>
+}
