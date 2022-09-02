@@ -1,7 +1,7 @@
 ﻿@using CookDelicious.Core.Models.Forum
 @model ForumPostViewModel
 
-
+<link rel="stylesheet" href="~/css/comment.css">
 
 <div class="receipe-post-area section-padding-80">
         <!-- Receipe Post Search -->
@@ -39,6 +39,10 @@
                         <div class="receipe-headline my-5">
                             <span>@Model.DatePublishedOn @Model.MonthPublishedOn @Model.YearPublishedOn</span>
                             <h1>@Model.Title</h1>
+                            @if(Model.AuthorName == User.Identity.Name)
+                        {
+                            <a asp-action="DeletePost" asp-controller="Forum" class="custom-button" asp-route-id="@Model.Id">Delete Post</a>
+                        }
                             <div class="receipe-duration">
                                 <h4>Автор: @Model.AuthorName</h4>
                                 <h4>Категория: @Model.CategoryName</h4>
@@ -56,6 +60,42 @@
                     </div>
                 </div>
 
+                 <div class="row">
+                     <div class="col-12">
+                    @foreach(var comment in Model.Comments)
+                    {
+                        <div class="section-heading text-left">
+                                <div class="col-md-8">
+                                    <div class="card p-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                      <div class="user d-flex flex-row align-items-center">
+                                        <img src="~/img/blog-img/2.jpg" width="30" class="user-img rounded-circle mr-2">
+                                        <span><small class="font-weight-bold text-primary">@comment.AuthorName</small> <small class="font-weight-bold">@comment.Content</small></span>
+                                      </div>
+                                      <small>2 days ago</small>
+                                      </div>
+                                      <div class="action d-flex justify-content-between mt-2 align-items-center">
+                                        @if(Model.AuthorName == User.Identity.Name)
+                                        {
+                                            <div class="reply px-4">
+                                                <a href="/Forum/DeletePostComment/@comment.Id?postId=@Model.Id" >Remove</a>
+                                            </div>
+                                        }
+                                      </div>
+                                    </div>
+                                </div>
+                         </div>
+                    }
+                     </div>
+                </div>
+
+                @{
+              var prevDisabled = !Model.Comments.HasPreviousPage ? "disabled" : "";
+              var nextDisabled = !Model.Comments.HasNextPage ? "disabled" : "";
+            }
+            <a asp-action="ForumPost" asp-route-commentPage="@(Model.Comments.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
+            <a asp-action="ForumPost" asp-route-commentPage="@(Model.Comments.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+
                 <div class="row">
                     <div class="col-12">
                         <div class="section-heading text-left">
@@ -67,22 +107,17 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="contact-form-area">
-                            <form action="#" method="post">
+                            <form action="postComment" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="row">
                                     <div class="col-12 col-lg-6">
-                                        <input type="text" class="form-control" id="name" placeholder="Name">
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <input type="email" class="form-control" id="email" placeholder="E-mail">
+                                        <input asp-for="Comment.AuthorName" name="AuthorName" type="hidden" class="form-control" id="name" value="@User.Identity.Name">
                                     </div>
                                     <div class="col-12">
-                                        <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                        <textarea name="Content" asp-for="Comment.Content" class="form-control" id="Content" cols="30" rows="5" aria-required="true" placeholder="Message"></textarea>
                                     </div>
                                     <div class="col-12">
-                                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn delicious-btn mt-30" type="submit">Post Comments</button>
+                                        <button class="btn delicious-btn mt-30" asp-route-id="@Model.Id" asp-action="PostComment" asp-controller="Forum" type="submit">Post Comments</button>
                                     </div>
                                 </div>
                             </form>
@@ -92,3 +127,5 @@
             </div>
         </div>
     </div>
+
+<partial name="_ValidationScriptsPartial" />
