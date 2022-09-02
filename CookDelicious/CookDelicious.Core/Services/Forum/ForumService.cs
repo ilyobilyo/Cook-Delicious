@@ -1,6 +1,9 @@
-﻿using CookDelicious.Core.Contracts.Forum;
+﻿using CookDelicious.Core.Contracts.Comments;
+using CookDelicious.Core.Contracts.Forum;
 using CookDelicious.Core.Contracts.User;
+using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Forum;
+using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Infrasturcture.Models.Forum;
 using CookDelicious.Infrasturcture.Repositories;
 using CookDelicious.Models;
@@ -12,11 +15,15 @@ namespace CookDelicious.Core.Services.Forum
     {
         private readonly IApplicationDbRepository repo;
         private readonly IUserService userService;
-
         public ForumService(IApplicationDbRepository repo, IUserService userService)
         {
             this.repo = repo;
             this.userService = userService;
+        }
+
+        public async Task<ForumPost> GetById(Guid id)
+        {
+            return await repo.GetByIdAsync<ForumPost>(id);
         }
 
         public async Task<ErrorViewModel> CreatePost(CreatePostViewModel model, string Username)
@@ -59,6 +66,31 @@ namespace CookDelicious.Core.Services.Forum
             return null;
         }
 
+        public async Task<bool> DeletePost(Guid id)
+        {
+            bool isDeleted = false;
+
+            var postToDelete = await repo.GetByIdAsync<ForumPost>(id);
+
+            if (postToDelete == null)
+            {
+                return isDeleted;
+            }
+
+            postToDelete.IsDeleted = true;
+
+            try
+            {
+                await repo.SaveChangesAsync();
+                isDeleted = true;
+            }
+            catch (Exception)
+            {
+                return isDeleted;
+            }
+
+            return isDeleted;
+        }
 
         public async Task<IList<string>> GetAllPostCategoryNames()
         {
@@ -67,10 +99,18 @@ namespace CookDelicious.Core.Services.Forum
                 .ToListAsync();
         }
 
-        public async Task<IList<ForumPostViewModel>> GetAllPosts()
+        public async Task<PagingList<ForumPostViewModel>> GetAllPosts(int pageNumber)
         {
-            return await repo.All<ForumPost>()
-                .Select(x => new ForumPostViewModel()
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
+
+            int pageSize = 6;
+
+            return await PagingList<ForumPostViewModel>.CreateAsync(repo.All<ForumPost>()
+                .Where(x => x.IsDeleted == false)
+                .Select(x => new ForumPostViewModel
                 {
                     Id = x.Id,
                     AuthorName = x.Author.UserName,
@@ -81,8 +121,9 @@ namespace CookDelicious.Core.Services.Forum
                     YearPublishedOn = x.PublishedOn.ToString("yyyy"),
                     ImageUrl = x.ImageUrl,
                     Title = x.Title,
-                })
-                .ToListAsync();
+                }),
+                pageNumber,
+                pageSize);
         }
 
         public async Task<IList<string>> GetArchive()
@@ -97,9 +138,16 @@ namespace CookDelicious.Core.Services.Forum
                 .ToList();
         }
 
-        public async Task<ForumPostViewModel> GetPostById(Guid id)
+        public async Task<ForumPostViewModel> GetPostById(Guid id, int commentPage)
         {
-            return await repo.All<ForumPost>()
+            if (commentPage == 0)
+            {
+                commentPage = 1;
+            }
+
+            int pageSize = 5;
+
+            var post = await repo.All<ForumPost>()
                 .Where(x => x.Id == id)
                 .Select(x => new ForumPostViewModel()
                 {
@@ -114,7 +162,24 @@ namespace CookDelicious.Core.Services.Forum
                     Title = x.Title,
                 })
                 .FirstOrDefaultAsync();
+
+
+            post.Comments = await PagingList<CommentViewModel>.CreateAsync(repo.All<ForumComment>()
+                .Where(x => x.IsDeleted == false && x.ForumPostId == post.Id)
+                .Select(x => new CommentViewModel
+                {
+                    Id = x.Id,
+                    AuthorName = x.Author.UserName,
+                    Content = x.Content,
+                }),
+                commentPage,
+                pageSize);
+
+            return post;
+
         }
+
+
 
 
 

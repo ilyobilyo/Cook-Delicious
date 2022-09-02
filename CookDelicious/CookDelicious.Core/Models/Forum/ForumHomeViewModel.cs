@@ -1,4 +1,6 @@
-﻿namespace CookDelicious.Core.Models.Forum
+﻿using CookDelicious.Core.Models.Paiging;
+
+namespace CookDelicious.Core.Models.Forum
 {
     public class ForumHomeViewModel
     {
@@ -6,6 +8,6 @@
 
         public IList<string> Archive { get; set; }
 
-        public IList<ForumPostViewModel> Posts { get; set; }
+        public PagingList<ForumPostViewModel> Posts { get; set; }
     }
 }
