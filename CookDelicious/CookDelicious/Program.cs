@@ -1,13 +1,15 @@
 using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Contracts.Admin.Product;
+using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Common.Categories;
 using CookDelicious.Core.Contracts.Common.DishTypes;
 using CookDelicious.Core.Contracts.Forum;
 using CookDelicious.Core.Contracts.Product;
-using CookDelicious.Core.Contracts.Recipe;
+using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Services.Admin;
+using CookDelicious.Core.Services.Comments;
 using CookDelicious.Core.Services.Common.Categories;
 using CookDelicious.Core.Services.Common.DishTypes;
 using CookDelicious.Core.Services.Forum;
@@ -44,7 +46,8 @@ builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<IDishTypeService, DishTypeService>()
     .AddScoped<IRecipeService, RecipeService>()
     .AddScoped<IForumService, ForumService>()
-    .AddScoped<IForumServiceAdmin, ForumServiceAdmin>();
+    .AddScoped<IForumServiceAdmin, ForumServiceAdmin>()
+    .AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(o =>
