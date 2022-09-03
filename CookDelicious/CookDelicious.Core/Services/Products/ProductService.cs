@@ -6,20 +6,25 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Models;
+using AutoMapper.QueryableExtensions;
+using CookDelicious.Core.Service.Models;
+using CookDelicious.Core.MapProfiles;
+using AutoMapper;
 
 namespace CookDelicious.Core.Services.Products
 {
     public class ProductService : IProductService
     {
         private readonly IApplicationDbRepository repo;
+        private readonly IMapper mapper;
 
-        public ProductService(IApplicationDbRepository repo)
+        public ProductService(IApplicationDbRepository repo, IMapper mapper)
         {
             this.repo = repo;
+            this.mapper = mapper;
         }
 
-
-        public async Task<IEnumerable<AllProductViewModel>> GetAllProducts(int pageNumber)
+        public async Task<IEnumerable<ProductServiceModel>> GetAllProducts(int pageNumber)
         {
             if (pageNumber == 0)
             {
@@ -28,12 +33,8 @@ namespace CookDelicious.Core.Services.Products
 
             int pageSize = 9;
 
-            return await PagingList<AllProductViewModel>.CreateAsync(repo.All<Product>()
-                .Select(p => new AllProductViewModel
-                {
-                    Type = p.Type,
-                    Name = p.Name,
-                }),
+            return await PagingList<ProductServiceModel>.CreateAsync(repo.All<Product>()
+                .ProjectTo<ProductServiceModel>(mapper.ConfigurationProvider),
                 pageNumber,
                 pageSize);
         }
