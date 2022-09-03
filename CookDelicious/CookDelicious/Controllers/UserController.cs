@@ -1,9 +1,9 @@
-﻿using CookDelicious.Core.Constants;
-using CookDelicious.Core.Contracts;
+﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Models.User;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Controllers
@@ -12,14 +12,18 @@ namespace CookDelicious.Controllers
     public class UserController : BaseController
     {
         private readonly IUserService userService;
-        public UserController(IUserService userService)
+        private readonly IMapper mapper;
+        public UserController(IUserService userService, IMapper mapper)
         {
             this.userService = userService;
+            this.mapper = mapper;
         }
 
-        public async Task<IActionResult> Profile()
+        public async Task<IActionResult> MyProfile()
         {
-            var model = await userService.GetUserProfile(User.Identity.Name);
+            var serviceModel = await userService.GetUserByUsername(User.Identity.Name);
+
+            var model = mapper.Map<UserProfileViewModel>(serviceModel);
 
             return View(model);
         }
@@ -27,14 +31,18 @@ namespace CookDelicious.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> UserProfile([FromQuery]string AuthorName)
         {
-            var model = await userService.GetUserProfile(AuthorName);
+            var serviceModel = await userService.GetUserByUsername(AuthorName);
+
+            var model = mapper.Map<UserProfileViewModel>(serviceModel);
 
             return View(model);
         }
 
         public async Task<IActionResult> EditProfile()
         {
-            var model = await userService.GetUserProfileEdit(User.Identity.Name);
+            var serviceModel = await userService.GetUserByUsername(User.Identity.Name);
+
+            var model = mapper.Map<UserEditProfileViewModel>(serviceModel);
 
             return View(model);
         }
@@ -47,7 +55,9 @@ namespace CookDelicious.Controllers
                 return View(model);
             }
 
-            if (await userService.UpdateUser(model))
+            var inputModel = mapper.Map<UserEditProfileInputModel>(model);
+
+            if (await userService.UpdateUser(inputModel))
             {
                 ViewData[MessageConstant.SuccessMessage] = "Успешен запис!";
             }
