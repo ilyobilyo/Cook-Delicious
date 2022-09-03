@@ -16,7 +16,7 @@ namespace CookDelicious.Infrasturcture.Models.Identity
         }
 
         [MaxLength(100)]
-        public string? FirsName { get; set; }
+        public string? FirstName { get; set; }
 
         [MaxLength(100)]
         public string? LastName { get; set; }
