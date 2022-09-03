@@ -1,4 +1,5 @@
 using CookDelicious.Core.Constants;
+using CookDelicious.Core.Contracts;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Contracts.Admin.Product;
 using CookDelicious.Core.Contracts.Comments;
@@ -8,6 +9,8 @@ using CookDelicious.Core.Contracts.Forum;
 using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Contracts.User;
+using CookDelicious.Core.MapProfiles;
+using CookDelicious.Core.Services;
 using CookDelicious.Core.Services.Admin;
 using CookDelicious.Core.Services.Comments;
 using CookDelicious.Core.Services.Common.Categories;
@@ -48,7 +51,14 @@ builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<IForumService, ForumService>()
     .AddScoped<IForumServiceAdmin, ForumServiceAdmin>()
     .AddScoped<ICommentService, CommentService>()
-    .AddScoped<ICommentServiceAdmin, CommentServiceAdmin>();
+    .AddScoped<ICommentServiceAdmin, CommentServiceAdmin>()
+    .AddScoped<IMapService, MapService>();
+
+builder.Services.AddAutoMapper(typeof(RecipeMapping),
+    typeof(UserMapping), 
+    typeof(CategoryMapping),
+    typeof(DishTypeMapping),
+    typeof(ProductMapping));
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(o =>
