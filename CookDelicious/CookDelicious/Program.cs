@@ -47,7 +47,8 @@ builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<IRecipeService, RecipeService>()
     .AddScoped<IForumService, ForumService>()
     .AddScoped<IForumServiceAdmin, ForumServiceAdmin>()
-    .AddScoped<ICommentService, CommentService>();
+    .AddScoped<ICommentService, CommentService>()
+    .AddScoped<ICommentServiceAdmin, CommentServiceAdmin>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(o =>
