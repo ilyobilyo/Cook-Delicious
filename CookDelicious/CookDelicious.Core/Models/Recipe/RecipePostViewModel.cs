@@ -1,7 +1,7 @@
 ﻿using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Product;
-using CookDelicious.Infrasturcture.Models.Common;
+using CookDelicious.Core.Service.Models;
 using CookDelicious.Infrasturcture.Models.Identity;
 
 namespace CookDelicious.Core.Models.Recipe
@@ -10,7 +10,7 @@ namespace CookDelicious.Core.Models.Recipe
     {
         public RecipePostViewModel()
         {
-            Ratings = new List<Rating>();
+            Ratings = new List<RatingServiceModel>();
         }
 
         public Guid Id { get; set; }
@@ -46,7 +46,7 @@ namespace CookDelicious.Core.Models.Recipe
             }
         }
 
-        public ICollection<Rating> Ratings { get; set; }
+        public ICollection<RatingServiceModel> Ratings { get; set; }
 
         public IList<RecipeProductViewModel> Products { get; set; }
 

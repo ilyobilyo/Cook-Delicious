@@ -1,4 +1,5 @@
-﻿using CookDelicious.Infrasturcture.Models.Common;
+﻿using CookDelicious.Core.Service.Models;
+using CookDelicious.Infrasturcture.Models.Common;
 using System.ComponentModel;
 
 namespace CookDelicious.Core.Models.Recipe
@@ -7,14 +8,14 @@ namespace CookDelicious.Core.Models.Recipe
     {
         public AllRecipeViewModel()
         {
-            Ratings = new List<Rating>();
+            Ratings = new List<RatingServiceModel>();
         }
 
         public string Id { get; set; }
 
         public string Title { get; set; }
 
-        public ICollection<Rating> Ratings { get; set; }
+        public ICollection<RatingServiceModel> Ratings { get; set; }
 
 
         public int Rating

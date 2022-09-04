@@ -94,7 +94,7 @@ namespace CookDelicious.Core.Services.Comments
 
             var forumComment = new ForumComment()
             {
-                Author = user,
+                //Author = user,
                 AuthorId = user.Id,
                 Content = model.Content,
                 ForumPost = forumPost,
@@ -131,7 +131,7 @@ namespace CookDelicious.Core.Services.Comments
 
             var forumComment = new RecipeComment()
             {
-                Author = user,
+                //Author = user,
                 AuthorId = user.Id,
                 Content = model.Content,
                 Recipe = recipePost,
