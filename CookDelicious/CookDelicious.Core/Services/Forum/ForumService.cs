@@ -44,7 +44,7 @@ namespace CookDelicious.Core.Services.Forum
 
             var forumPost = new ForumPost()
             {
-                Author = author,
+                //Author = author,
                 AuthorId = author.Id,
                 Content = model.Description,
                 ImageUrl = model.ImageUrl,
