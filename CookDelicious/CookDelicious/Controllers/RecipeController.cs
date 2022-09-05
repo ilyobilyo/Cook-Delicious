@@ -1,4 +1,5 @@
-﻿using CookDelicious.Core.Constants;
+﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Common.Categories;
 using CookDelicious.Core.Contracts.Recipes;
@@ -16,17 +17,22 @@ namespace CookDelicious.Controllers
         private readonly IRecipeService recipeService;
         private readonly ICategoryService categoryService;
         private readonly ICommentService commentService;
+        private readonly IMapper mapper;
 
-        public RecipeController(IRecipeService recipeService, ICategoryService categoryService, ICommentService commentService)
+        public RecipeController(IRecipeService recipeService, ICategoryService categoryService, ICommentService commentService, IMapper mapper)
         {
             this.recipeService = recipeService;
             this.categoryService = categoryService;
             this.commentService = commentService;
+            this.mapper = mapper;
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> All(int pageNumber)
         {
+            var recipe = await recipeService.GetAllRecipes(pageNumber);
+
+
             var recipes = await recipeService.GetAllRecipes(pageNumber);
 
             return View(recipes);

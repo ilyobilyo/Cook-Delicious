@@ -10,6 +10,6 @@
 
         public bool? IsDeleted { get; set; } = false;
 
-        public ICollection<RecipeProductServiceModel> RecipeProducts { get; set; }
+        //public ICollection<RecipeProductServiceModel> RecipeProducts { get; set; }
     }
 }

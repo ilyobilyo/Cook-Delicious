@@ -32,7 +32,7 @@
 
         public int AccessFailedCount { get; set; }
 
-        public string? FirsName { get; set; }
+        public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
 

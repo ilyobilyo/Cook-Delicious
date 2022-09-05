@@ -18,7 +18,7 @@
 
         public string ImageUrl { get; set; }
 
-        public string? CurrentJob { get; set; }
+        public string? Job { get; set; }
 
         public string? Address { get; set; }
 

@@ -1,13 +1,11 @@
-﻿using CookDelicious.Core.Models.User;
-using CookDelicious.Infrasturcture.Models.Identity;
+﻿using CookDelicious.Core.Service.Models;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 
 namespace CookDelicious.Core.Contracts.User
 {
     public interface IUserService
     {
-        Task<UserProfileViewModel> GetUserProfile(string userName);
-        Task<UserEditProfileViewModel> GetUserProfileEdit(string userName);
-        Task<bool> UpdateUser(UserEditProfileViewModel model);
-        Task<ApplicationUser> GetUserByUsername(string author);
+        Task<bool> UpdateUser(UserEditProfileInputModel model);
+        Task<UserServiceModel> GetUserByUsername(string author);
     }
 }

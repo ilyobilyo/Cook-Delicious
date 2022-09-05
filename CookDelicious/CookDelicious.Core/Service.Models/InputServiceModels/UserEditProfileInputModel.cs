@@ -1,8 +1,9 @@
-﻿namespace CookDelicious.Core.Models.User
+﻿namespace CookDelicious.Core.Service.Models.InputServiceModels
 {
-    public class UserProfileViewModel
+    public class UserEditProfileInputModel
     {
         public string Id { get; set; }
+
         public string Username { get; set; }
 
         public string? FirstName { get; set; }
@@ -20,7 +21,5 @@
         public string? Job { get; set; }
 
         public string? Address { get; set; }
-
-        public List<MyRecipesViewModel>? MyRecipes { get; set; }
     }
 }
