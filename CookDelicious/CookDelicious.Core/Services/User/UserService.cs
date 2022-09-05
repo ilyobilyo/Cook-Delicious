@@ -36,7 +36,7 @@ namespace CookDelicious.Core.Services.User
                     Username = x.UserName,
                     Address = x.Address,
                     CurrentJob = x.Job,
-                    FirstName = x.FirsName,
+                    FirstName = x.FirstName,
                     LastName = x.LastName,
                 })
                 .FirstOrDefaultAsync();
@@ -53,7 +53,7 @@ namespace CookDelicious.Core.Services.User
                     Age = x.Age,
                     CurrentJob = x.Job,
                     Email = x.Email,
-                    FirstName = x.FirsName,
+                    FirstName = x.FirstName,
                     ImageUrl = x.ImageUrl,
                     LastName = x.LastName,
                     Town = x.Town,
@@ -73,7 +73,7 @@ namespace CookDelicious.Core.Services.User
             {
                 user.UserName = model.Username;
 
-                user.FirsName = model.FirstName;
+                user.FirstName = model.FirstName;
 
                 user.LastName = model.LastName;
 

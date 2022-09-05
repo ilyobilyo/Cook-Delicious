@@ -6,36 +6,44 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Models;
+using CookDelicious.Core.Service.Models;
+using AutoMapper;
 
 namespace CookDelicious.Core.Services.Products
 {
     public class ProductService : IProductService
     {
         private readonly IApplicationDbRepository repo;
+        private readonly IMapper mapper;
 
-        public ProductService(IApplicationDbRepository repo)
+        public ProductService(IApplicationDbRepository repo,
+            IMapper mapper)
         {
             this.repo = repo;
+            this.mapper = mapper;
         }
 
 
-        public async Task<IEnumerable<AllProductViewModel>> GetAllProducts(int pageNumber)
+        public async Task<IEnumerable<ProductServiceModel>> GetAllProducts()
         {
-            if (pageNumber == 0)
-            {
-                pageNumber = 1;
-            }
+            var allProducts = await repo.All<Product>()
+                .ToListAsync();
 
-            int pageSize = 9;
+            return mapper.Map<IEnumerable<ProductServiceModel>>(allProducts);
+        }
 
-            return await PagingList<AllProductViewModel>.CreateAsync(repo.All<Product>()
-                .Select(p => new AllProductViewModel
-                {
-                    Type = p.Type,
-                    Name = p.Name,
-                }),
-                pageNumber,
-                pageSize);
+        public async Task<(IEnumerable<ProductServiceModel>, int)> GetAllProductsForPageing(int pageNumber, int pageSize)
+        {
+            var totalCount = await repo.All<Product>().CountAsync();
+
+            var items = await repo.All<Product>()
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var itemsAsServiceModel = mapper.Map<IEnumerable<ProductServiceModel>>(items);
+
+            return (itemsAsServiceModel, totalCount);
         }
 
         public async Task<ICollection<RecipeProduct>> GetProductsForCreatingRecipe(string products, Guid recipeId)
