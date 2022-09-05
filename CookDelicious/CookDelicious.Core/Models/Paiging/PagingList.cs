@@ -25,6 +25,8 @@ namespace CookDelicious.Core.Models.Paiging
 
         public bool HasNextPage => PageIndex < TotalPages;
 
+
+
         public static async Task<PagingList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
             var count = await source.CountAsync();

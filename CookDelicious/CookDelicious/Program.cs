@@ -8,6 +8,7 @@ using CookDelicious.Core.Contracts.Forum;
 using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Contracts.User;
+using CookDelicious.Core.MapProfiles;
 using CookDelicious.Core.Services.Admin;
 using CookDelicious.Core.Services.Comments;
 using CookDelicious.Core.Services.Common.Categories;
@@ -49,6 +50,8 @@ builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<IForumServiceAdmin, ForumServiceAdmin>()
     .AddScoped<ICommentService, CommentService>()
     .AddScoped<ICommentServiceAdmin, CommentServiceAdmin>();
+
+builder.Services.AddAutoMapper(typeof(ProductMapping));
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(o =>

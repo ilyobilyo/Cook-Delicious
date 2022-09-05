@@ -1,4 +1,8 @@
-﻿using CookDelicious.Core.Contracts.Product;
+﻿using AutoMapper;
+using CookDelicious.Core.Contracts.Product;
+using CookDelicious.Core.Models.Paiging;
+using CookDelicious.Core.Models.Product;
+using CookDelicious.Core.Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +12,30 @@ namespace CookDelicious.Controllers
     public class ProductController : BaseController
     {
         private readonly IProductService productService;
+        private readonly IMapper mapper;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IMapper mapper)
         {
             this.productService = productService;
+            this.mapper = mapper;
         }
 
         public async Task<IActionResult> All(int pageNumber)
         {
-            var products = await productService.GetAllProducts(pageNumber);
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
 
-            return View(products);
+            int pageSize = 9;
+
+            (var productsServiceModels,var totalCount) = await productService.GetAllProductsForPageing(pageNumber, pageSize);
+
+            var allProductsViewModels = mapper.Map<List<AllProductViewModel>>(productsServiceModels);
+
+            var pageList = new PagingList<AllProductViewModel>(allProductsViewModels, totalCount, pageNumber, pageSize);
+
+            return View(pageList);
         }
 
     }
