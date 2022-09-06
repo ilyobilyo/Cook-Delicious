@@ -8,6 +8,7 @@ using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Recipe;
 using CookDelicious.Core.Service.Models;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Models.Recipes;
@@ -41,8 +42,7 @@ namespace CookDelicious.Core.Services.Recipes
             this.mapper = mapper;
         }
 
-        //TODO MAPPING
-        public async Task<ErrorViewModel> CreateRecipe(CreateRecipeViewModel model)
+        public async Task<ErrorViewModel> CreateRecipe(CreateRecipeServiceModel model)
         {
             ApplicationUser author;
             Category category;
@@ -56,27 +56,27 @@ namespace CookDelicious.Core.Services.Recipes
                 return error;
             }
 
-            //category = await categoryService.GetCategoryByName(model.Category);
+            category = await categoryService.GetCategoryByName(model.Category);
 
-            //if (category == null)
-            //{
-            //    error.Messages = "Категорията не съществува!";
-            //    return error;
-            //}
+            if (category == null)
+            {
+                error.Messages = "Категорията не съществува!";
+                return error;
+            }
 
-            //var dishType = await dishTypeService.GetDishTypeByName(model.DishType);
+            var dishType = await dishTypeService.GetDishTypeByName(model.DishType);
 
             var recipe = new Recipe()
             {
                 Title = model.Title,
                 AuthorId = model.AuthorId,
                 Author = author,
-                //Catrgory = category,
-                //CategoryId = category.Id,
+                Catrgory = category,
+                CategoryId = category.Id,
                 CookingTime = model.CookingTime,
                 Description = model.Description,
-                //DishType = dishType,
-                //DishTypeId = dishType.Id,
+                DishType = dishType,
+                DishTypeId = dishType.Id,
                 ImageUrl = model.ImageUrl,
                 PublishedOn = DateTime.Now,
             };
@@ -86,7 +86,7 @@ namespace CookDelicious.Core.Services.Recipes
             var categories = await categoryService.GetAllCategoryNames();
 
             model.Categories = categories;
-           
+
             try
             {
                 await repo.AddAsync(recipe);
@@ -100,27 +100,19 @@ namespace CookDelicious.Core.Services.Recipes
             return error;
         }
 
-        //TODO MAPPING
-        public async Task<IEnumerable<AllRecipeViewModel>> GetAllRecipes(int pageNumber)
+        public async Task<(IEnumerable<RecipeServiceModel>, int)> GetAllRecipesForPageing(int pageNumber, int pageSize)
         {
-            if (pageNumber == 0)
-            {
-                pageNumber = 1;
-            }
+            var totalCount = await repo.All<Recipe>().CountAsync();
 
-            int pageSize = 12;
+            var items = await repo.All<Recipe>()
+                .Include(x => x.Ratings)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
-
-            return await PagingList<AllRecipeViewModel>.CreateAsync(repo.All<Recipe>()
-                .Select(p => new AllRecipeViewModel
-                {
-                    Id = p.Id.ToString(),
-                    ImageUrl = p.ImageUrl,
-                    //Ratings = p.Ratings,
-                    Title = p.Title,
-                }),
-                pageNumber,
-                pageSize);
+            var itemsAsServiceModel = mapper.Map<IEnumerable<RecipeServiceModel>>(items);
+            
+            return (itemsAsServiceModel, totalCount);
         }
 
         //TODO MAPPING
@@ -129,69 +121,52 @@ namespace CookDelicious.Core.Services.Recipes
             return await repo.GetByIdAsync<Recipe>(id);
         }
 
-        //TODO MAPPING
-        public async Task<RecipePostViewModel> GetRecipeForPost(Guid id, int commentPage)
+        public async Task<IEnumerable<RecipeCommentServiceModel>> GetRecipeCommentsPerPage(Guid Id ,int commentPage, int pageSize)
         {
-            if (commentPage == 0)
-            {
-                commentPage = 1;
-            }
+            var items = await repo.All<RecipeComment>()
+                .Where(x => x.RecipeId == Id && x.IsDeleted == false)
+                .Skip((commentPage - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
-            int pageSize = 5;
+            var itemsAsServiceModel = mapper.Map<IEnumerable<RecipeCommentServiceModel>>(items);
 
-            var products = await productService.GetProductsForRecipePost(id);
+            return itemsAsServiceModel;
+        }
 
+        //TODO MAPPING
+        public async Task<RecipeServiceModel> GetRecipeForPost(Guid id)
+        {
             var recipe = await repo.All<Recipe>()
+                .Include(x => x.RecipeProducts)
+                .ThenInclude(x => x.Product)
+                .Include(x => x.Ratings)
+                .Include(x => x.Comments.Where(c => c.IsDeleted == false))
+                .Include(x => x.Author)
+                .Include(x => x.Catrgory)
+                .Include(x => x.DishType)
                .Where(x => x.Id == id)
-               .Select(x => new RecipePostViewModel()
-               {
-                   Id = id,
-                   ImageUrl = x.ImageUrl,
-                   Author = x.Author,
-                   Category = x.Catrgory.Name,
-                   CookingTime = x.CookingTime,
-                   Description = x.Description,
-                   //Ratings = x.Ratings,
-                   Title = x.Title,
-                   PublishedOn = x.PublishedOn.ToString("dd/MM/yyyy"),
-                   DishType = x.DishType.Name,
-                   Products = products
-               })
                .FirstOrDefaultAsync();
 
-            recipe.Comments = await PagingList<CommentViewModel>.CreateAsync(repo.All<RecipeComment>()
-                .Where(x => x.IsDeleted == false && x.RecipeId == recipe.Id)
-                .Select(x => new CommentViewModel
-                {
-                    Id = x.Id,
-                    AuthorName = x.Author.UserName,
-                    Content = x.Content,
-                }),
-                commentPage,
-                pageSize);
+            var recipeServiceModel = mapper.Map<RecipeServiceModel>(recipe);
 
-            return recipe;
+            recipeServiceModel.Category = mapper.Map<CategoryServiceModel>(recipe.Catrgory);
+
+            return recipeServiceModel;
         }
 
-        //TODO MAPPING
-        public async Task<RatingViewModel> GetRecipeForSetRating(Guid id)
+      
+
+        public async Task<RecipeServiceModel> GetRecipeForSetRating(Guid id)
         {
-            return await repo.All<Recipe>()
+            var recipe = await repo.All<Recipe>()
                 .Where(x => x.Id == id)
-                .Select(x => new RatingViewModel()
-                {
-                    Id = id,
-                    ImageUrl = x.ImageUrl,
-                    Title = x.Title,
-                    DatePublishedOn = x.PublishedOn.ToString("dd"),
-                    MonthPublishedOn = x.PublishedOn.ToString("MMMM"),
-                    YearPublishedOn = x.PublishedOn.ToString("yyyy"),
-                }).FirstOrDefaultAsync();
+                .FirstOrDefaultAsync();
 
+            return mapper.Map<RecipeServiceModel>(recipe);
         }
 
-        //TODO MAPPING
-        public async Task<bool> IsRatingSet(RatingViewModel model)
+        public async Task<bool> IsRatingSet(RatingSetServiceModel model)
         {
             var recipe = await repo.GetByIdAsync<Recipe>(model.Id);
 
@@ -220,7 +195,7 @@ namespace CookDelicious.Core.Services.Recipes
             return true;
         }
 
-        private int GetRatingDigit(RatingViewModel model)
+        private int GetRatingDigit(RatingSetServiceModel model)
         {
             var digit = 0;
 
@@ -247,5 +222,6 @@ namespace CookDelicious.Core.Services.Recipes
 
             return digit;
         }
+
     }
 }

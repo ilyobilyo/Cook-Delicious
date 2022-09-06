@@ -4,8 +4,10 @@ using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Common.Categories;
 using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Models.Comments;
+using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Recipe;
-using CookDelicious.Models;
+using CookDelicious.Core.Service.Models;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,12 +32,20 @@ namespace CookDelicious.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> All(int pageNumber)
         {
-            var recipe = await recipeService.GetAllRecipes(pageNumber);
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
 
+            int pageSize = 1;
 
-            var recipes = await recipeService.GetAllRecipes(pageNumber);
+            (var recipesServiceModels, var totalCount) = await recipeService.GetAllRecipesForPageing(pageNumber, pageSize);
 
-            return View(recipes);
+            var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesServiceModels);
+
+            var pagingList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize);
+
+            return View(pagingList);
         }
 
         public async Task<IActionResult> CreateRecipe([FromRoute]string Id)
@@ -61,7 +71,11 @@ namespace CookDelicious.Controllers
 
             model.AuthorId = Id;
 
-            var error = await recipeService.CreateRecipe(model);
+            var createRecipeServiceModel = mapper.Map<CreateRecipeServiceModel>(model);
+
+            var error = await recipeService.CreateRecipe(createRecipeServiceModel);
+
+            model = mapper.Map<CreateRecipeViewModel>(createRecipeServiceModel);
 
             if (error.Messages != null)
             {
@@ -78,24 +92,44 @@ namespace CookDelicious.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RecipePost([FromRoute] Guid Id, int commentPage)
         {
-            var model = await recipeService.GetRecipeForPost(Id, commentPage);
+            if (commentPage == 0)
+            {
+                commentPage = 1;
+            }
 
-            return View(model);
+            int pageSize = 5;
+
+            var serviceModel = await recipeService.GetRecipeForPost(Id);
+
+            var commentsServiceModel = await recipeService.GetRecipeCommentsPerPage(Id, commentPage, pageSize);
+
+            var commentsViewModel = mapper.Map<List<CommentViewModel>>(commentsServiceModel);
+
+            var commentsPagingList = new PagingList<CommentViewModel>(commentsViewModel, serviceModel.Comments.Count(), commentPage, pageSize);
+
+            var recipePostViewModel = mapper.Map<RecipePostViewModel>(serviceModel);
+
+            recipePostViewModel.Comments = commentsPagingList;
+
+            return View(recipePostViewModel);
         }
 
         public async Task<IActionResult> Rating([FromRoute] Guid Id)
         {
-            var model = await recipeService.GetRecipeForSetRating(Id);
+            var serviceModel = await recipeService.GetRecipeForSetRating(Id);
+
+            var viewModel = mapper.Map<RatingViewModel>(serviceModel);
 
             ViewData[MessageConstant.WarningMessage] = "Изберете звезда от 1 до 5 за успешен вод !";
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Rating(RatingViewModel model)
         {
+            var ratingServiceModel = mapper.Map<RatingSetServiceModel>(model);
 
-            if (await recipeService.IsRatingSet(model))
+            if (await recipeService.IsRatingSet(ratingServiceModel))
             {
                 ViewData[MessageConstant.SuccessMessage] = "Вашият вот е успешен!";
             }
@@ -104,16 +138,20 @@ namespace CookDelicious.Controllers
                 ViewData[MessageConstant.ErrorMessage] = "Вашият вот не е успешен! Опитайте пак.";
             }
 
-            model = await recipeService.GetRecipeForSetRating(model.Id);
+            var serviceModel = await recipeService.GetRecipeForSetRating(ratingServiceModel.Id);
 
-            return View(model);
+            var viewModel = mapper.Map<RatingViewModel>(serviceModel);
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> PostComment([FromRoute] Guid Id, CommentViewModel model)
         {
-            var comment = await commentService.PostCommentForRecipe(Id, model);
+            var commentServiceModel = mapper.Map<PostRecipeCommentInputModel>(model);
+
+            var comment = await commentService.PostCommentForRecipe(Id, commentServiceModel);
 
             return RedirectToAction(nameof(RecipePost), new { Id = Id });
         }
