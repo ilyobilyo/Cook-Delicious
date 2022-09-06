@@ -14,6 +14,8 @@
 
         public string YearPublishedOn { get; set; }
 
+        public int RatingDigit { get; set; }
+
         public bool RatingOneCheck { get; set; }
 
         public bool RatingTwoCheck { get; set; }

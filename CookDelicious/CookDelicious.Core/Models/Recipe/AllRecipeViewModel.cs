@@ -8,14 +8,14 @@ namespace CookDelicious.Core.Models.Recipe
     {
         public AllRecipeViewModel()
         {
-            Ratings = new List<RatingServiceModel>();
+            Ratings = new List<RatingViewModel>();
         }
 
         public string Id { get; set; }
 
         public string Title { get; set; }
 
-        public ICollection<RatingServiceModel> Ratings { get; set; }
+        public ICollection<RatingViewModel> Ratings { get; set; }
 
 
         public int Rating

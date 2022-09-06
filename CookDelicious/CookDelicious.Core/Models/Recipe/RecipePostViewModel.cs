@@ -10,14 +10,14 @@ namespace CookDelicious.Core.Models.Recipe
     {
         public RecipePostViewModel()
         {
-            Ratings = new List<RatingServiceModel>();
+            Ratings = new List<RatingViewModel>();
         }
 
         public Guid Id { get; set; }
 
         public string Title { get; set; }
 
-        public ApplicationUser Author { get; set; }
+        public UserServiceModel Author { get; set; }
 
         public string PublishedOn { get; set; }
 
@@ -46,9 +46,9 @@ namespace CookDelicious.Core.Models.Recipe
             }
         }
 
-        public ICollection<RatingServiceModel> Ratings { get; set; }
+        public ICollection<RatingViewModel> Ratings { get; set; }
 
-        public IList<RecipeProductViewModel> Products { get; set; }
+        public IList<RecipeProductViewModel> RecipeProducts { get; set; }
 
         public PagingList<CommentViewModel> Comments { get; set; }
 
