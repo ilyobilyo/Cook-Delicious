@@ -1,10 +1,10 @@
-﻿using CookDelicious.Core.Service.Models;
+﻿using CookDelicious.Infrasturcture.Models.Common;
 
 namespace CookDelicious.Core.Contracts.Common.Categories
 {
     public interface ICategoryService
     {
-        Task<CategoryServiceModel> GetCategoryByName(string category);
+        Task<Category> GetCategoryByName(string category);
         Task<IList<string>> GetAllCategoryNames();
     }
 }

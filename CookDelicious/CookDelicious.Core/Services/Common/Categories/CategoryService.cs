@@ -25,13 +25,11 @@ namespace CookDelicious.Core.Services.Common.Categories
                 .ToListAsync();
         }
 
-        public async Task<CategoryServiceModel> GetCategoryByName(string categoryName)
+        public async Task<Category> GetCategoryByName(string categoryName)
         {
-            var category = await repo.All<Category>()
+            return await repo.All<Category>()
                 .Where(x => x.Name == categoryName)
                 .FirstOrDefaultAsync();
-
-            return mapper.Map<CategoryServiceModel>(category);
         }
     }
 }

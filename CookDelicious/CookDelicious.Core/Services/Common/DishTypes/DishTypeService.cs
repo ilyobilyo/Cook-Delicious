@@ -18,13 +18,11 @@ namespace CookDelicious.Core.Services.Common.DishTypes
             this.mapper = mapper;
         }
 
-        public async Task<DishTypeServiceModel> GetDishTypeByName(string dishTypeName)
+        public async Task<DishType> GetDishTypeByName(string dishTypeName)
         {
-            var dishType = await repo.All<DishType>()
+            return await repo.All<DishType>()
                 .Where(x => x.Name == dishTypeName)
                 .FirstOrDefaultAsync();
-
-            return mapper.Map<DishTypeServiceModel>(dishType);
         }
     }
 }

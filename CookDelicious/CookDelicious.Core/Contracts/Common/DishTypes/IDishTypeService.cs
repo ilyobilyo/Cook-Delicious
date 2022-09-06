@@ -1,9 +1,9 @@
-﻿using CookDelicious.Core.Service.Models;
+﻿using CookDelicious.Infrasturcture.Models.Common;
 
 namespace CookDelicious.Core.Contracts.Common.DishTypes
 {
     public interface IDishTypeService
     {
-        Task<DishTypeServiceModel> GetDishTypeByName(string dishTypeName);
+        Task<DishType> GetDishTypeByName(string dishTypeName);
     }
 }
