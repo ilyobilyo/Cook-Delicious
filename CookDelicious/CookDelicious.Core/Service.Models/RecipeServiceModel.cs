@@ -22,16 +22,14 @@
 
         public CategoryServiceModel Category { get; set; }
 
-        public Guid DishTypeId { get; set; }
-
         public DishTypeServiceModel DishType { get; set; }
 
         public bool? IsDeleted { get; set; }
 
-        public ICollection<RatingServiceModel> Ratings { get; set; }
+        public IEnumerable<RatingServiceModel> Ratings { get; set; }
 
-        public ICollection<RecipeProductServiceModel> RecipeProducts { get; set; }
+        public IEnumerable<RecipeProductServiceModel> RecipeProducts { get; set; }
 
-        public ICollection<RecipeCommentServiceModel> Comments { get; set; }
+        public IEnumerable<RecipeCommentServiceModel> Comments { get; set; }
     }
 }
