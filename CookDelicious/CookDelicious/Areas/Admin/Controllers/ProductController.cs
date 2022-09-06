@@ -1,4 +1,5 @@
-﻿using CookDelicious.Core.Constants;
+﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin.Product;
 using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Models.Admin.Product;
@@ -10,11 +11,15 @@ namespace CookDelicious.Areas.Admin.Controllers
     {
         private readonly IProductServiceAdmin productServiceAdmin;
         private readonly IProductService productService;
+        private readonly IMapper mapper;
 
-        public ProductController(IProductServiceAdmin productServiceAdmin, IProductService productService)
+        public ProductController(IProductServiceAdmin productServiceAdmin,
+            IProductService productService,
+            IMapper mapper)
         {
             this.productServiceAdmin = productServiceAdmin;
             this.productService = productService;
+            this.mapper = mapper;
         }
 
         public IActionResult CreateProduct()
@@ -39,11 +44,11 @@ namespace CookDelicious.Areas.Admin.Controllers
             return View();
         }
 
-        public async Task<IActionResult> All(int pageNumber)
-        {
-            var products = await productService.GetAllProducts(pageNumber);
+        //public async Task<IActionResult> All(int pageNumber)
+        //{
+        //    var productsServiceModel = await productService.GetAllProducts(pageNumber);
 
-            return View(products);
-        }
+        //    return View(products);
+        //}
     }
 }
