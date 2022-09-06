@@ -1,9 +1,13 @@
-﻿using CookDelicious.Core.Contracts.Comments;
+﻿using AutoMapper;
+using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Forum;
 using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Models.Comments;
+using CookDelicious.Core.Service.Models;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Forum;
+using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Models.Recipes;
 using CookDelicious.Infrasturcture.Repositories;
 
@@ -15,16 +19,19 @@ namespace CookDelicious.Core.Services.Comments
         private readonly IForumService forumService;
         private readonly IUserService userService;
         private readonly IRecipeService recipeService;
+        private readonly IMapper mapper;
 
         public CommentService(IApplicationDbRepository repo,
             IForumService forumService,
             IUserService userService,
-            IRecipeService recipeService)
+            IRecipeService recipeService,
+            IMapper mapper)
         {
             this.repo = repo;
             this.forumService = forumService;
             this.userService = userService;
             this.recipeService = recipeService;
+            this.mapper = mapper;
         }
 
         public async Task<bool> DeletePostComment(Guid id)
@@ -116,11 +123,11 @@ namespace CookDelicious.Core.Services.Comments
             return IsPosted;
         }
 
-        public async Task<bool> PostCommentForRecipe(Guid id, CommentViewModel model)
+        public async Task<bool> PostCommentForRecipe(Guid id, PostRecipeCommentInputModel model)
         {
             var recipePost = await recipeService.GetById(id);
 
-            var user = await userService.GetUserByUsername(model.AuthorName);
+            var user = await userService.GetApplicationUserByUsername(model.AuthorName);
 
             var IsPosted = false;
 
@@ -131,7 +138,7 @@ namespace CookDelicious.Core.Services.Comments
 
             var forumComment = new RecipeComment()
             {
-                //Author = user,
+                Author = user,
                 AuthorId = user.Id,
                 Content = model.Content,
                 Recipe = recipePost,
