@@ -90,17 +90,13 @@ namespace CookDelicious.Core.Services.Products
             return recipeProducts;
         }
 
-        public async Task<IList<RecipeProductViewModel>> GetProductsForRecipePost(Guid id)
+        public async Task<IList<RecipeProductServiceModel>> GetProductsForRecipePost(Guid id)
         {
-            return await repo.All<RecipeProduct>()
+            var recipeProducts = await repo.All<RecipeProduct>()
                 .Where(x => x.RecipeId == id)
-                .Select(x => new RecipeProductViewModel()
-                {
-                    Id = x.ProductId,
-                    Name = x.Product.Name,
-                    Quantity = x.Quantity
-                })
                 .ToListAsync();
+
+            return mapper.Map<List<RecipeProductServiceModel>>(recipeProducts);
         }
 
         private async Task<Product> CreateProduct(string name)
