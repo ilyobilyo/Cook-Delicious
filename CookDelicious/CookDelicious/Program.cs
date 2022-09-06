@@ -1,4 +1,5 @@
 using CookDelicious.Core.Constants;
+using CookDelicious.Core.Contracts;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Contracts.Admin.Product;
 using CookDelicious.Core.Contracts.Comments;
@@ -50,6 +51,13 @@ builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<IForumServiceAdmin, ForumServiceAdmin>()
     .AddScoped<ICommentService, CommentService>()
     .AddScoped<ICommentServiceAdmin, CommentServiceAdmin>();
+
+builder.Services.AddAutoMapper(typeof(RecipeMapping),
+    typeof(UserMapping), 
+    typeof(CategoryMapping),
+    typeof(DishTypeMapping),
+    typeof(ProductMapping),
+    typeof(RatingMapping));
 
 builder.Services.AddAutoMapper(typeof(ProductMapping));
 

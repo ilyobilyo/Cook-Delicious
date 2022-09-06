@@ -1,5 +1,8 @@
-﻿using CookDelicious.Core.Contracts.User;
+﻿using AutoMapper;
+using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Models.User;
+using CookDelicious.Core.Service.Models;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -9,61 +12,30 @@ namespace CookDelicious.Core.Services.User
     public class UserService : IUserService
     {
         private readonly IApplicationDbRepository repo;
+        private readonly IMapper mapper;
 
-        public UserService(IApplicationDbRepository repo)
+        public UserService(IApplicationDbRepository repo, IMapper mapper)
         {
             this.repo = repo;
+            this.mapper = mapper;
         }
 
-        public async Task<ApplicationUser> GetUserByUsername(string author)
+        public async Task<ApplicationUser> GetApplicationUserByUsername(string username)
         {
             return await repo.All<ApplicationUser>()
+                .Where(x => x.UserName == username)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<UserServiceModel> GetUserByUsername(string author)
+        {
+            var user = await repo.All<ApplicationUser>()
                 .Where(x => x.UserName == author)
                 .FirstOrDefaultAsync();
+
+            return mapper.Map<UserServiceModel>(user);
         }
-
-        public async Task<UserProfileViewModel> GetUserProfile(string userName)
-        {
-            return await repo.All<ApplicationUser>()
-                .Where(x => x.UserName == userName)
-                .Select(x => new UserProfileViewModel()
-                {
-                    Id = x.Id,
-                    Age = x.Age,
-                    ImageUrl = x.ImageUrl,
-                    Email = x.Email,
-                    Town = x.Town,
-                    Username = x.UserName,
-                    Address = x.Address,
-                    CurrentJob = x.Job,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                })
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task<UserEditProfileViewModel> GetUserProfileEdit(string userName)
-        {
-            return await repo.All<ApplicationUser>()
-                .Where(x => x.UserName == userName)
-                .Select(x => new UserEditProfileViewModel()
-                {
-                    Id = x.Id,
-                    Address = x.Address,
-                    Age = x.Age,
-                    CurrentJob = x.Job,
-                    Email = x.Email,
-                    FirstName = x.FirstName,
-                    ImageUrl = x.ImageUrl,
-                    LastName = x.LastName,
-                    Town = x.Town,
-                    Username = x.UserName,
-                })
-                .FirstOrDefaultAsync();
-        }
-
-
-        public async Task<bool> UpdateUser(UserEditProfileViewModel model)
+        public async Task<bool> UpdateUser(UserEditProfileInputModel model)
         {
             bool result = false;
 
@@ -81,7 +53,7 @@ namespace CookDelicious.Core.Services.User
 
                 user.Email = model.Email;
 
-                user.Job = model.CurrentJob;
+                user.Job = model.Job;
 
                 user.ImageUrl = model.ImageUrl;
 
