@@ -57,7 +57,8 @@ builder.Services.AddAutoMapper(typeof(RecipeMapping),
     typeof(CategoryMapping),
     typeof(DishTypeMapping),
     typeof(ProductMapping),
-    typeof(RatingMapping));
+    typeof(RatingMapping),
+    typeof(ForumMapping));
 
 builder.Services.AddAutoMapper(typeof(ProductMapping));
 
