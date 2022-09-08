@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CookDelicious.Core.Service.Models.InputServiceModels
+﻿namespace CookDelicious.Core.Service.Models.InputServiceModels
 {
-    public class PostRecipeCommentInputModel
+    public class PostCommentInputModel
     {
         public Guid Id { get; set; }
 

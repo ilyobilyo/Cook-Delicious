@@ -149,7 +149,7 @@ namespace CookDelicious.Controllers
         [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> PostComment([FromRoute] Guid Id, CommentViewModel model)
         {
-            var commentServiceModel = mapper.Map<PostRecipeCommentInputModel>(model);
+            var commentServiceModel = mapper.Map<PostCommentInputModel>(model);
 
             var comment = await commentService.PostCommentForRecipe(Id, commentServiceModel);
 
