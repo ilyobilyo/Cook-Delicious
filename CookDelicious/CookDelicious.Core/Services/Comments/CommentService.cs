@@ -82,7 +82,7 @@ namespace CookDelicious.Core.Services.Comments
 
             return isDeleted;
         }
-
+        
         public async Task<bool> PostCommentForPost(Guid id, PostCommentInputModel model)
         {
             var forumPost = await forumService.GetById(id);
