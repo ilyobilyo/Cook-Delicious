@@ -1,9 +1,12 @@
-﻿using CookDelicious.Core.Constants;
+﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Forum;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Forum;
+using CookDelicious.Core.Models.Paiging;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,17 +16,32 @@ namespace CookDelicious.Controllers
     {
         private readonly IForumService forumService;
         private readonly ICommentService commentService;
+        private readonly IMapper mapper;
 
-        public ForumController(IForumService forumService, ICommentService commentService)
+        public ForumController(IForumService forumService, 
+            ICommentService commentService,
+            IMapper mapper)
         {
             this.forumService = forumService;
             this.commentService = commentService;
+            this.mapper = mapper;
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> Home(int pageNumber)
         {
-            var posts = await forumService.GetAllPosts(pageNumber);
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
+
+            int pageSize = 6;
+
+            var (postsServiceModels, totalPostsCount) = await forumService.GetAllPostsForPageing(pageNumber, pageSize);
+
+            var postsViewModel = mapper.Map<List<AllForumPostViewModel>>(postsServiceModels);
+
+            var postsPageingList = new PagingList<AllForumPostViewModel>(postsViewModel, totalPostsCount, pageNumber, pageSize);
 
             var categories = await forumService.GetAllPostCategoryNames();
 
@@ -32,7 +50,7 @@ namespace CookDelicious.Controllers
             var model = new ForumHomeViewModel()
             {
                 Categories = categories,
-                Posts = posts,
+                Posts = postsPageingList,
                 Archive = archive
             };
 
@@ -56,7 +74,9 @@ namespace CookDelicious.Controllers
         [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> CreatePost(CreatePostViewModel model)
         {
-            var error = await forumService.CreatePost(model, User.Identity.Name);
+            var inputModel = mapper.Map<CreateForumPostInputModel>(model);
+
+            var error = await forumService.CreatePost(inputModel, User.Identity.Name);
 
             if (error != null)
             {
@@ -77,9 +97,26 @@ namespace CookDelicious.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ForumPost([FromRoute]Guid Id, int commentPage)
         {
-            var post = await forumService.GetPostById(Id, commentPage);
+            if (commentPage == 0)
+            {
+                commentPage = 1;
+            }
 
-            return View(post);
+            int pageSize = 5;
+
+            var post = await forumService.GetPostServiceModelById(Id);
+
+            var commentsPerPage = await forumService.GetCommentsPerPage(Id, commentPage, pageSize);
+
+            var commentsViewModels = mapper.Map<List<CommentViewModel>>(commentsPerPage);
+
+            var commentPageingList = new PagingList<CommentViewModel>(commentsViewModels, post.ForumComments.Count, commentPage, pageSize);
+
+            var forumPostrViewModel = mapper.Map<ForumPostViewModel>(post);
+
+            forumPostrViewModel.Comments = commentPageingList;
+
+            return View(forumPostrViewModel);
         }
 
         [Authorize(Roles = "Administrator, User")]
@@ -99,7 +136,9 @@ namespace CookDelicious.Controllers
         [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> PostComment([FromRoute] Guid Id, CommentViewModel model)
         {
-            var comment = await commentService.PostCommentForPost(Id, model);
+            var commentInputModel = mapper.Map<PostCommentInputModel>(model);
+
+            var comment = await commentService.PostCommentForPost(Id, commentInputModel);
 
             return RedirectToAction(nameof(ForumPost), new { Id = Id });
         }

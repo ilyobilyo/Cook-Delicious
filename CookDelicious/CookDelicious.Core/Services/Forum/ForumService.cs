@@ -1,9 +1,12 @@
-﻿using CookDelicious.Core.Contracts.Comments;
+﻿using AutoMapper;
+using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Forum;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Forum;
 using CookDelicious.Core.Models.Paiging;
+using CookDelicious.Core.Service.Models;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Forum;
 using CookDelicious.Infrasturcture.Repositories;
 using CookDelicious.Models;
@@ -15,10 +18,15 @@ namespace CookDelicious.Core.Services.Forum
     {
         private readonly IApplicationDbRepository repo;
         private readonly IUserService userService;
-        public ForumService(IApplicationDbRepository repo, IUserService userService)
+        private readonly IMapper mapper;
+
+        public ForumService(IApplicationDbRepository repo, 
+            IUserService userService,
+            IMapper mapper)
         {
             this.repo = repo;
             this.userService = userService;
+            this.mapper = mapper;
         }
 
         public async Task<ForumPost> GetById(Guid id)
@@ -26,14 +34,14 @@ namespace CookDelicious.Core.Services.Forum
             return await repo.GetByIdAsync<ForumPost>(id);
         }
 
-        public async Task<ErrorViewModel> CreatePost(CreatePostViewModel model, string Username)
+        public async Task<ErrorViewModel> CreatePost(CreateForumPostInputModel model, string Username)
         {
             if (model.Title == null || model.Description == null)
             {
                 return new ErrorViewModel() { Messages = "Заглавието и садържанието на поста са задължителни!"};
             }
 
-            var author = await userService.GetUserByUsername(Username);
+            var author = await userService.GetApplicationUserByUsername(Username);
 
             if (author == null)
             {
@@ -44,7 +52,7 @@ namespace CookDelicious.Core.Services.Forum
 
             var forumPost = new ForumPost()
             {
-                //Author = author,
+                Author = author,
                 AuthorId = author.Id,
                 Content = model.Description,
                 ImageUrl = model.ImageUrl,
@@ -99,31 +107,22 @@ namespace CookDelicious.Core.Services.Forum
                 .ToListAsync();
         }
 
-        public async Task<PagingList<ForumPostViewModel>> GetAllPosts(int pageNumber)
+        public async Task<(IEnumerable<ForumPostServiceModel>, int)> GetAllPostsForPageing(int pageNumber, int pageSize)
         {
-            if (pageNumber == 0)
-            {
-                pageNumber = 1;
-            }
+            var totalPostsCount = await repo.All<ForumPost>()
+                .CountAsync();
 
-            int pageSize = 6;
-
-            return await PagingList<ForumPostViewModel>.CreateAsync(repo.All<ForumPost>()
+            var posts = await repo.All<ForumPost>()
+                .Include(x => x.Author)
+                .Include(x => x.PostCategory)
                 .Where(x => x.IsDeleted == false)
-                .Select(x => new ForumPostViewModel
-                {
-                    Id = x.Id,
-                    AuthorName = x.Author.UserName,
-                    CategoryName = x.PostCategory.Name,
-                    Content = x.Content,
-                    DatePublishedOn = x.PublishedOn.ToString("dd"),
-                    MonthPublishedOn = x.PublishedOn.ToString("MMMM"),
-                    YearPublishedOn = x.PublishedOn.ToString("yyyy"),
-                    ImageUrl = x.ImageUrl,
-                    Title = x.Title,
-                }),
-                pageNumber,
-                pageSize);
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var forumPostServiceModels = mapper.Map<IEnumerable<ForumPostServiceModel>>(posts);
+
+            return (forumPostServiceModels, totalPostsCount);
         }
 
         public async Task<IList<string>> GetArchive()
@@ -138,48 +137,33 @@ namespace CookDelicious.Core.Services.Forum
                 .ToList();
         }
 
-        public async Task<ForumPostViewModel> GetPostById(Guid id, int commentPage)
+        public async Task<ForumPostServiceModel> GetPostServiceModelById(Guid id)
         {
-            if (commentPage == 0)
-            {
-                commentPage = 1;
-            }
-
-            int pageSize = 5;
-
             var post = await repo.All<ForumPost>()
+                .Include(x => x.Author)
+                .Include(x => x.PostCategory)
+                .Include(x => x.ForumComments.Where(c => c.IsDeleted == false))
                 .Where(x => x.Id == id)
-                .Select(x => new ForumPostViewModel()
-                {
-                    Id = x.Id,
-                    AuthorName = x.Author.UserName,
-                    CategoryName = x.PostCategory.Name,
-                    Content = x.Content,
-                    DatePublishedOn = x.PublishedOn.ToString("dd"),
-                    MonthPublishedOn = x.PublishedOn.ToString("MMMM"),
-                    YearPublishedOn = x.PublishedOn.ToString("yyyy"),
-                    ImageUrl = x.ImageUrl,
-                    Title = x.Title,
-                })
                 .FirstOrDefaultAsync();
 
+            var postServiceModel = mapper.Map<ForumPostServiceModel>(post);
 
-            post.Comments = await PagingList<CommentViewModel>.CreateAsync(repo.All<ForumComment>()
-                .Where(x => x.IsDeleted == false && x.ForumPostId == post.Id)
-                .Select(x => new CommentViewModel
-                {
-                    Id = x.Id,
-                    AuthorName = x.Author.UserName,
-                    Content = x.Content,
-                }),
-                commentPage,
-                pageSize);
-
-            return post;
-
+            return postServiceModel;
         }
 
 
+        public async Task<IEnumerable<ForumCommentServiceModel>> GetCommentsPerPage(Guid id, int commentPage, int pageSize)
+        {
+            var forumComments = await repo.All<ForumComment>()
+                .Where(x => x.ForumPostId == id && x.IsDeleted == false)
+                .Skip((commentPage - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var forumCommentsServiceModel = mapper.Map<IEnumerable<ForumCommentServiceModel>>(forumComments);
+
+            return forumCommentsServiceModel;
+        }
 
 
 
@@ -189,5 +173,6 @@ namespace CookDelicious.Core.Services.Forum
                 .Where(x => x.Name == category)
                 .FirstOrDefaultAsync();
         }
+
     }
 }
