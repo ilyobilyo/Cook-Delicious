@@ -14,7 +14,7 @@
 
         public string AuthorId { get; set; }
 
-        public UserServiceModel Author { get; set; }
+        public UserForumServiceModel Author { get; set; }
 
         public Guid PostCategoryId { get; set; }
 
