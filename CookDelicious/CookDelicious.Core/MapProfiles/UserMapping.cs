@@ -11,6 +11,8 @@ namespace CookDelicious.Core.MapProfiles
         public UserMapping()
         {
             CreateMap<ApplicationUser, UserServiceModel>();
+            CreateMap<ApplicationUser, UserForumServiceModel>();
+            CreateMap<UserServiceModel, UserForumServiceModel>();
             CreateMap<UserServiceModel, ApplicationUser>();
             CreateMap<UserServiceModel, UserProfileViewModel>();
             CreateMap<UserServiceModel, UserEditProfileViewModel>();

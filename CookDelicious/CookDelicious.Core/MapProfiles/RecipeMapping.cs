@@ -22,7 +22,7 @@ namespace CookDelicious.Core.MapProfiles
             CreateMap<CreateRecipeViewModel, CreateRecipeServiceModel>();
             CreateMap<CreateRecipeServiceModel, CreateRecipeViewModel>();
             CreateMap<RecipeComment, RecipeCommentServiceModel>();
-            CreateMap<CommentViewModel, PostRecipeCommentInputModel>();
+            CreateMap<CommentViewModel, PostCommentInputModel>();
             CreateMap<RecipeCommentServiceModel, CommentViewModel>();
             CreateMap<RecipeProductServiceModel, RecipeProductViewModel>()
                 .ForMember(x => x.Product, y => y.MapFrom(s => s.Product.Name));
