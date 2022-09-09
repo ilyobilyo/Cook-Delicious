@@ -10,6 +10,7 @@ using CookDelicious.Infrasturcture.Models.Forum;
 using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Models.Recipes;
 using CookDelicious.Infrasturcture.Repositories;
+using CookDelicious.Models;
 
 namespace CookDelicious.Core.Services.Comments
 {
@@ -120,17 +121,22 @@ namespace CookDelicious.Core.Services.Comments
             return IsPosted;
         }
 
-        public async Task<bool> PostCommentForRecipe(Guid id, PostCommentInputModel model)
+        public async Task<ErrorViewModel> PostCommentForRecipe(Guid id, PostCommentInputModel model)
         {
+            var IsPosted = false;
+
+            if (model.Content.Length > 200)
+            {
+                return new ErrorViewModel() { Messages = "Коментарът трябва да е не повече от 200 символа!" };
+            }
+
             var recipePost = await recipeService.GetById(id);
 
             var user = await userService.GetApplicationUserByUsername(model.AuthorName);
 
-            var IsPosted = false;
-
             if (recipePost == null || user == null)
             {
-                return IsPosted;
+                return new ErrorViewModel() { Messages = "Невалидна рецепра или потребител!" };
             }
 
             var forumComment = new RecipeComment()
@@ -151,10 +157,10 @@ namespace CookDelicious.Core.Services.Comments
             }
             catch (Exception)
             {
-                return IsPosted;
+                return new ErrorViewModel() { Messages = "Unexpected error!" }; ;
             }
 
-            return IsPosted;
+            return null;
         }
     }
 }

@@ -1,18 +1,14 @@
-﻿using CookDelicious.Core.Models.Admin;
+﻿using CookDelicious.Core.Service.Models;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CookDelicious.Core.Contracts.Admin
 {
     public interface IUserServiceAdmin
     {
-        Task<IEnumerable<UserListViewModel>> GetUsersInManageUsers(int pageNumber);
+        Task<(IEnumerable<UserServiceModel>, int)> GetUsersPageingInManageUsers(int pageNumber, int pageSize);
         Task<ApplicationUser> GetUserByIdRoles(string id);
-        Task<UserEditViewModel> GetUserByIdEdit(string id);
-        Task<bool> UpdateUser(UserEditViewModel model);
+        Task<UserServiceModel> GetUserByIdEdit(string id);
+        Task<bool> UpdateUser(UpdateUserInputModel model);
     }
 }

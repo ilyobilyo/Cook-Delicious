@@ -124,6 +124,7 @@ namespace CookDelicious.Core.Services.Recipes
         public async Task<IEnumerable<RecipeCommentServiceModel>> GetRecipeCommentsPerPage(Guid Id ,int commentPage, int pageSize)
         {
             var items = await repo.All<RecipeComment>()
+                .Include(x => x.Author)
                 .Where(x => x.RecipeId == Id && x.IsDeleted == false)
                 .Skip((commentPage - 1) * pageSize)
                 .Take(pageSize)

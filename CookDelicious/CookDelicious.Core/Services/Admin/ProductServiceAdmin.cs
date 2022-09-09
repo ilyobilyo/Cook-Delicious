@@ -1,5 +1,5 @@
 ﻿using CookDelicious.Core.Contracts.Admin.Product;
-using CookDelicious.Core.Models.Admin.Product;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Repositories;
 using CookDelicious.Models;
@@ -16,7 +16,7 @@ namespace CookDelicious.Core.Services.Products
             this.repo = repo;
         }
 
-        public async Task<IList<ErrorViewModel>> CreateProduct(CreateProductViewModel model)
+        public async Task<IList<ErrorViewModel>> CreateProduct(CreateProductInputModel model)
         {
             List<ErrorViewModel> errors = new List<ErrorViewModel>();
 
@@ -51,7 +51,7 @@ namespace CookDelicious.Core.Services.Products
             return errors;
         }
 
-        private async Task<bool> IsProductExists(CreateProductViewModel model)
+        private async Task<bool> IsProductExists(CreateProductInputModel model)
         {
             return await repo.All<Product>()
                 .AnyAsync(x => x.Name == model.Name && x.Type == model.Type);
