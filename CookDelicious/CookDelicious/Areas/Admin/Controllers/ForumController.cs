@@ -1,6 +1,8 @@
-﻿using CookDelicious.Core.Constants;
+﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Models.Admin.Forum;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Areas.Admin.Controllers
@@ -8,10 +10,16 @@ namespace CookDelicious.Areas.Admin.Controllers
     public class ForumController : BaseController
     {
         private readonly IForumServiceAdmin forumService;
+        private readonly ICommentServiceAdmin commentService;
+        private readonly IMapper mapper;
 
-        public ForumController(IForumServiceAdmin forumService)
+        public ForumController(IForumServiceAdmin forumService,
+            ICommentServiceAdmin commentService,
+            IMapper mapper)
         {
             this.forumService = forumService;
+            this.commentService = commentService;
+            this.mapper = mapper;
         }
 
         public IActionResult CreatePostCategory()
@@ -22,7 +30,9 @@ namespace CookDelicious.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePostCategory(CreatePostCategoryViewModel model)
         {
-            var error = await forumService.CreatePostCategory(model);
+            var inputModel = mapper.Map<CreatePostCategoryInputModel>(model);
+
+            var error = await forumService.CreatePostCategory(inputModel);
 
             if (error != null)
             {
@@ -35,6 +45,13 @@ namespace CookDelicious.Areas.Admin.Controllers
             }
 
             return View();
+        }
+
+        public async Task<IActionResult> DeleteForumComment([FromRoute] Guid id)
+        {
+            await commentService.DeleteForumComment(id);
+
+            return Redirect("/Admin/User/ManageUsers");
         }
     }
 }

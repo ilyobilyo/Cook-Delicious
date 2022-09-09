@@ -1,7 +1,11 @@
-﻿using CookDelicious.Core.Constants;
+﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Models.Admin;
+using CookDelicious.Core.Models.Admin.Comments;
 using CookDelicious.Core.Models.Paiging;
+using CookDelicious.Core.Service.Models;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,36 +17,47 @@ namespace CookDelicious.Areas.Admin.Controllers
     public class UserController : BaseController
     {
         private readonly RoleManager<IdentityRole> roleManager;
-
         private readonly UserManager<ApplicationUser> userManager;
-
         private readonly IUserServiceAdmin userService;
+        private readonly ICommentServiceAdmin commentService;
+        private readonly IMapper mapper;
 
-        public UserController(RoleManager<IdentityRole> roleManager, IUserServiceAdmin userService, UserManager<ApplicationUser> userManager)
+        public UserController(RoleManager<IdentityRole> roleManager,
+            IUserServiceAdmin userService,
+            UserManager<ApplicationUser> userManager,
+            ICommentServiceAdmin commentService,
+            IMapper mapper)
         {
             this.roleManager = roleManager;
             this.userService = userService;
             this.userManager = userManager;
+            this.commentService = commentService;
+            this.mapper = mapper;
         }
 
         [Authorize(Roles = UserConstraints.Roles.Administrator)]
         public async Task<IActionResult> ManageUsers(int pageNumber)
         {
-            var users = await userService.GetUsersInManageUsers(pageNumber);
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
 
-            return View(users);
+            int pageSize = 2;
+
+            (var usersServiceModels, var totalCount) = await userService.GetUsersPageingInManageUsers(pageNumber, pageSize);
+
+            var usersViewModel = mapper.Map<List<UserListViewModel>>(usersServiceModels);
+
+            var pageingList = new PagingList<UserListViewModel>(usersViewModel, totalCount, pageNumber, pageSize);
+
+            return View(pageingList);
         }
 
         [Authorize(Roles = UserConstraints.Roles.Administrator)]
         public async Task<IActionResult> Roles(string id)
         {
             var user = await userService.GetUserByIdRoles(id);
-
-            var model = new UserRolesViewModel()
-            {
-                Id = id,
-                Username = user.UserName
-            };
 
             ViewBag.RoleItems = roleManager.Roles
                 .ToList()
@@ -53,6 +68,8 @@ namespace CookDelicious.Areas.Admin.Controllers
                     Selected = userManager.IsInRoleAsync(user, x.Name).Result
                 })
                 .ToList();
+
+            var model = mapper.Map<UserRolesViewModel>(user);
 
             return View(model);
         }
@@ -77,9 +94,11 @@ namespace CookDelicious.Areas.Admin.Controllers
         [Authorize(Roles = UserConstraints.Roles.Administrator)]
         public async Task<IActionResult> Edit(string id)
         {
-            var model = await userService.GetUserByIdEdit(id);
+            var serviceModel = await userService.GetUserByIdEdit(id);
 
-            return View(model);
+            var viewModel = mapper.Map<UserEditViewModel>(serviceModel);
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -90,7 +109,9 @@ namespace CookDelicious.Areas.Admin.Controllers
                 return View(model);
             }
 
-            if (await userService.UpdateUser(model))
+            var serviceModel = mapper.Map<UpdateUserInputModel>(model);
+
+            if (await userService.UpdateUser(serviceModel))
             {
                 ViewData[MessageConstant.SuccessMessage] = "Успешен запис!";
             }
@@ -111,6 +132,26 @@ namespace CookDelicious.Areas.Admin.Controllers
             });
 
             return Redirect("/");
+        }
+
+        [Authorize(Roles = UserConstraints.Roles.Administrator)]
+        public async Task<IActionResult> RecipeComments([FromRoute] string id)
+        {
+            var commentsServiceModels = await commentService.GetRecipeComments(id);
+
+            var commentsViewModel = mapper.Map<List<AdminCommentViewModel>>(commentsServiceModels);
+
+            return View(commentsViewModel);
+        }
+
+        [Authorize(Roles = UserConstraints.Roles.Administrator)]
+        public async Task<IActionResult> ForumComments([FromRoute] string id)
+        {
+            var commentsServiceModels = await commentService.GetForumComments(id);
+
+            var commentsViewModel = mapper.Map<List<AdminCommentViewModel>>(commentsServiceModels);
+
+            return View(commentsViewModel);
         }
     }
 }

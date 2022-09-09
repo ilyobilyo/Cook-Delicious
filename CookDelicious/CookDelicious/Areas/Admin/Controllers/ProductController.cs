@@ -3,6 +3,10 @@ using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin.Product;
 using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Models.Admin.Product;
+using CookDelicious.Core.Models.Paiging;
+using CookDelicious.Core.Models.Product;
+using CookDelicious.Core.Service.Models;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Areas.Admin.Controllers
@@ -30,7 +34,9 @@ namespace CookDelicious.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductViewModel model)
         {
-            var errors = await productServiceAdmin.CreateProduct(model);
+            var serviceModel = mapper.Map<CreateProductInputModel>(model);
+
+            var errors = await productServiceAdmin.CreateProduct(serviceModel);
 
             if (errors.Count > 0)
             {
@@ -44,11 +50,22 @@ namespace CookDelicious.Areas.Admin.Controllers
             return View();
         }
 
-        //public async Task<IActionResult> All(int pageNumber)
-        //{
-        //    var productsServiceModel = await productService.GetAllProducts(pageNumber);
+        public async Task<IActionResult> All(int pageNumber)
+        {
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
 
-        //    return View(products);
-        //}
+            int pageSize = 9;
+
+            (var productsServiceModels, var totalCount) = await productService.GetAllProductsForPageing(pageNumber, pageSize);
+
+            var allProductsViewModels = mapper.Map<List<AllProductViewModel>>(productsServiceModels);
+
+            var pageList = new PagingList<AllProductViewModel>(allProductsViewModels, totalCount, pageNumber, pageSize);
+
+            return View(pageList);
+        }
     }
 }
