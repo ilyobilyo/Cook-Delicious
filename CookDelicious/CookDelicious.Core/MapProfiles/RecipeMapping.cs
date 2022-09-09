@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CookDelicious.Core.Models.Admin.Comments;
 using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Product;
 using CookDelicious.Core.Models.Recipe;
@@ -24,12 +23,9 @@ namespace CookDelicious.Core.MapProfiles
             CreateMap<CreateRecipeServiceModel, CreateRecipeViewModel>();
             CreateMap<RecipeComment, RecipeCommentServiceModel>();
             CreateMap<CommentViewModel, PostCommentInputModel>();
-            CreateMap<RecipeCommentServiceModel, CommentViewModel>()
-                .ForMember(x => x.AuthorName, y => y.MapFrom(s => s.Author.UserName));
+            CreateMap<RecipeCommentServiceModel, CommentViewModel>();
             CreateMap<RecipeProductServiceModel, RecipeProductViewModel>()
                 .ForMember(x => x.Product, y => y.MapFrom(s => s.Product.Name));
-            CreateMap<RecipeCommentServiceModel, AdminCommentViewModel>()
-                .ForMember(x => x.AuthorName, y => y.MapFrom(s => s.Author.UserName));
         }
     }
 }

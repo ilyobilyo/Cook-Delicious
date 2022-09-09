@@ -151,12 +151,7 @@ namespace CookDelicious.Controllers
         {
             var commentServiceModel = mapper.Map<PostCommentInputModel>(model);
 
-            var error = await commentService.PostCommentForRecipe(Id, commentServiceModel);
-
-            if (error != null)
-            {
-                return View("_Error", error);
-            }
+            var comment = await commentService.PostCommentForRecipe(Id, commentServiceModel);
 
             return RedirectToAction(nameof(RecipePost), new { Id = Id });
         }

@@ -1,30 +1,35 @@
-﻿using AutoMapper;
-using CookDelicious.Core.Contracts.Admin;
-using CookDelicious.Core.Service.Models;
-using CookDelicious.Core.Service.Models.InputServiceModels;
+﻿using CookDelicious.Core.Contracts.Admin;
+using CookDelicious.Core.Models.Admin;
+using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CookDelicious.Core.Services.Admin
 {
     public class UserServiceAdmin : IUserServiceAdmin
     {
         private readonly IApplicationDbRepository repo;
-        private readonly IMapper mapper;
 
-        public UserServiceAdmin(IApplicationDbRepository repo,
-            IMapper mapper)
+        public UserServiceAdmin(IApplicationDbRepository repo)
         {
             this.repo = repo;
-            this.mapper = mapper;
         }
 
-        public async Task<UserServiceModel> GetUserByIdEdit(string id)
+        public async Task<UserEditViewModel> GetUserByIdEdit(string id)
         {
             var user = await repo.GetByIdAsync<ApplicationUser>(id);
 
-            return mapper.Map<UserServiceModel>(user);
+            return new UserEditViewModel()
+            {
+                Id = user.Id,
+                Username = user.UserName
+            };
         }
 
         public async Task<ApplicationUser> GetUserByIdRoles(string id)
@@ -32,22 +37,28 @@ namespace CookDelicious.Core.Services.Admin
             return await repo.GetByIdAsync<ApplicationUser>(id);
         }
 
-        public async Task<(IEnumerable<UserServiceModel>, int)> GetUsersPageingInManageUsers(int pageNumber, int pageSize)
+        public async Task<IEnumerable<UserListViewModel>> GetUsersInManageUsers(int pageNumber)
         {
-            var totalCount = await repo.All<ApplicationUser>()
-                 .CountAsync();
 
-            var users = await repo.All<ApplicationUser>()
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
 
-            var usersServiceModels = mapper.Map<IEnumerable<UserServiceModel>>(users);
+            int pageSize = 2;
 
-            return (usersServiceModels, totalCount);
+            return await PagingList<UserListViewModel>.CreateAsync(repo.All<ApplicationUser>()
+                .Select(x => new UserListViewModel()
+                {
+                    Email = x.Email,
+                    Id = x.Id,
+                    Username = x.UserName
+                }),
+                pageNumber,
+                pageSize);
         }
 
-        public async Task<bool> UpdateUser(UpdateUserInputModel model)
+        public async Task<bool> UpdateUser(UserEditViewModel model)
         {
             bool result = false;
 

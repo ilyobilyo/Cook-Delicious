@@ -1,6 +1,6 @@
 ﻿@using CookDelicious.Core.Models.Admin.Comments
 @using CookDelicious.Core.Models.Paiging
-@model List<AdminCommentViewModel>
+@model PagingList<AdminCommentViewModel>
 
 
 <div class="container">
@@ -28,23 +28,22 @@
                   <thead>
                     <tr>
                       <th>Author</th>
-                      <th>Content</th>
-                      <th>Is Deleted Status</th>
+                      <th>Cintent</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
                       @foreach(var comment in Model)
                             {
-                                <tr>
-                                    <td>@comment.AuthorName</td>
-                                    <td>@comment.Content</td>
-                                    <td>@comment.IsDeleted</td>
-                                    <td><div class="reply px-4">
-                                           <a href="/Admin/Recipe/DeleteRecipeComment/@comment.Id" >Remove</a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                
                             }
+                            <tr>
+                      <td>183</td>
+                      <td>John Doe</td>
+                      <td>11-7-2014</td>
+                      <td><span class="tag tag-success">Approved</span></td>
+                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

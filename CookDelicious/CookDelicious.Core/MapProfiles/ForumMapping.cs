@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using CookDelicious.Core.Models.Admin.Comments;
-using CookDelicious.Core.Models.Admin.Forum;
 using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Forum;
 using CookDelicious.Core.Service.Models;
@@ -28,14 +26,11 @@ namespace CookDelicious.Core.MapProfiles
                 .ForMember(x => x.AuthorName, y => y.MapFrom(s => s.Author.UserName))
                 .ForMember(x => x.CategoryName, y => y.MapFrom(s => s.PostCategory.Name));
             CreateMap<PostCategory, PostCategoryServiceModel>();
-            CreateMap<CreatePostCategoryViewModel, CreatePostCategoryInputModel>();
             CreateMap<ForumComment, ForumCommentServiceModel>();
             CreateMap<ForumCommentServiceModel, CommentViewModel>()
                 .ForMember(x => x.AuthorName, y => y.MapFrom(s => s.Author.UserName));
             CreateMap<CreatePostViewModel, CreateForumPostInputModel>();
             CreateMap<CommentViewModel, PostCommentInputModel>();
-            CreateMap<ForumCommentServiceModel, AdminCommentViewModel>()
-                .ForMember(x => x.AuthorName, y => y.MapFrom(s => s.Author.UserName));
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Models.Admin.DishType;
-using CookDelicious.Core.Service.Models;
-using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Repositories;
 using CookDelicious.Models;
@@ -18,7 +16,7 @@ namespace CookDelicious.Core.Services.Admin
             this.repo = repo;
         }
 
-        public async Task<ErrorViewModel> CreateDishType(CreateDishTypeInputModel model)
+        public async Task<ErrorViewModel> CreateDishType(CreateDishTypeViewModel model)
         {
             ErrorViewModel error = new ErrorViewModel();
 
@@ -54,7 +52,7 @@ namespace CookDelicious.Core.Services.Admin
             return error;
         }
 
-        private async Task<bool> IsDishTypeExists(CreateDishTypeInputModel model)
+        private async Task<bool> IsDishTypeExists(CreateDishTypeViewModel model)
         {
             return await repo.All<DishType>()
                .AnyAsync(x => x.Name == model.Name);

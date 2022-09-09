@@ -1,12 +1,10 @@
-﻿using CookDelicious.Core.Service.Models;
+﻿using CookDelicious.Core.Models.Admin.Comments;
+using CookDelicious.Core.Models.Paiging;
 
 namespace CookDelicious.Core.Contracts.Admin
 {
     public interface ICommentServiceAdmin
     {
-        Task<IEnumerable<RecipeCommentServiceModel>> GetRecipeComments(string userId);
-        Task DeleteRecipeComment(Guid id);
-        Task DeleteForumComment(Guid id);
-        Task<IEnumerable<ForumCommentServiceModel>> GetForumComments(string id);
+        Task<PagingList<AdminCommentViewModel>> GetAllComments(int pageNumber);
     }
 }
