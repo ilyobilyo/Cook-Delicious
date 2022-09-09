@@ -1,5 +1,5 @@
 ﻿using CookDelicious.Core.Contracts.Admin;
-using CookDelicious.Core.Models.Admin.Category;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Repositories;
 using CookDelicious.Models;
@@ -16,7 +16,7 @@ namespace CookDelicious.Core.Services.Admin
             this.repo = repo;
         }
 
-        public async Task<ErrorViewModel> CreateCategory(AddCategoryViewModel model)
+        public async Task<ErrorViewModel> CreateCategory(CreateCategoryInputModel model)
         {
             ErrorViewModel error = new ErrorViewModel();
 
@@ -52,7 +52,7 @@ namespace CookDelicious.Core.Services.Admin
             return error;
         }
 
-        private async Task<bool> IsCategoryExists(AddCategoryViewModel model)
+        private async Task<bool> IsCategoryExists(CreateCategoryInputModel model)
         {
             return await repo.All<Category>()
                 .AnyAsync(x => x.Name == model.Name);
