@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CookDelicious.Core.Models.Sorting;
+using CookDelicious.Core.Service.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,7 @@ namespace CookDelicious.Core.Models.Paiging
         public bool HasNextPage => PageIndex < TotalPages;
 
 
+        //public SortServiceModel Sorting { get; set; }
 
         public static async Task<PagingList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
