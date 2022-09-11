@@ -1,4 +1,5 @@
-﻿using CookDelicious.Core.Service.Models;
+﻿using CookDelicious.Core.Models.Sorting;
+using CookDelicious.Core.Service.Models;
 using CookDelicious.Infrasturcture.Models.Common;
 using System.ComponentModel;
 
@@ -34,5 +35,11 @@ namespace CookDelicious.Core.Models.Recipe
         }
 
         public string ImageUrl { get; set; }
+
+        //public SortViewModel Sorting { get; set; }
+
+        //public IEnumerable<string> DishTypes { get; set; }
+
+        //public IEnumerable<string> Categories { get; set; }
     }
 }
