@@ -31,5 +31,7 @@
         public IEnumerable<RecipeProductServiceModel> RecipeProducts { get; set; }
 
         public IEnumerable<RecipeCommentServiceModel> Comments { get; set; }
+
+        public Dictionary<string, string> Sorting { get; set; }
     }
 }
