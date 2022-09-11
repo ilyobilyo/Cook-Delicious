@@ -111,7 +111,72 @@ namespace CookDelicious.Core.Services.Recipes
                 .ToListAsync();
 
             var itemsAsServiceModel = mapper.Map<IEnumerable<RecipeServiceModel>>(items);
+
+            return (itemsAsServiceModel, totalCount);
+        }
+
+        public async Task<(IEnumerable<RecipeServiceModel>, int)> GetSortRecipesForPageing(int pageNumber, int pageSize, SortServiceModel model)
+        {
+            var totalCount = await repo.All<Recipe>()
+                .Where(x => x.DishType.Name == model.DishType
+                || x.Catrgory.Name == model.Category)
+                .CountAsync();
+
+            var items = await repo.All<Recipe>()
+                .Include(x => x.DishType)
+                .Include(x => x.Catrgory)
+                .Include(x => x.Ratings)
+                .Where(x => x.DishType.Name == model.DishType
+                || x.Catrgory.Name == model.Category)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var itemsAsServiceModel = mapper.Map<IEnumerable<RecipeServiceModel>>(items);
+
+            return (itemsAsServiceModel, totalCount);
+        }
+
+        public async Task<(IEnumerable<RecipeServiceModel>, int)> GetSortRecipesForPageing(int pageNumber, int pageSize, string dishType, string category)
+        {
+            var totalCount = 0;
+
+            var items = new List<Recipe>();
+
+            if (dishType == "All" && category == "All")
+            {
+                 totalCount = await repo.All<Recipe>()
+                .CountAsync();
+
+                 items = await repo.All<Recipe>()
+                    .Include(x => x.DishType)
+                    .Include(x => x.Catrgory)
+                    .Include(x => x.Ratings)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+            }
+            else
+            {
+                 totalCount = await repo.All<Recipe>()
+                .Where(x => x.DishType.Name == dishType
+                || x.Catrgory.Name == category)
+                .CountAsync();
+
+                 items = await repo.All<Recipe>()
+                    .Include(x => x.DishType)
+                    .Include(x => x.Catrgory)
+                    .Include(x => x.Ratings)
+                    .Where(x => x.DishType.Name == dishType
+                    || x.Catrgory.Name == category)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+            }
             
+
+            var itemsAsServiceModel = mapper.Map<IEnumerable<RecipeServiceModel>>(items);
+
             return (itemsAsServiceModel, totalCount);
         }
 
@@ -166,6 +231,8 @@ namespace CookDelicious.Core.Services.Recipes
 
             return mapper.Map<RecipeServiceModel>(recipe);
         }
+
+        
 
         public async Task<bool> IsRatingSet(RatingSetServiceModel model)
         {

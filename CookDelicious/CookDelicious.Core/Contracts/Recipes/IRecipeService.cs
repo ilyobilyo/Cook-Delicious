@@ -1,4 +1,5 @@
 ﻿using CookDelicious.Core.Models.Recipe;
+using CookDelicious.Core.Models.Sorting;
 using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Recipes;
@@ -15,5 +16,7 @@ namespace CookDelicious.Core.Contracts.Recipes
         Task<Recipe> GetById(Guid id);
         Task<(IEnumerable<RecipeServiceModel>, int)> GetAllRecipesForPageing( int pageNumber, int pageSize);
         Task<IEnumerable<RecipeCommentServiceModel>> GetRecipeCommentsPerPage(Guid Id, int commentPage, int pageSize);
+        Task<(IEnumerable<RecipeServiceModel>, int)> GetSortRecipesForPageing(int pageNumber, int pageSize, SortServiceModel model);
+        Task<(IEnumerable<RecipeServiceModel>, int)> GetSortRecipesForPageing(int pageNumber, int pageSize, string dishType, string category);
     }
 }
