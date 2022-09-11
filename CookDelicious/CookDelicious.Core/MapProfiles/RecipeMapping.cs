@@ -13,7 +13,8 @@ namespace CookDelicious.Core.MapProfiles
     {
         public RecipeMapping()
         {
-            CreateMap<Recipe, RecipeServiceModel>();
+            CreateMap<Recipe, RecipeServiceModel>()
+                .ForMember(x => x.Sorting, y => y.Ignore());
             CreateMap<RecipeServiceModel, AllRecipeViewModel>();
             CreateMap<RecipeServiceModel, RecipePostViewModel>()
                 .ForMember(x => x.Category, y => y.MapFrom(s => s.Category.Name))
