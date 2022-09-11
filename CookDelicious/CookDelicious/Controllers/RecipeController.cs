@@ -6,6 +6,7 @@ using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Recipe;
+using CookDelicious.Core.Models.Sorting;
 using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using Microsoft.AspNetCore.Authorization;
@@ -29,8 +30,32 @@ namespace CookDelicious.Controllers
             this.mapper = mapper;
         }
 
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> All(int pageNumber, SortViewModel sort, string dishType)
+        //{
+        //    if (pageNumber == 0)
+        //    {
+        //        pageNumber = 1;
+        //    }
+
+        //    int pageSize = 1;
+
+        //    var sortServiceModel = mapper.Map<SortServiceModel>(sort);
+
+        //    (var recipesServiceModels, var totalCount) = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, sortServiceModel);
+
+        //    var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesServiceModels);
+
+        //    var pagingList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize);
+
+        //    pagingList.Sorting = sortServiceModel;
+
+        //    return View(pagingList);
+        //}
+
         [AllowAnonymous]
-        public async Task<IActionResult> All(int pageNumber)
+        public async Task<IActionResult> All(int pageNumber,[FromQuery] string dishType,[FromQuery] string category)
         {
             if (pageNumber == 0)
             {
@@ -39,14 +64,37 @@ namespace CookDelicious.Controllers
 
             int pageSize = 1;
 
-            (var recipesServiceModels, var totalCount) = await recipeService.GetAllRecipesForPageing(pageNumber, pageSize);
+            (var recipesServiceModels, var totalCount) = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, dishType, category);
 
             var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesServiceModels);
 
-            var pagingList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize);
+            var pagingViewModel = new RecipePagingViewModel() 
+            { 
+                PagedList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize), 
+                Sorting = new SortServiceModel() { DishType = dishType, Category = category } 
+            };
 
-            return View(pagingList);
+            return View(pagingViewModel);
         }
+
+        [AllowAnonymous]
+        public IActionResult Sort()
+        {
+            return View();
+        }
+
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> Sort(SortViewModel model)
+        //{
+        //    //var sortServiceModel = mapper.Map<SortServiceModel>(model);
+
+        //    //var recipesServiceModels = await recipeService.GetSortRecipesForPageing(sortServiceModel);
+
+        //    //var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesServiceModels);
+
+        //    //return RedirectToAction("All", recipesViewModel);
+        //}
 
         public async Task<IActionResult> CreateRecipe([FromRoute]string Id)
         {
