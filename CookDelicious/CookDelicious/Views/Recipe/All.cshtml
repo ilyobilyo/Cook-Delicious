@@ -1,10 +1,12 @@
 ﻿@using CookDelicious.Core.Models.Paiging
 @using CookDelicious.Core.Models.Recipe
-@model PagingList<AllRecipeViewModel>
+@using CookDelicious.Core.Models.Sorting
+@model RecipePagingViewModel
 
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = "Recipes";
 }
+
 
 <section class="best-receipe-area">
         <div class="container">
@@ -16,7 +18,7 @@
                 </div>
             </div>
             <div class="row">
-                @foreach(var recipe in Model)
+                @foreach(var recipe in Model.PagedList)
             {
                 <!-- Single Best Receipe Area -->
                 <div class="col-12 col-sm-6 col-lg-4">
@@ -46,10 +48,11 @@
             </div>
             
             @{
-              var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-              var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+              var prevDisabled = !Model.PagedList.HasPreviousPage ? "disabled" : "";
+              var nextDisabled = !Model.PagedList.HasNextPage ? "disabled" : "";
+              var dishType = Model.Sorting.DishType;
             }
-            <a asp-action="All" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
-            <a asp-action="All" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+            <a asp-action="All" asp-route-dishType="@dishType" asp-route-pageNumber="@(Model.PagedList.PageIndex - 1)"  class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
+            <a asp-action="All" asp-route-dishType="@dishType" asp-route-pageNumber="@(Model.PagedList.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
         </div>
     </section>
