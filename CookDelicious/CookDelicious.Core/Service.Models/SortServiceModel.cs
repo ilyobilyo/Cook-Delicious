@@ -6,8 +6,6 @@
 
         public string DishType { get; set; }
 
-        public string Date { get; set; }
-
-        public string Rating { get; set; }
+        public bool Date { get; set; }
     }
 }
