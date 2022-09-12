@@ -20,7 +20,7 @@ namespace CookDelicious.Core.Services.Forum
         private readonly IUserService userService;
         private readonly IMapper mapper;
 
-        public ForumService(IApplicationDbRepository repo, 
+        public ForumService(IApplicationDbRepository repo,
             IUserService userService,
             IMapper mapper)
         {
@@ -38,7 +38,7 @@ namespace CookDelicious.Core.Services.Forum
         {
             if (model.Title == null || model.Description == null)
             {
-                return new ErrorViewModel() { Messages = "Заглавието и садържанието на поста са задължителни!"};
+                return new ErrorViewModel() { Messages = "Заглавието и садържанието на поста са задължителни!" };
             }
 
             var author = await userService.GetApplicationUserByUsername(Username);
@@ -107,18 +107,56 @@ namespace CookDelicious.Core.Services.Forum
                 .ToListAsync();
         }
 
-        public async Task<(IEnumerable<ForumPostServiceModel>, int)> GetAllPostsForPageing(int pageNumber, int pageSize)
+        public async Task<(IEnumerable<ForumPostServiceModel>, int)> GetAllSortPostsForPageing(int pageNumber, int pageSize, string sortCategory, string sortArchive)
         {
-            var totalPostsCount = await repo.All<ForumPost>()
+            var totalPostsCount = 0;
+
+            var posts = new List<ForumPost>();
+
+            if (sortCategory == null && sortArchive == null)
+            {
+                totalPostsCount = await repo.All<ForumPost>()
+                .Where(x => x.IsDeleted == false)
                 .CountAsync();
 
-            var posts = await repo.All<ForumPost>()
-                .Include(x => x.Author)
-                .Include(x => x.PostCategory)
-                .Where(x => x.IsDeleted == false)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+                posts = await repo.All<ForumPost>()
+                   .Include(x => x.Author)
+                   .Include(x => x.PostCategory)
+                   .Where(x => x.IsDeleted == false)
+                   .Skip((pageNumber - 1) * pageSize)
+                   .Take(pageSize)
+                   .ToListAsync();
+            }
+            else if (sortCategory != null)
+            {
+                totalPostsCount = await repo.All<ForumPost>()
+                    .Include(x => x.PostCategory)
+                .Where(x => x.IsDeleted == false && x.PostCategory.Name == sortCategory)
+                .CountAsync();
+
+                posts = await repo.All<ForumPost>()
+                  .Include(x => x.Author)
+                  .Include(x => x.PostCategory)
+                  .Where(x => x.IsDeleted == false && x.PostCategory.Name == sortCategory)
+                  .Skip((pageNumber - 1) * pageSize)
+                  .Take(pageSize)
+                  .ToListAsync();
+            }
+            else
+            {
+                //totalPostsCount = await repo.All<ForumPost>()
+                //    .Include(x => x.PostCategory)
+                //.Where(x => x.IsDeleted == false && x.PublishedOn.Month == sortCategory)
+                //.CountAsync();
+
+                //posts = await repo.All<ForumPost>()
+                //  .Include(x => x.Author)
+                //  .Include(x => x.PostCategory)
+                //  .Where(x => x.IsDeleted == false && x.PublishedOn.ToString("MMMM yyyy") == sortCategory)
+                //  .Skip((pageNumber - 1) * pageSize)
+                //  .Take(pageSize)
+                //  .ToListAsync();
+            }
 
             var forumPostServiceModels = mapper.Map<IEnumerable<ForumPostServiceModel>>(posts);
 

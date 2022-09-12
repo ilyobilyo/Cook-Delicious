@@ -67,7 +67,7 @@
                             <ul class="list">
                                 @foreach(var archive in Model.Archive)
                                 {
-                                    <li><a href="#">@archive</a></li>
+                                    <li><a asp-action="Home" asp-controller="Forum" asp-route-pageNumber="1" asp-route-sortArchive="@archive" >@archive</a></li>
                                 }
                             </ul>
                         </div>
@@ -78,7 +78,7 @@
                             <ul class="list">
                                 @foreach(var category in Model.Categories)
                                 {
-                                    <li><a href="#">@category</a></li>
+                                    <li><a asp-action="Home" asp-controller="Forum" asp-route-pageNumber="1" asp-route-sortCategory="@category" >@category</a></li>
                                 }
                             </ul>
                         </div>

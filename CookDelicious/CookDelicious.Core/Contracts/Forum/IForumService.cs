@@ -11,7 +11,7 @@ namespace CookDelicious.Core.Contracts.Forum
     {
         Task<IList<string>> GetAllPostCategoryNames();
         Task<ErrorViewModel> CreatePost(CreateForumPostInputModel model, string name);
-        Task<(IEnumerable<ForumPostServiceModel>, int)> GetAllPostsForPageing(int pageNumber, int pageSize);
+        Task<(IEnumerable<ForumPostServiceModel>, int)> GetAllSortPostsForPageing(int pageNumber, int pageSize, string sortCSategory, string sortArchive);
         Task<IList<string>> GetArchive();
         Task<ForumPostServiceModel> GetPostServiceModelById(Guid id);
         Task<bool> DeletePost(Guid id);
