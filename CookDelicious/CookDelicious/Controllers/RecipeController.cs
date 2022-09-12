@@ -30,71 +30,60 @@ namespace CookDelicious.Controllers
             this.mapper = mapper;
         }
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> All(int pageNumber, SortViewModel sort, string dishType)
-        //{
-        //    if (pageNumber == 0)
-        //    {
-        //        pageNumber = 1;
-        //    }
-
-        //    int pageSize = 1;
-
-        //    var sortServiceModel = mapper.Map<SortServiceModel>(sort);
-
-        //    (var recipesServiceModels, var totalCount) = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, sortServiceModel);
-
-        //    var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesServiceModels);
-
-        //    var pagingList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize);
-
-        //    pagingList.Sorting = sortServiceModel;
-
-        //    return View(pagingList);
-        //}
-
+        [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> All(int pageNumber,[FromQuery] string dishType,[FromQuery] string category)
+        public async Task<IActionResult> All(int pageNumber, RecipePagingViewModel sort)
         {
             if (pageNumber == 0)
             {
                 pageNumber = 1;
             }
 
-            int pageSize = 1;
+            int pageSize = 3;
 
-            (var recipesServiceModels, var totalCount) = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, dishType, category);
+            var sortServiceModel = mapper.Map<SortServiceModel>(sort.Sorting);
+
+            (var recipesServiceModels, var totalCount) = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, sortServiceModel);
+
+            var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesServiceModels);
+
+            var pagingViewModel = new RecipePagingViewModel()
+            {
+                PagedList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize),
+                Sorting = new SortViewModel() { DishType = sortServiceModel.DishType, Category = sortServiceModel.Category },
+                Categories = await categoryService.GetAllCategoryNames()
+            };
+
+            return View(pagingViewModel);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> All(int pageNumber,
+            [FromQuery] string dishType,
+            [FromQuery] string category, 
+            [FromQuery] bool dateAsc)
+        {
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
+
+            int pageSize = 3;
+
+            (var recipesServiceModels, var totalCount) = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, dishType, category, dateAsc);
 
             var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesServiceModels);
 
             var pagingViewModel = new RecipePagingViewModel() 
             { 
                 PagedList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize), 
-                Sorting = new SortServiceModel() { DishType = dishType, Category = category } 
+                Sorting = new SortViewModel() { DishType = dishType, Category = category },
+                Categories = await categoryService.GetAllCategoryNames()
             };
 
             return View(pagingViewModel);
         }
-
-        [AllowAnonymous]
-        public IActionResult Sort()
-        {
-            return View();
-        }
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> Sort(SortViewModel model)
-        //{
-        //    //var sortServiceModel = mapper.Map<SortServiceModel>(model);
-
-        //    //var recipesServiceModels = await recipeService.GetSortRecipesForPageing(sortServiceModel);
-
-        //    //var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesServiceModels);
-
-        //    //return RedirectToAction("All", recipesViewModel);
-        //}
 
         public async Task<IActionResult> CreateRecipe([FromRoute]string Id)
         {
