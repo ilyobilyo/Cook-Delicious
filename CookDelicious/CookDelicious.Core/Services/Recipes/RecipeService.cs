@@ -117,12 +117,15 @@ namespace CookDelicious.Core.Services.Recipes
 
         public async Task<(IEnumerable<RecipeServiceModel>, int)> GetSortRecipesForPageing(int pageNumber, int pageSize, SortServiceModel model)
         {
-            var totalCount = await repo.All<Recipe>()
-                .Where(x => x.DishType.Name == model.DishType
-                || x.Catrgory.Name == model.Category)
-                .CountAsync();
+            int totalCount = await GetSortedRecipesTotalCount(model);
 
-            var items = await repo.All<Recipe>()
+            var items = new List<Recipe>();
+
+            if (totalCount == 0)
+            {
+                totalCount = await GetRecipeTotalCountWithOneOfTheSortParameters(model);
+
+                items = await repo.All<Recipe>()
                 .Include(x => x.DishType)
                 .Include(x => x.Catrgory)
                 .Include(x => x.Ratings)
@@ -132,12 +135,49 @@ namespace CookDelicious.Core.Services.Recipes
                 .Take(pageSize)
                 .ToListAsync();
 
+                if (model.Date)
+                {
+                    items = items.OrderByDescending(x => x.PublishedOn).ToList();
+                }
+                else
+                {
+                    items = items.OrderBy(x => x.PublishedOn).ToList();
+                }
+            }
+            else
+            {
+                items = await repo.All<Recipe>()
+                .Include(x => x.DishType)
+                .Include(x => x.Catrgory)
+                .Include(x => x.Ratings)
+                .Where(x => x.DishType.Name == model.DishType
+                && x.Catrgory.Name == model.Category)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+                if (model.Date)
+                {
+                    items = items.OrderBy(x => x.PublishedOn).ToList();
+                }
+                else
+                {
+                    items = items.OrderByDescending(x => x.PublishedOn).ToList();
+                }
+            }
+
             var itemsAsServiceModel = mapper.Map<IEnumerable<RecipeServiceModel>>(items);
 
             return (itemsAsServiceModel, totalCount);
         }
 
-        public async Task<(IEnumerable<RecipeServiceModel>, int)> GetSortRecipesForPageing(int pageNumber, int pageSize, string dishType, string category)
+
+
+        public async Task<(IEnumerable<RecipeServiceModel>, int)> GetSortRecipesForPageing(int pageNumber,
+            int pageSize,
+            string dishType,
+            string category,
+            bool orderByDateAsc)
         {
             var totalCount = 0;
 
@@ -145,40 +185,74 @@ namespace CookDelicious.Core.Services.Recipes
 
             if (dishType == "All" && category == "All")
             {
-                 totalCount = await repo.All<Recipe>()
-                .CountAsync();
+                totalCount = await repo.All<Recipe>()
+               .CountAsync();
 
-                 items = await repo.All<Recipe>()
-                    .Include(x => x.DishType)
-                    .Include(x => x.Catrgory)
-                    .Include(x => x.Ratings)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToListAsync();
+                items = await repo.All<Recipe>()
+                   .Include(x => x.DishType)
+                   .Include(x => x.Catrgory)
+                   .Include(x => x.Ratings)
+                   .Skip((pageNumber - 1) * pageSize)
+                   .Take(pageSize)
+                   .ToListAsync();
+
+                if (orderByDateAsc)
+                {
+                    items.OrderBy(x => x.PublishedOn);
+                }
+                else
+                {
+                    items.OrderByDescending(x => x.PublishedOn);
+                }
             }
             else
             {
-                 totalCount = await repo.All<Recipe>()
-                .Where(x => x.DishType.Name == dishType
-                || x.Catrgory.Name == category)
-                .CountAsync();
+                totalCount = await GetSortedRecipesTotalCount(dishType, category);
 
-                 items = await repo.All<Recipe>()
-                    .Include(x => x.DishType)
-                    .Include(x => x.Catrgory)
-                    .Include(x => x.Ratings)
-                    .Where(x => x.DishType.Name == dishType
-                    || x.Catrgory.Name == category)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToListAsync();
+                if (totalCount == 0)
+                {
+                    totalCount = await GetRecipeTotalCountWithOneOfTheSortParameters(dishType, category);
+
+                    items = await repo.All<Recipe>()
+                  .Include(x => x.DishType)
+                  .Include(x => x.Catrgory)
+                  .Include(x => x.Ratings)
+                  .Where(x => x.DishType.Name == dishType
+                  || x.Catrgory.Name == category)
+                  .Skip((pageNumber - 1) * pageSize)
+                  .Take(pageSize)
+                  .ToListAsync();
+                }
+                else
+                {
+                    items = await repo.All<Recipe>()
+                  .Include(x => x.DishType)
+                  .Include(x => x.Catrgory)
+                  .Include(x => x.Ratings)
+                  .Where(x => x.DishType.Name == dishType
+                  && x.Catrgory.Name == category)
+                  .Skip((pageNumber - 1) * pageSize)
+                  .Take(pageSize)
+                  .ToListAsync();
+                }
+
+                if (orderByDateAsc)
+                {
+                    items.OrderBy(x => x.PublishedOn);
+                }
+                else
+                {
+                    items.OrderByDescending(x => x.PublishedOn);
+                }
             }
-            
+
 
             var itemsAsServiceModel = mapper.Map<IEnumerable<RecipeServiceModel>>(items);
 
             return (itemsAsServiceModel, totalCount);
         }
+
+
 
         //TODO MAPPING
         public async Task<Recipe> GetById(Guid id)
@@ -186,7 +260,7 @@ namespace CookDelicious.Core.Services.Recipes
             return await repo.GetByIdAsync<Recipe>(id);
         }
 
-        public async Task<IEnumerable<RecipeCommentServiceModel>> GetRecipeCommentsPerPage(Guid Id ,int commentPage, int pageSize)
+        public async Task<IEnumerable<RecipeCommentServiceModel>> GetRecipeCommentsPerPage(Guid Id, int commentPage, int pageSize)
         {
             var items = await repo.All<RecipeComment>()
                 .Include(x => x.Author)
@@ -221,7 +295,7 @@ namespace CookDelicious.Core.Services.Recipes
             return recipeServiceModel;
         }
 
-      
+
 
         public async Task<RecipeServiceModel> GetRecipeForSetRating(Guid id)
         {
@@ -232,7 +306,7 @@ namespace CookDelicious.Core.Services.Recipes
             return mapper.Map<RecipeServiceModel>(recipe);
         }
 
-        
+
 
         public async Task<bool> IsRatingSet(RatingSetServiceModel model)
         {
@@ -253,7 +327,7 @@ namespace CookDelicious.Core.Services.Recipes
 
             try
             {
-                 await repo.SaveChangesAsync();
+                await repo.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -261,6 +335,40 @@ namespace CookDelicious.Core.Services.Recipes
             }
 
             return true;
+        }
+
+       
+
+        private async Task<int> GetRecipeTotalCountWithOneOfTheSortParameters(string dishType, string category)
+        {
+            return await repo.All<Recipe>()
+                .Where(x => x.DishType.Name == dishType
+                || x.Catrgory.Name == category)
+                .CountAsync();
+        }
+
+        private async Task<int> GetSortedRecipesTotalCount(string dishType, string category)
+        {
+            return await repo.All<Recipe>()
+           .Where(x => x.DishType.Name == dishType
+           && x.Catrgory.Name == category)
+           .CountAsync();
+        }
+
+        private async Task<int> GetRecipeTotalCountWithOneOfTheSortParameters(SortServiceModel model)
+        {
+            return await repo.All<Recipe>()
+                .Where(x => x.DishType.Name == model.DishType
+                || x.Catrgory.Name == model.Category)
+                .CountAsync();
+        }
+
+        private async Task<int> GetSortedRecipesTotalCount(SortServiceModel model)
+        {
+            return await repo.All<Recipe>()
+                .Where(x => x.DishType.Name == model.DishType
+                && x.Catrgory.Name == model.Category)
+                .CountAsync();
         }
 
         private int GetRatingDigit(RatingSetServiceModel model)
