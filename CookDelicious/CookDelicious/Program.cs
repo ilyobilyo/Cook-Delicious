@@ -2,6 +2,7 @@ using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Contracts.Admin.Product;
+using CookDelicious.Core.Contracts.Blog;
 using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Common.Categories;
 using CookDelicious.Core.Contracts.Common.DishTypes;
@@ -11,6 +12,7 @@ using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.MapProfiles;
 using CookDelicious.Core.Services.Admin;
+using CookDelicious.Core.Services.BlogService;
 using CookDelicious.Core.Services.Comments;
 using CookDelicious.Core.Services.Common.Categories;
 using CookDelicious.Core.Services.Common.DishTypes;
@@ -50,7 +52,9 @@ builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<IForumService, ForumService>()
     .AddScoped<IForumServiceAdmin, ForumServiceAdmin>()
     .AddScoped<ICommentService, CommentService>()
-    .AddScoped<ICommentServiceAdmin, CommentServiceAdmin>();
+    .AddScoped<ICommentServiceAdmin, CommentServiceAdmin>()
+    .AddScoped<IBlogService, BlogService>()
+    .AddScoped<IBlogServiceAdmin, BlogServiceAdmin>();
 
 builder.Services.AddAutoMapper(typeof(RecipeMapping),
     typeof(UserMapping), 
@@ -58,7 +62,8 @@ builder.Services.AddAutoMapper(typeof(RecipeMapping),
     typeof(DishTypeMapping),
     typeof(ProductMapping),
     typeof(RatingMapping),
-    typeof(ForumMapping));
+    typeof(ForumMapping),
+    typeof(BlogMapping));
 
 builder.Services.AddAutoMapper(typeof(ProductMapping));
 
