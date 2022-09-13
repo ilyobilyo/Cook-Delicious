@@ -4,6 +4,7 @@ using CookDelicious.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CookDelicious.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220913124628_AddBlogPostTableAndBlogPostCategoriesTable")]
+    partial class AddBlogPostTableAndBlogPostCategoriesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasIndex("BlogPostCategoryId");
 
-                    b.ToTable("BlogPosts", (string)null);
+                    b.ToTable("BlogPosts");
                 });
 
             modelBuilder.Entity("CookDelicious.Infrasturcture.Models.Blog.BlogPostCategory", b =>
@@ -75,7 +77,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlogPostCategories", (string)null);
+                    b.ToTable("BlogPostCategories");
                 });
 
             modelBuilder.Entity("CookDelicious.Infrasturcture.Models.Common.Category", b =>
@@ -94,7 +96,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("CookDelicious.Infrasturcture.Models.Common.DishType", b =>
@@ -113,7 +115,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DishTypes", (string)null);
+                    b.ToTable("DishTypes");
                 });
 
             modelBuilder.Entity("CookDelicious.Infrasturcture.Models.Common.Product", b =>
@@ -137,7 +139,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("CookDelicious.Infrasturcture.Models.Common.Rating", b =>
@@ -156,7 +158,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Ratings", (string)null);
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("CookDelicious.Infrasturcture.Models.Common.RecipeProduct", b =>
@@ -176,7 +178,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("RecipeProducts", (string)null);
+                    b.ToTable("RecipeProducts");
                 });
 
             modelBuilder.Entity("CookDelicious.Infrasturcture.Models.Forum.ForumComment", b =>
@@ -209,7 +211,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasIndex("ForumPostId");
 
-                    b.ToTable("ForumComments", (string)null);
+                    b.ToTable("ForumComments");
                 });
 
             modelBuilder.Entity("CookDelicious.Infrasturcture.Models.Forum.ForumPost", b =>
@@ -249,7 +251,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasIndex("PostCategoryId");
 
-                    b.ToTable("ForumPosts", (string)null);
+                    b.ToTable("ForumPosts");
                 });
 
             modelBuilder.Entity("CookDelicious.Infrasturcture.Models.Forum.PostCategory", b =>
@@ -264,7 +266,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PostCategories", (string)null);
+                    b.ToTable("PostCategories");
                 });
 
             modelBuilder.Entity("CookDelicious.Infrasturcture.Models.Identity.ApplicationUser", b =>
@@ -405,7 +407,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasIndex("DishTypeId");
 
-                    b.ToTable("Recipes", (string)null);
+                    b.ToTable("Recipes");
                 });
 
             modelBuilder.Entity("CookDelicious.Infrasturcture.Models.Recipes.RecipeComment", b =>
@@ -438,7 +440,7 @@ namespace CookDelicious.Infrastructure.Data.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("RecipeComments", (string)null);
+                    b.ToTable("RecipeComments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

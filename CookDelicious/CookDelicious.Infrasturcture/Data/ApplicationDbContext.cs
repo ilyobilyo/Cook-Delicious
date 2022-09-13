@@ -1,4 +1,5 @@
-﻿using CookDelicious.Infrasturcture.Models.Common;
+﻿using CookDelicious.Infrasturcture.Models.Blog;
+using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Models.Forum;
 using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Models.Recipes;
@@ -33,6 +34,10 @@ namespace CookDelicious.Infrastructure.Data
         public DbSet<Rating> Ratings { get; set; }
 
         public DbSet<PostCategory> PostCategories { get; set; }
+
+        public DbSet<BlogPost> BlogPosts { get; set; }
+
+        public DbSet<BlogPostCategory> BlogPostCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
