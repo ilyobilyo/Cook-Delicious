@@ -93,36 +93,52 @@
                                     @if (User.Identity.IsAuthenticated)
                                     {
                                         <li class="active">
-                                            <a class="active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                            <a class="active" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                                         </li>
                                         <li>
-						                    <a class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="All" asp-route-category="All">Recipes</a>
+						                    <a class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="All" asp-route-category="All">Всички Рецепти</a>
 					                    </li>
 					                    <li>
-						                    <a class="active" asp-area="" asp-controller="User" asp-action="MyProfile">MyProfile</a>
+						                    <a class="active" asp-area="" asp-controller="User" asp-action="MyProfile">Моят Профил</a>
 					                    </li>
-                                        <li>
-                                            <a class="active" asp-area="" asp-controller="Forum" asp-action="Home">Forum</a>
-                                        </li>
-                                        <li><a href="#">Mega Menu</a>
+                                        
+                                        <li><a href="/">Mega Menu</a>
                                             <div class="megamenu">
-                                                <ul class="single-mega cn-col-4">
-                                                    
-                                                </ul>
-                                                <ul class="single-mega cn-col-4">
-                                                    <li>
-						                                <a class="active" asp-area="" asp-controller="Product" asp-action="All" asp-route-dishType="All" asp-route-category="All">Products</a>
+                                                <ul class="single-mega cn-col-4" >
+                                                    <li style="margin: 10px">
+						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Аламинути" asp-route-category="All">Аламинути</a>
+					                                </li>
+                                                    <li style="margin: 10px">
+						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Предястия" asp-route-category="All">Предястия</a>
+					                                </li>
+                                                    <li style="margin: 10px">
+						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Основни ястия" asp-route-category="All">Основни ястия</a>
+					                                </li>
+                                                    <li style="margin: 10px">
+						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Десерти" asp-route-category="All">Десерти</a>
+					                                </li>
+                                                    <li style="margin: 10px">
+						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Коктейли" asp-route-category="All">Коктейли</a>
+					                                </li>
+                                                    <li style="margin: 10px">
+						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Product" asp-action="All" asp-route-dishType="All" asp-route-category="All">Продукти</a>
 					                                </li>
                                                 </ul>
                                                 <ul class="single-mega cn-col-4">
-                                                    <li>
-                                                        <a href="contact.html">Contact</a>
+                                                    <li style="margin: 10px">
+                                                        <a style="font-size: 25px; color: #1c8314" class="active" asp-area="" asp-controller="Forum" asp-action="Home">Форум</a>
+                                                    </li>
+                                                    <li style="margin: 10px">
+                                                        <a style="font-size: 25px; color: #1c8314" class="active" asp-area="" asp-controller="Blog" asp-action="Home">Блог</a>
+                                                    </li>
+                                                    <li style="margin: 10px">
+                                                        <a style="font-size: 25px; color: #1c8314" href="contact.html">Контакти</a>
                                                     </li>
                                                 </ul>
-                                                <div class="single-mega cn-col-4">
+                                                <div class="single-mega cn-col-4" style="width: 900px">
                                                     <div class="receipe-slider owl-carousel">
-                                                        <a href="#"><img src="img/bg-img/bg1.jpg" alt=""></a>
-                                                        <a href="#"><img src="img/bg-img/bg6.jpg" alt=""></a>
+                                                        <a  style="width: 900px; height: 300px" href="/"><img src="~/img/bg-img/bg3.jpg" alt=""></a>
+                                                        <a  style="width: 900px; height: 300px" href="/"><img src="~/img/bg-img/bg2.jpg" alt=""></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,31 +146,34 @@
                                         @if (User.IsInRole("Administrator"))
                                         {
                                             <li>
-						                        <a class="active" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Menu</a>
+						                        <a class="active" asp-area="Admin" asp-controller="Home" asp-action="Index">Админ меню</a>
 					                        </li>
                                         }
                                         <li class="active">
                                          <form class="active" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                            <button type="submit" class="custom-button">Logout</button>
+                                            <button type="submit" class="custom-button">Изход</button>
                                         </form>
                                     </li>
                                     }
                                     else
                                     {
-                                        <li class="active">
-                                            <a class="active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                        <li>
+                                            <a class="active" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                                         </li>
                                         <li>
-                                            <a class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="All" asp-route-category="All">Recipes</a>
+                                            <a class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="All" asp-route-category="All">Всички рецепти</a>
                                         </li>
                                         <li>
-                                            <a class="active" href="/Identity/Account/Login">Login</a>
-                                        </li>
-                                         <li>
-                                            <a class="active" href="/Identity/Account/Register">Register</a>
+                                            <a class="active" asp-area="" asp-controller="Blog" asp-action="Home">Блог</a>
                                         </li>
                                         <li>
-                                            <a class="active" asp-area="" asp-controller="Forum" asp-action="Home">Forum</a>
+                                            <a class="active" asp-area="" asp-controller="Forum" asp-action="Home">Форум</a>
+                                        </li>
+                                        <li  class="active">
+                                            <a class="active" href="/Identity/Account/Login">Вход</a>
+                                        </li>
+                                         <li  class="active">
+                                            <a class="active" href="/Identity/Account/Register">Регистрация</a>
                                         </li>
                                     }
                                 </ul>
