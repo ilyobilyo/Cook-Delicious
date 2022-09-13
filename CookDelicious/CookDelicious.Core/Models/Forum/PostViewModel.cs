@@ -1,6 +1,6 @@
 ﻿namespace CookDelicious.Core.Models.Forum
 {
-    public class AllForumPostViewModel
+    public class PostViewModel
     {
         public Guid Id { get; set; }
 

@@ -8,6 +8,6 @@ namespace CookDelicious.Core.Models.Forum
 
         public IList<string> Archive { get; set; }
 
-        public PagingList<AllForumPostViewModel> Posts { get; set; }
+        public PagingList<PostViewModel> Posts { get; set; }
     }
 }

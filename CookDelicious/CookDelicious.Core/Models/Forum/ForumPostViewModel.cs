@@ -3,7 +3,7 @@ using CookDelicious.Core.Models.Paiging;
 
 namespace CookDelicious.Core.Models.Forum
 {
-    public class ForumPostViewModel : AllForumPostViewModel
+    public class ForumPostViewModel : PostViewModel
     {
         public PagingList<CommentViewModel> Comments { get; set; }
 
