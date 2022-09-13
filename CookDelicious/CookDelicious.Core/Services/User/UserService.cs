@@ -30,6 +30,7 @@ namespace CookDelicious.Core.Services.User
         public async Task<UserServiceModel> GetUserByUsername(string author)
         {
             var user = await repo.All<ApplicationUser>()
+                .Include(x => x.Recipes)
                 .Where(x => x.UserName == author)
                 .FirstOrDefaultAsync();
 
