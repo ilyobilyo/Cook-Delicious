@@ -21,6 +21,6 @@
 
         public string? Address { get; set; }
 
-        public List<MyRecipesViewModel>? MyRecipes { get; set; }
+        public List<MyRecipesViewModel> MyRecipes { get; set; }
     }
 }
