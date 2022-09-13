@@ -107,13 +107,13 @@ namespace CookDelicious.Core.Services.Forum
                 .ToListAsync();
         }
 
-        public async Task<(IEnumerable<ForumPostServiceModel>, int)> GetAllSortPostsForPageing(int pageNumber, int pageSize, string sortCategory, string sortArchive)
+        public async Task<(IEnumerable<ForumPostServiceModel>, int)> GetAllSortPostsForPageing(int pageNumber, int pageSize, string sortCategory)
         {
             var totalPostsCount = 0;
 
             var posts = new List<ForumPost>();
 
-            if (sortCategory == null && sortArchive == null)
+            if (sortCategory == null)
             {
                 totalPostsCount = await repo.All<ForumPost>()
                 .Where(x => x.IsDeleted == false)
@@ -127,7 +127,7 @@ namespace CookDelicious.Core.Services.Forum
                    .Take(pageSize)
                    .ToListAsync();
             }
-            else if (sortCategory != null)
+            else
             {
                 totalPostsCount = await repo.All<ForumPost>()
                     .Include(x => x.PostCategory)
@@ -141,21 +141,6 @@ namespace CookDelicious.Core.Services.Forum
                   .Skip((pageNumber - 1) * pageSize)
                   .Take(pageSize)
                   .ToListAsync();
-            }
-            else
-            {
-                //totalPostsCount = await repo.All<ForumPost>()
-                //    .Include(x => x.PostCategory)
-                //.Where(x => x.IsDeleted == false && x.PublishedOn.Month == sortCategory)
-                //.CountAsync();
-
-                //posts = await repo.All<ForumPost>()
-                //  .Include(x => x.Author)
-                //  .Include(x => x.PostCategory)
-                //  .Where(x => x.IsDeleted == false && x.PublishedOn.ToString("MMMM yyyy") == sortCategory)
-                //  .Skip((pageNumber - 1) * pageSize)
-                //  .Take(pageSize)
-                //  .ToListAsync();
             }
 
             var forumPostServiceModels = mapper.Map<IEnumerable<ForumPostServiceModel>>(posts);

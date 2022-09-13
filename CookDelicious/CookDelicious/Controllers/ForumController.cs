@@ -28,7 +28,7 @@ namespace CookDelicious.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Home(int pageNumber, string sortCategory = null, string sortArchive = null)
+        public async Task<IActionResult> Home(int pageNumber, string sortCategory = null)
         {
             if (pageNumber == 0)
             {
@@ -37,11 +37,11 @@ namespace CookDelicious.Controllers
 
             int pageSize = 6;
 
-            var (postsServiceModels, totalPostsCount) = await forumService.GetAllSortPostsForPageing(pageNumber, pageSize, sortCategory, sortArchive);
+            var (postsServiceModels, totalPostsCount) = await forumService.GetAllSortPostsForPageing(pageNumber, pageSize, sortCategory);
 
-            var postsViewModel = mapper.Map<List<AllForumPostViewModel>>(postsServiceModels);
+            var postsViewModel = mapper.Map<List<PostViewModel>>(postsServiceModels);
 
-            var postsPageingList = new PagingList<AllForumPostViewModel>(postsViewModel, totalPostsCount, pageNumber, pageSize);
+            var postsPageingList = new PagingList<PostViewModel>(postsViewModel, totalPostsCount, pageNumber, pageSize);
 
             var categories = await forumService.GetAllPostCategoryNames();
 
