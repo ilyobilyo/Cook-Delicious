@@ -27,6 +27,7 @@ namespace CookDelicious.Core.Services.Products
         public async Task<IEnumerable<ProductServiceModel>> GetAllProducts()
         {
             var allProducts = await repo.All<Product>()
+                .Where(x => x.IsDeleted == false && x.Type != "Незададен")
                 .ToListAsync();
 
             return mapper.Map<IEnumerable<ProductServiceModel>>(allProducts);
@@ -37,6 +38,7 @@ namespace CookDelicious.Core.Services.Products
             var totalCount = await repo.All<Product>().CountAsync();
 
             var items = await repo.All<Product>()
+                .Where(x => x.IsDeleted == false && x.Type != "Незададен")
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -50,11 +52,11 @@ namespace CookDelicious.Core.Services.Products
         {
             var splitedProductsWithQuantity = products.Split(", ", StringSplitOptions.RemoveEmptyEntries);
             var splitedProductsNames = products.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var productDict = Enumerable.Range(0, splitedProductsNames.Length / 2).ToDictionary(i => splitedProductsNames[2 * i] , i => splitedProductsNames[2 * i + 1]);
+            var productDict = Enumerable.Range(0, splitedProductsNames.Length / 2).ToDictionary(i => splitedProductsNames[2 * i + 1] , i => splitedProductsNames[2 * i]);
 
             List<RecipeProduct> recipeProducts = new List<RecipeProduct>();
 
-            foreach (var (quantity, recipeProduct) in productDict)
+            foreach (var (recipeProduct, quantity) in productDict)
             {
                 var isExist = await IsProductExists(recipeProduct);
 
