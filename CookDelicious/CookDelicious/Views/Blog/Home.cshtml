@@ -1,0 +1,190 @@
+﻿@using CookDelicious.Core.Models.Blog
+@model BlogHomeViewModel
+
+
+<link rel="stylesheet" href="~/css/style.css">
+<link rel="stylesheet" href="~/plugins/toastr/toastr.min.css">
+
+<body>
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <div class="breadcumb-area bg-img bg-overlay">
+        <img src="~/img/bg-img/breadcumb2.jpg" style="height: 190px; width: 1750.75px;"/>
+    </div>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Blog Area Start ##### -->
+    <div class="blog-area section-padding-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <div class="blog-posts-area">
+                        <!-- Single Blog Area -->
+                        @foreach(var post in Model.Posts)
+                        {
+                         <div class="single-blog-area mb-80">
+                            <!-- Thumbnail -->
+                            <div class="blog-thumbnail">
+                                <img src="~/img/blog-img/3.jpg" style="width: 730px; height: 294.19px;">
+                                <!-- Post Date -->
+                                <div class="post-date" style="height: 100px; width: 85px;">
+                                    <a href="/Forum/ForumPost/@post.Id" style="height: 100px; width: 85px;"><span>@post.DatePublishedOn</span>@post.MonthPublishedOn <br> @post.YearPublishedOn</a>
+                                </div>
+                            </div>
+                            <!-- Content -->
+                            <div class="blog-content">
+                                <a href="/Forum/ForumPost/@post.Id" class="post-title">@post.Title</a>
+                                <div class="meta-data">by <a href="/User/UserProfile?AuthorName=@post.AuthorName">@post.AuthorName</a> in @post.CategoryName
+                                </div>
+                                <div class="limit" >
+                                    <p style="word-wrap: break-word; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@post.Content</p>
+                                 </div>
+                                <a href="/Forum/ForumPost/@post.Id" class="btn delicious-btn mt-30">Read More</a>
+                            </div>
+             
+                         </div>
+                        }
+                    </div>
+                </div>
+       
+                <div class="col-12 col-lg-4">
+                    <div class="blog-sidebar-area">
+
+                         <!-- Widget -->
+                        <div class="single-widget mb-80">
+                            <h3>Създай нов пост</h3>
+
+                            <!-- Form -->
+                            <div class="newsletter-form bg-img bg-overlay" style="background-image: url(img/bg-img/bg1.jpg);">
+                                    <a class="btn delicious-btn w-100" asp-action="CreatePost" asp-controller="Forum">Публикувай пост</a>
+                                <p>Fusce nec ante vitae lacus aliquet vulputate. Donec sceleri sque accumsan molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.</p>
+                            </div>
+                        </div>
+
+                        <!-- Widget -->
+                        <div class="single-widget mb-80">
+                            <h6>Archive</h6>
+                            <ul class="list">
+                                @foreach(var archive in Model.Archive)
+                                {
+                                    <li>@archive</li>
+                                }
+                            </ul>
+                        </div>
+
+                        <!-- Widget -->
+                        <div class="single-widget mb-80">
+                            <h6>Categories</h6>
+                            <ul class="list">
+                                @foreach(var category in Model.Categories)
+                                {
+                                    <li><a asp-action="Home" asp-controller="Forum" asp-route-pageNumber="1" asp-route-sortCategory="@category" >@category</a></li>
+                                }
+                            </ul>
+                        </div>
+
+                        <!-- Widget -->
+                        <div class="single-widget mb-80">
+                            <div class="quote-area text-center">
+                                <span>"</span>
+                                <h4>Nothing is better than going home to family and eating good food and relaxing</h4>
+                                <p>John Smith</p>
+                                <div class="date-comments d-flex justify-content-between">
+                                    <div class="date">January 04, 2018</div>
+                                    <div class="comments">2 Comments</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+                                        
+            @{
+              var prevDisabled = !Model.Posts.HasPreviousPage ? "disabled" : "";
+              var nextDisabled = !Model.Posts.HasNextPage ? "disabled" : "";
+            }
+            <a asp-action="Home" asp-route-pageNumber="@(Model.Posts.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
+            <a asp-action="Home" asp-route-pageNumber="@(Model.Posts.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+        </div>
+          
+    </div>
+    <!-- ##### Blog Area End ##### -->
+       
+    <!-- ##### Follow Us Instagram Area Start ##### -->
+    <div class="follow-us-instagram">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h5>Follow Us Instragram</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Instagram Feeds -->
+        <div class="insta-feeds d-flex flex-wrap">
+            <!-- Single Insta Feeds -->
+            <div class="single-insta-feeds">
+                <img src="~/img/bg-img/insta1.jpg" alt="">
+                <!-- Icon -->
+                <div class="insta-icon">
+                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <!-- Single Insta Feeds -->
+            <div class="single-insta-feeds">
+                <img src="~/img/bg-img/insta2.jpg" alt="">
+                <!-- Icon -->
+                <div class="insta-icon">
+                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <!-- Single Insta Feeds -->
+            <div class="single-insta-feeds">
+                <img src="~/img/bg-img/insta3.jpg" alt="">
+                <!-- Icon -->
+                <div class="insta-icon">
+                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <!-- Single Insta Feeds -->
+            <div class="single-insta-feeds">
+                <img src="~/img/bg-img/insta4.jpg" alt="">
+                <!-- Icon -->
+                <div class="insta-icon">
+                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <!-- Single Insta Feeds -->
+            <div class="single-insta-feeds">
+                <img src="~/img/bg-img/insta5.jpg" alt="">
+                <!-- Icon -->
+                <div class="insta-icon">
+                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <!-- Single Insta Feeds -->
+            <div class="single-insta-feeds">
+                <img src="~/img/bg-img/insta6.jpg" alt="">
+                <!-- Icon -->
+                <div class="insta-icon">
+                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <!-- Single Insta Feeds -->
+            <div class="single-insta-feeds">
+                <img src="~/img/bg-img/insta7.jpg" alt="">
+                <!-- Icon -->
+                <div class="insta-icon">
+                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+           
+    </div>
+</body>
