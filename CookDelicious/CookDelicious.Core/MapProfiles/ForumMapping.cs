@@ -21,7 +21,7 @@ namespace CookDelicious.Core.MapProfiles
                 .ForMember(x => x.AuthorName, y => y.MapFrom(s => s.Author.UserName))
                 .ForMember(x => x.CategoryName, y => y.MapFrom(s => s.PostCategory.Name))
                 .ForMember(x => x.Comments, y => y.Ignore());
-            CreateMap<ForumPostServiceModel, AllForumPostViewModel>()
+            CreateMap<ForumPostServiceModel, PostViewModel>()
                 .ForMember(x => x.DatePublishedOn, y => y.MapFrom(s => s.PublishedOn.ToString("dd")))
                 .ForMember(x => x.MonthPublishedOn, y => y.MapFrom(s => s.PublishedOn.ToString("MMMM")))
                 .ForMember(x => x.YearPublishedOn, y => y.MapFrom(s => s.PublishedOn.ToString("yyyy")))
