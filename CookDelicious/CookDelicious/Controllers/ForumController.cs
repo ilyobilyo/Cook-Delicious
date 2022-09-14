@@ -6,6 +6,7 @@ using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Forum;
 using CookDelicious.Core.Models.Paiging;
+using CookDelicious.Core.Models.Sorting;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -51,7 +52,8 @@ namespace CookDelicious.Controllers
             {
                 Categories = categories,
                 Posts = postsPageingList,
-                Archive = archive
+                Archive = archive,
+                Sorting = new SortPostViewModel() { Category = sortCategory }
             };
 
             return View(model);
