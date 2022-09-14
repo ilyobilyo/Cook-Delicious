@@ -17,6 +17,7 @@
                         <div class="col-12 col-lg-3">
                             <label style="font-size: 20px">Вид ястие</label>
                             <select class="col-sm-9  text-secondary" asp-for="Sorting.DishType" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                <option data-select2-id="35">Всички</option>
                                 <option data-select2-id="35">Аламинути</option>
                                 <option data-select2-id="36">Предястия</option>
                                 <option data-select2-id="37">Основни ястия</option>
@@ -27,6 +28,7 @@
                         <div class="col-12 col-lg-3">
                             <label style="font-size: 20px">Категория</label>
                             <select class="col-sm-9  text-secondary" asp-for="Sorting.Category" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                            <option data-select2-id="39">Всички</option>
                             @foreach(var sortCategory in Model.Categories)
                             {
                                 <option data-select2-id="36">@sortCategory</option>
@@ -61,7 +63,7 @@
                 <!-- Single Best Receipe Area -->
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="single-best-receipe-area mb-30">
-                        <img src="~/img/bg-img/@recipe.ImageUrl" alt="">
+                        <img src="~/img/bg-img/@recipe.ImageUrl" alt="" style="width: 350px; height: 304px">
                         <div class="receipe-content">
                             <a asp-action="RecipePost" asp-controller="Recipe" asp-route-id="@recipe.Id" >
                                 <h5>@recipe.Title</h5>
