@@ -25,21 +25,21 @@
                          <div class="single-blog-area mb-80">
                             <!-- Thumbnail -->
                             <div class="blog-thumbnail">
-                                <img src="~/img/blog-img/3.jpg" style="width: 730px; height: 294.19px;">
+                                <img src="~/img/blog-img/@post.ImageUrl"  style="width: 730px; height: 294.19px;">
                                 <!-- Post Date -->
                                 <div class="post-date" style="height: 100px; width: 85px;">
-                                    <a href="/Forum/ForumPost/@post.Id" style="height: 100px; width: 85px;"><span>@post.DatePublishedOn</span>@post.MonthPublishedOn <br> @post.YearPublishedOn</a>
+                                    <a href="/Blog/BlogPost/@post.Id" style="height: 100px; width: 85px;"><span>@post.DatePublishedOn</span>@post.MonthPublishedOn <br> @post.YearPublishedOn</a>
                                 </div>
                             </div>
                             <!-- Content -->
                             <div class="blog-content">
-                                <a href="/Forum/ForumPost/@post.Id" class="post-title">@post.Title</a>
+                                <a href="/Blog/BlogPost/@post.Id" class="post-title">@post.Title</a>
                                 <div class="meta-data">by <a href="/User/UserProfile?AuthorName=@post.AuthorName">@post.AuthorName</a> in @post.CategoryName
                                 </div>
                                 <div class="limit" >
                                     <p style="word-wrap: break-word; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@post.Content</p>
                                  </div>
-                                <a href="/Forum/ForumPost/@post.Id" class="btn delicious-btn mt-30">Read More</a>
+                                <a href="/Blog/BlogPost/@post.Id" class="btn delicious-btn mt-30">Read More</a>
                             </div>
              
                          </div>
@@ -52,11 +52,8 @@
 
                          <!-- Widget -->
                         <div class="single-widget mb-80">
-                            <h3>Създай нов пост</h3>
-
                             <!-- Form -->
                             <div class="newsletter-form bg-img bg-overlay" style="background-image: url(img/bg-img/bg1.jpg);">
-                                    <a class="btn delicious-btn w-100" asp-action="CreatePost" asp-controller="Forum">Публикувай пост</a>
                                 <p>Fusce nec ante vitae lacus aliquet vulputate. Donec sceleri sque accumsan molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.</p>
                             </div>
                         </div>
@@ -67,7 +64,7 @@
                             <ul class="list">
                                 @foreach(var archive in Model.Archive)
                                 {
-                                    <li>@archive</li>
+                                    <li><a asp-action="Home" asp-controller="Blog" asp-route-pageNumber="1" asp-route-sortMonth="@archive.Split(" ").First()" >@archive</a></li>
                                 }
                             </ul>
                         </div>
@@ -78,7 +75,7 @@
                             <ul class="list">
                                 @foreach(var category in Model.Categories)
                                 {
-                                    <li><a asp-action="Home" asp-controller="Forum" asp-route-pageNumber="1" asp-route-sortCategory="@category" >@category</a></li>
+                                    <li><a asp-action="Home" asp-controller="Blog" asp-route-pageNumber="1" asp-route-blogPostCategory="@category" >@category</a></li>
                                 }
                             </ul>
                         </div>
@@ -101,11 +98,13 @@
             </div>
                                         
             @{
-              var prevDisabled = !Model.Posts.HasPreviousPage ? "disabled" : "";
-              var nextDisabled = !Model.Posts.HasNextPage ? "disabled" : "";
+                var prevDisabled = !Model.Posts.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.Posts.HasNextPage ? "disabled" : "";
+                var blogPostCategory = Model.Sorting.Category;
+                var sortMonth = Model.Sorting.Month;
             }
-            <a asp-action="Home" asp-route-pageNumber="@(Model.Posts.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
-            <a asp-action="Home" asp-route-pageNumber="@(Model.Posts.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+            <a asp-action="Home" asp-route-blogPostCategory="@blogPostCategory" asp-route-sortMonth="@sortMonth" asp-route-pageNumber="@(Model.Posts.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
+            <a asp-action="Home" asp-route-blogPostCategory="@blogPostCategory" asp-route-sortMonth="@sortMonth" asp-route-pageNumber="@(Model.Posts.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
         </div>
           
     </div>
