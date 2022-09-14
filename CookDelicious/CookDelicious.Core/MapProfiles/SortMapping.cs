@@ -8,7 +8,7 @@ namespace CookDelicious.Core.MapProfiles
     {
         public SortMapping()
         {
-            CreateMap<SortViewModel, SortServiceModel>();
+            CreateMap<SortRecipeViewModel, SortServiceModel>();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace CookDelicious.Core.MapProfiles
                 .ForMember(x => x.AuthorName, y => y.MapFrom(s => s.Author.UserName))
                 .ForMember(x => x.CategoryName, y => y.MapFrom(s => s.BlogPostCategory.Name));
             CreateMap<CreateBlogPostViewModel, CreateBlogPostInputModel>();
+            CreateMap<CreateBlogPostCategoryViewModel, CreateBlogPostCategoryInputModel>();
         }
     }
 }
