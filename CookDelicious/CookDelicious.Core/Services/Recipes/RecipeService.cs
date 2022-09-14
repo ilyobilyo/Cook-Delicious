@@ -123,46 +123,95 @@ namespace CookDelicious.Core.Services.Recipes
 
             if (totalCount == 0)
             {
-                totalCount = await GetRecipeTotalCountWithOneOfTheSortParameters(model);
 
-                items = await repo.All<Recipe>()
+                if (model.Category == "Всички" && model.DishType == "Всички")
+                {
+                    totalCount = await repo.All<Recipe>().CountAsync();
+
+                    if (model.Date)
+                    {
+                        items = await repo.All<Recipe>()
+                       .Include(x => x.DishType)
+                       .Include(x => x.Catrgory)
+                       .Include(x => x.Ratings)
+                       .OrderBy(x => x.PublishedOn.Date)
+                       .Skip((pageNumber - 1) * pageSize)
+                       .Take(pageSize)
+                       .ToListAsync();
+                    }
+                    else
+                    {
+                        items = await repo.All<Recipe>()
                 .Include(x => x.DishType)
                 .Include(x => x.Catrgory)
                 .Include(x => x.Ratings)
-                .Where(x => x.DishType.Name == model.DishType
-                || x.Catrgory.Name == model.Category)
+                .OrderByDescending(x => x.PublishedOn.Date)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
+                    }
 
-                if (model.Date)
-                {
-                    items = items.OrderByDescending(x => x.PublishedOn).ToList();
                 }
                 else
                 {
-                    items = items.OrderBy(x => x.PublishedOn).ToList();
+                    totalCount = await GetRecipeTotalCountWithOneOfTheSortParameters(model);
+
+                    if (model.Date)
+                    {
+                        items = await repo.All<Recipe>()
+                    .Include(x => x.DishType)
+                    .Include(x => x.Catrgory)
+                    .Include(x => x.Ratings)
+                    .Where(x => x.DishType.Name == model.DishType
+                    || x.Catrgory.Name == model.Category)
+                    .OrderBy(x => x.PublishedOn.Date)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+                    }
+                    else
+                    {
+                        items = await repo.All<Recipe>()
+                    .Include(x => x.DishType)
+                    .Include(x => x.Catrgory)
+                    .Include(x => x.Ratings)
+                    .Where(x => x.DishType.Name == model.DishType
+                    || x.Catrgory.Name == model.Category)
+                    .OrderByDescending(x => x.PublishedOn.Date)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+                    }
+
                 }
             }
             else
             {
-                items = await repo.All<Recipe>()
+                if (model.Date)
+                {
+                    items = await repo.All<Recipe>()
                 .Include(x => x.DishType)
                 .Include(x => x.Catrgory)
                 .Include(x => x.Ratings)
                 .Where(x => x.DishType.Name == model.DishType
                 && x.Catrgory.Name == model.Category)
+                .OrderBy(x => x.PublishedOn.Date)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
-
-                if (model.Date)
-                {
-                    items = items.OrderBy(x => x.PublishedOn).ToList();
                 }
                 else
                 {
-                    items = items.OrderByDescending(x => x.PublishedOn).ToList();
+                    items = await repo.All<Recipe>()
+                .Include(x => x.DishType)
+                .Include(x => x.Catrgory)
+                .Include(x => x.Ratings)
+                .Where(x => x.DishType.Name == model.DishType
+                && x.Catrgory.Name == model.Category)
+                .OrderByDescending(x => x.PublishedOn.Date)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
                 }
             }
 
@@ -183,26 +232,32 @@ namespace CookDelicious.Core.Services.Recipes
 
             var items = new List<Recipe>();
 
-            if (dishType == "All" && category == "All")
+            if (dishType == "Всички" && category == "Всички")
             {
                 totalCount = await repo.All<Recipe>()
                .CountAsync();
 
-                items = await repo.All<Recipe>()
+                if (orderByDateAsc)
+                {
+                    items = await repo.All<Recipe>()
                    .Include(x => x.DishType)
                    .Include(x => x.Catrgory)
                    .Include(x => x.Ratings)
+                   .OrderBy(x => x.PublishedOn.Date)
                    .Skip((pageNumber - 1) * pageSize)
                    .Take(pageSize)
                    .ToListAsync();
-
-                if (orderByDateAsc)
-                {
-                    items.OrderBy(x => x.PublishedOn);
                 }
                 else
                 {
-                    items.OrderByDescending(x => x.PublishedOn);
+                    items = await repo.All<Recipe>()
+                   .Include(x => x.DishType)
+                   .Include(x => x.Catrgory)
+                   .Include(x => x.Ratings)
+                   .OrderByDescending(x => x.PublishedOn.Date)
+                   .Skip((pageNumber - 1) * pageSize)
+                   .Take(pageSize)
+                   .ToListAsync();
                 }
             }
             else
@@ -213,36 +268,63 @@ namespace CookDelicious.Core.Services.Recipes
                 {
                     totalCount = await GetRecipeTotalCountWithOneOfTheSortParameters(dishType, category);
 
-                    items = await repo.All<Recipe>()
+                    if (orderByDateAsc)
+                    {
+                        items = await repo.All<Recipe>()
                   .Include(x => x.DishType)
                   .Include(x => x.Catrgory)
                   .Include(x => x.Ratings)
                   .Where(x => x.DishType.Name == dishType
                   || x.Catrgory.Name == category)
+                   .OrderBy(x => x.PublishedOn.Date)
                   .Skip((pageNumber - 1) * pageSize)
                   .Take(pageSize)
                   .ToListAsync();
+                    }
+                    else
+                    {
+                        items = await repo.All<Recipe>()
+                  .Include(x => x.DishType)
+                  .Include(x => x.Catrgory)
+                  .Include(x => x.Ratings)
+                  .Where(x => x.DishType.Name == dishType
+                  || x.Catrgory.Name == category)
+                   .OrderByDescending(x => x.PublishedOn.Date)
+                  .Skip((pageNumber - 1) * pageSize)
+                  .Take(pageSize)
+                  .ToListAsync();
+                    }
+                    
                 }
                 else
                 {
-                    items = await repo.All<Recipe>()
+                    if (orderByDateAsc)
+                    {
+                        items = await repo.All<Recipe>()
                   .Include(x => x.DishType)
                   .Include(x => x.Catrgory)
                   .Include(x => x.Ratings)
                   .Where(x => x.DishType.Name == dishType
                   && x.Catrgory.Name == category)
+                   .OrderBy(x => x.PublishedOn.Date)
                   .Skip((pageNumber - 1) * pageSize)
                   .Take(pageSize)
                   .ToListAsync();
-                }
-
-                if (orderByDateAsc)
-                {
-                    items.OrderBy(x => x.PublishedOn);
-                }
-                else
-                {
-                    items.OrderByDescending(x => x.PublishedOn);
+                    }
+                    else
+                    {
+                        items = await repo.All<Recipe>()
+                  .Include(x => x.DishType)
+                  .Include(x => x.Catrgory)
+                  .Include(x => x.Ratings)
+                  .Where(x => x.DishType.Name == dishType
+                  && x.Catrgory.Name == category)
+                   .OrderByDescending(x => x.PublishedOn.Date)
+                  .Skip((pageNumber - 1) * pageSize)
+                  .Take(pageSize)
+                  .ToListAsync();
+                    }
+                    
                 }
             }
 
@@ -254,7 +336,6 @@ namespace CookDelicious.Core.Services.Recipes
 
 
 
-        //TODO MAPPING
         public async Task<Recipe> GetById(Guid id)
         {
             return await repo.GetByIdAsync<Recipe>(id);
@@ -274,7 +355,6 @@ namespace CookDelicious.Core.Services.Recipes
             return itemsAsServiceModel;
         }
 
-        //TODO MAPPING
         public async Task<RecipeServiceModel> GetRecipeForPost(Guid id)
         {
             var recipe = await repo.All<Recipe>()
@@ -295,8 +375,6 @@ namespace CookDelicious.Core.Services.Recipes
             return recipeServiceModel;
         }
 
-
-
         public async Task<RecipeServiceModel> GetRecipeForSetRating(Guid id)
         {
             var recipe = await repo.All<Recipe>()
@@ -305,8 +383,6 @@ namespace CookDelicious.Core.Services.Recipes
 
             return mapper.Map<RecipeServiceModel>(recipe);
         }
-
-
 
         public async Task<bool> IsRatingSet(RatingSetServiceModel model)
         {
@@ -337,7 +413,9 @@ namespace CookDelicious.Core.Services.Recipes
             return true;
         }
 
-       
+
+
+
 
         private async Task<int> GetRecipeTotalCountWithOneOfTheSortParameters(string dishType, string category)
         {
