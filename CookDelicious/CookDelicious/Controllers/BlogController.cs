@@ -2,6 +2,7 @@
 using CookDelicious.Core.Contracts.Blog;
 using CookDelicious.Core.Models.Blog;
 using CookDelicious.Core.Models.Paiging;
+using CookDelicious.Core.Models.Sorting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,11 +20,16 @@ namespace CookDelicious.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Home(int pageNumber, string blogPostCategory = null)
+        public async Task<IActionResult> Home(int pageNumber, string blogPostCategory = null, int? sortMonth = null)
         {
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
+
             int pageSize = 6;
 
-            var (blogPostsServiceModels, totalBlogPostsCount) = await blogService.GetAllSortBlogPostsForPageing(pageNumber, pageSize, blogPostCategory);
+            var (blogPostsServiceModels, totalBlogPostsCount) = await blogService.GetAllSortBlogPostsForPageing(pageNumber, pageSize, blogPostCategory, sortMonth);
 
             var blogPostsViewModel = mapper.Map<List<BlogPostViewModel>>(blogPostsServiceModels);
 
@@ -37,7 +43,8 @@ namespace CookDelicious.Controllers
             {
                 Categories = categories,
                 Posts = blogPostsPageingList,
-                Archive = archive
+                Archive = archive,
+                Sorting = new SortPostViewModel() { Category = blogPostCategory, Month = sortMonth}
             };
 
             return View(model);
