@@ -1,6 +1,5 @@
-﻿
-@using CookDelicious.Core.Models.Admin.Forum
-@model CreatePostCategoryViewModel
+﻿@using CookDelicious.Core.Models.Admin.Blog
+@model CreateBlogPostCategoryViewModel
 
 <head>
     <meta charset="utf-8">
@@ -21,8 +20,8 @@
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/Admin">Home</a></li>
-              <li class="breadcrumb-item"><a href="/Admin/Forum/CreatePostCategory">PostCategories</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Create Post Category</li>
+              <li class="breadcrumb-item"><a href="/Admin/Blog/CreateBlogPostCategory">Blog Post Categories</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Create Blog Post Category</li>
             </ol>
           </nav>
           <!-- /Breadcrumb -->
@@ -30,7 +29,7 @@
             </div>
                 <div class="col-md-8">
                     <h2>Create Product</h2>
-            <form id="createPostCategroy" method="post">
+            <form id="createBlogPostCategroy" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
               <div class="card mb-3">
                 <div class="card-body">

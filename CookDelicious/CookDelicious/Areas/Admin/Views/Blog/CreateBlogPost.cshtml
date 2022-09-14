@@ -1,4 +1,6 @@
-﻿
+﻿@using CookDelicious.Core.Models.Admin.Blog
+@model CreateBlogPostViewModel
+
 <head>
     <meta charset="utf-8">
     <!--  All snippets are MIT license http://bootdey.com/license -->
@@ -18,8 +20,8 @@
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item"><a href="/Forum/Home">Forum</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Create Post</li>
+              <li class="breadcrumb-item"><a href="/Blog/Home">Blog</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Create Blog Post</li>
             </ol>
           </nav>
           <!-- /Breadcrumb -->
@@ -93,7 +95,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <button id="login-submit" type="submit" class="btn btn-info " href="/User/Profile">Done</button>
+                      <button id="login-submit" type="submit" class="btn btn-info ">Done</button>
                     </div>
                   </div>
                 </div>
