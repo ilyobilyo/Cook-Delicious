@@ -8,7 +8,7 @@ namespace CookDelicious.Core.Models.Paiging
     {
         public PagingList<AllRecipeViewModel> PagedList { get; set; }
 
-        public SortViewModel Sorting { get; set; }
+        public SortRecipeViewModel Sorting { get; set; }
 
         public IList<string> Categories { get; set; }
     }
