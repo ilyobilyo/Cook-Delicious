@@ -102,11 +102,12 @@
             </div>
                                         
             @{
-              var prevDisabled = !Model.Posts.HasPreviousPage ? "disabled" : "";
-              var nextDisabled = !Model.Posts.HasNextPage ? "disabled" : "";
+                var prevDisabled = !Model.Posts.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.Posts.HasNextPage ? "disabled" : "";
+                var sortCategory = Model.Sorting.Category;
             }
-            <a asp-action="Home" asp-route-pageNumber="@(Model.Posts.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
-            <a asp-action="Home" asp-route-pageNumber="@(Model.Posts.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+            <a asp-action="Home" asp-route-sortCategory="@sortCategory" asp-route-pageNumber="@(Model.Posts.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
+            <a asp-action="Home" asp-route-sortCategory="@sortCategory" asp-route-pageNumber="@(Model.Posts.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
         </div>
           
     </div>
