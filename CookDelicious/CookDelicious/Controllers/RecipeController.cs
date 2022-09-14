@@ -39,7 +39,7 @@ namespace CookDelicious.Controllers
                 pageNumber = 1;
             }
 
-            int pageSize = 3;
+            int pageSize = 9;
 
             var sortServiceModel = mapper.Map<SortServiceModel>(sort.Sorting);
 
@@ -50,7 +50,7 @@ namespace CookDelicious.Controllers
             var pagingViewModel = new RecipePagingViewModel()
             {
                 PagedList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize),
-                Sorting = new SortViewModel() { DishType = sortServiceModel.DishType, Category = sortServiceModel.Category },
+                Sorting = new SortRecipeViewModel() { DishType = sortServiceModel.DishType, Category = sortServiceModel.Category, Date = sortServiceModel.Date },
                 Categories = await categoryService.GetAllCategoryNames()
             };
 
@@ -69,7 +69,7 @@ namespace CookDelicious.Controllers
                 pageNumber = 1;
             }
 
-            int pageSize = 3;
+            int pageSize = 9;
 
             (var recipesServiceModels, var totalCount) = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, dishType, category, dateAsc);
 
@@ -78,7 +78,7 @@ namespace CookDelicious.Controllers
             var pagingViewModel = new RecipePagingViewModel() 
             { 
                 PagedList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize), 
-                Sorting = new SortViewModel() { DishType = dishType, Category = category },
+                Sorting = new SortRecipeViewModel() { DishType = dishType, Category = category, Date = dateAsc },
                 Categories = await categoryService.GetAllCategoryNames()
             };
 
