@@ -1,13 +1,10 @@
-﻿using CookDelicious.Core.Contracts.Product;
-using CookDelicious.Core.Models.Product;
-using CookDelicious.Infrasturcture.Repositories;
-using CookDelicious.Infrasturcture.Models.Common;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using CookDelicious.Core.Models.Paiging;
-using CookDelicious.Models;
+﻿using AutoMapper;
+using CookDelicious.Core.Constants;
+using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Service.Models;
-using AutoMapper;
+using CookDelicious.Infrasturcture.Models.Common;
+using CookDelicious.Infrasturcture.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace CookDelicious.Core.Services.Products
 {
@@ -27,7 +24,7 @@ namespace CookDelicious.Core.Services.Products
         public async Task<IEnumerable<ProductServiceModel>> GetAllProducts()
         {
             var allProducts = await repo.All<Product>()
-                .Where(x => x.IsDeleted == false && x.Type != "Незададен")
+                .Where(x => x.IsDeleted == false && x.Type != RecipeConstants.UnsetProductType)
                 .ToListAsync();
 
             return mapper.Map<IEnumerable<ProductServiceModel>>(allProducts);
@@ -38,7 +35,7 @@ namespace CookDelicious.Core.Services.Products
             var totalCount = await repo.All<Product>().CountAsync();
 
             var items = await repo.All<Product>()
-                .Where(x => x.IsDeleted == false && x.Type != "Незададен")
+                .Where(x => x.IsDeleted == false && x.Type != RecipeConstants.UnsetProductType)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -106,7 +103,7 @@ namespace CookDelicious.Core.Services.Products
             var product = new Product()
             {
                 Name = name,
-                Type = "Незададен",
+                Type = RecipeConstants.UnsetProductType,
             };
 
             try

@@ -1,6 +1,5 @@
-﻿using CookDelicious.Core.Contracts.Admin;
-using CookDelicious.Core.Models.Admin.DishType;
-using CookDelicious.Core.Service.Models;
+﻿using CookDelicious.Core.Constants;
+using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Repositories;
@@ -24,14 +23,14 @@ namespace CookDelicious.Core.Services.Admin
 
             if (model == null || model.Name == null)
             {
-                error.Messages = "Name is required!";
+                error.Messages = MessageConstant.RequiredName;
                 return error;
             }
 
 
             if (await IsDishTypeExists(model))
             {
-                error.Messages = $"{model.Name} is already exist.";
+                error.Messages = $"{model.Name} {MessageConstant.AlreadyExist}";
                 return error;
             }
 
@@ -48,7 +47,7 @@ namespace CookDelicious.Core.Services.Admin
             }
             catch (Exception)
             {
-                error.Messages = "Unexpected error. You cant add this product!";
+                error.Messages = RecipeConstants.UnexpectedErrorDishtype;
             }
 
             return error;

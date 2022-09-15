@@ -1,18 +1,10 @@
 ﻿using AutoMapper;
 using CookDelicious.Core.Contracts.Admin;
-using CookDelicious.Core.Models.Admin.Comments;
-using CookDelicious.Core.Models.Comments;
-using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Service.Models;
 using CookDelicious.Infrasturcture.Models.Forum;
 using CookDelicious.Infrasturcture.Models.Recipes;
 using CookDelicious.Infrasturcture.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CookDelicious.Core.Services.Admin
 {

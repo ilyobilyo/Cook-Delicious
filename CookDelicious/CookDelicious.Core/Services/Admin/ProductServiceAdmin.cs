@@ -1,4 +1,5 @@
-﻿using CookDelicious.Core.Contracts.Admin.Product;
+﻿using CookDelicious.Core.Constants;
+using CookDelicious.Core.Contracts.Admin.Product;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Repositories;
@@ -22,13 +23,13 @@ namespace CookDelicious.Core.Services.Products
 
             if (model == null || model.Name == null || model.Type == null)
             {
-                errors.Add(new ErrorViewModel() { Messages = "All fields is required!" });
+                errors.Add(new ErrorViewModel() { Messages = RecipeConstants.AllFieldsAreRequired });
                 return errors;
             }
 
             if (await IsProductExists(model))
             {
-                errors.Add(new ErrorViewModel() { Messages = $"{model.Name} is already exist." });
+                errors.Add(new ErrorViewModel() { Messages = $"{model.Name} {MessageConstant.AlreadyExist}" });
                 return errors;
             }
 
@@ -45,7 +46,7 @@ namespace CookDelicious.Core.Services.Products
             }
             catch (Exception)
             {
-                errors.Add(new ErrorViewModel() { Messages = "Unexpected error. You cant add this product!" });
+                errors.Add(new ErrorViewModel() { Messages = RecipeConstants.UnexpectedErrorProduct });
             }
 
             return errors;

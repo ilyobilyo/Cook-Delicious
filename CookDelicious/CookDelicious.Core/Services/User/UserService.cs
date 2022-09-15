@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CookDelicious.Core.Contracts.User;
-using CookDelicious.Core.Models.User;
 using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Identity;

@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using CookDelicious.Core.Contracts.Comments;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Forum;
 using CookDelicious.Core.Contracts.User;
-using CookDelicious.Core.Models.Comments;
-using CookDelicious.Core.Models.Forum;
-using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Forum;
@@ -38,14 +35,14 @@ namespace CookDelicious.Core.Services.Forum
         {
             if (model.Title == null || model.Description == null)
             {
-                return new ErrorViewModel() { Messages = "Заглавието и садържанието на поста са задължителни!" };
+                return new ErrorViewModel() { Messages = PostsConstants.RequiredTitleAndContent };
             }
 
             var author = await userService.GetApplicationUserByUsername(Username);
 
             if (author == null)
             {
-                return new ErrorViewModel() { Messages = "Невалиден автор. Пробвайте пак!" };
+                return new ErrorViewModel() { Messages = UserConstants.InvalidAuthor };
             }
 
             var postCategory = await GetPostCategoryByName(model.Category);
@@ -68,7 +65,7 @@ namespace CookDelicious.Core.Services.Forum
             }
             catch (Exception)
             {
-                return new ErrorViewModel() { Messages = "Unexpected error. You cant add this post!" };
+                return new ErrorViewModel() { Messages = PostsConstants.UnexpectedErrorPost };
             }
 
             return null;

@@ -1,4 +1,5 @@
-﻿using CookDelicious.Core.Contracts.Admin;
+﻿using CookDelicious.Core.Constants;
+using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Blog;
@@ -23,14 +24,14 @@ namespace CookDelicious.Core.Services.Admin
         {
             if (inputModel.Title == null || inputModel.Description == null)
             {
-                return new ErrorViewModel() { Messages = "Заглавието и садържанието на поста са задължителни!" };
+                return new ErrorViewModel() { Messages = PostsConstants.RequiredTitleAndContent };
             }
 
             var author = await userService.GetApplicationUserByUsername(username);
 
             if (author == null)
             {
-                return new ErrorViewModel() { Messages = "Невалиден автор. Пробвайте пак!" };
+                return new ErrorViewModel() { Messages = UserConstants.InvalidAuthor };
             }
 
             var blogPostCategory = await GetBlogPostCategoryByName(inputModel.Category);
@@ -53,7 +54,7 @@ namespace CookDelicious.Core.Services.Admin
             }
             catch (Exception)
             {
-                return new ErrorViewModel() { Messages = "Unexpected error. You cant add this post!" };
+                return new ErrorViewModel() { Messages = PostsConstants.UnexpectedErrorPost };
             }
 
             return null;
@@ -65,7 +66,7 @@ namespace CookDelicious.Core.Services.Admin
         {
             if (await IsBlogPostCategoryExists(inputModel))
             {
-                return new ErrorViewModel() { Messages = $"{inputModel.Name} is already exist." };
+                return new ErrorViewModel() { Messages = $"{inputModel.Name} {MessageConstant.AlreadyExist}" };
             }
 
             var blogPostCategory = new BlogPostCategory()
@@ -80,7 +81,7 @@ namespace CookDelicious.Core.Services.Admin
             }
             catch (Exception)
             {
-                return new ErrorViewModel() { Messages = "Unexpected error. You cant add this post category!" };
+                return new ErrorViewModel() { Messages = PostsConstants.UnexpectedErrorPostCategory };
             }
 
             return null;

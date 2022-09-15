@@ -1,13 +1,10 @@
-﻿using AutoMapper;
+﻿using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Forum;
 using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Contracts.User;
-using CookDelicious.Core.Models.Comments;
-using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Forum;
-using CookDelicious.Infrasturcture.Models.Identity;
 using CookDelicious.Infrasturcture.Models.Recipes;
 using CookDelicious.Infrasturcture.Repositories;
 using CookDelicious.Models;
@@ -123,11 +120,9 @@ namespace CookDelicious.Core.Services.Comments
 
         public async Task<ErrorViewModel> PostCommentForRecipe(Guid id, PostCommentInputModel model)
         {
-            var IsPosted = false;
-
             if (model.Content.Length > 200)
             {
-                return new ErrorViewModel() { Messages = "Коментарът трябва да е не повече от 200 символа!" };
+                return new ErrorViewModel() { Messages = CommentConstants.CommentMaxLength };
             }
 
             var recipePost = await recipeService.GetById(id);
@@ -136,7 +131,7 @@ namespace CookDelicious.Core.Services.Comments
 
             if (recipePost == null || user == null)
             {
-                return new ErrorViewModel() { Messages = "Невалидна рецепра или потребител!" };
+                return new ErrorViewModel() { Messages = PostsConstants.InvalidRecipeOrUser };
             }
 
             var forumComment = new RecipeComment()
@@ -153,11 +148,10 @@ namespace CookDelicious.Core.Services.Comments
             {
                 await repo.AddAsync(forumComment);
                 await repo.SaveChangesAsync();
-                IsPosted = true;
             }
             catch (Exception)
             {
-                return new ErrorViewModel() { Messages = "Unexpected error!" }; ;
+                return new ErrorViewModel() { Messages = MessageConstant.UnexpectedError };
             }
 
             return null;
