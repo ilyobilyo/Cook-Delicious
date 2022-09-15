@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Controllers
 {
-    [Authorize(Roles = "Administrator, User")]
+    [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
     public class UserController : BaseController
     {
         private readonly IUserService userService;
@@ -59,11 +59,11 @@ namespace CookDelicious.Controllers
 
             if (await userService.UpdateUser(inputModel))
             {
-                ViewData[MessageConstant.SuccessMessage] = "Успешен запис!";
+                ViewData[MessageConstant.SuccessMessage] = MessageConstant.SuccessfulRecord;
             }
             else
             {
-                ViewData[MessageConstant.ErrorMessage] = "Възникна грешка!";
+                ViewData[MessageConstant.ErrorMessage] = MessageConstant.OccurredError;
             }
 
             return View(model);

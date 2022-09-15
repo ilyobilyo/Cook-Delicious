@@ -36,7 +36,7 @@ namespace CookDelicious.Controllers
                 pageNumber = 1;
             }
 
-            int pageSize = 6;
+            int pageSize = PageConstants.ForumHomePageSize;
 
             var (postsServiceModels, totalPostsCount) = await forumService.GetAllSortPostsForPageing(pageNumber, pageSize, sortCategory);
 
@@ -59,7 +59,7 @@ namespace CookDelicious.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Administrator, User")]
+        [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
         public async Task<IActionResult> CreatePost()
         {
             var categories = await forumService.GetAllPostCategoryNames();
@@ -73,7 +73,7 @@ namespace CookDelicious.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator, User")]
+        [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
         public async Task<IActionResult> CreatePost(CreatePostViewModel model)
         {
             var inputModel = mapper.Map<CreateForumPostInputModel>(model);
@@ -86,7 +86,7 @@ namespace CookDelicious.Controllers
             }
             else
             {
-                ViewData[MessageConstant.SuccessMessage] = "Вие публикувахте поста успешно!";
+                ViewData[MessageConstant.SuccessMessage] = PostsConstants.PostSuccessfullyPublished;
             }
 
             var categories = await forumService.GetAllPostCategoryNames();
@@ -104,7 +104,7 @@ namespace CookDelicious.Controllers
                 commentPage = 1;
             }
 
-            int pageSize = 5;
+            int pageSize = PageConstants.ForumCommentPageSize;
 
             var post = await forumService.GetPostServiceModelById(Id);
 
@@ -121,21 +121,21 @@ namespace CookDelicious.Controllers
             return View(forumPostrViewModel);
         }
 
-        [Authorize(Roles = "Administrator, User")]
+        [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
         public async Task<IActionResult> DeletePost([FromRoute]Guid Id)
         {
             var IsDeleted = await forumService.DeletePost(Id);
 
             if (!IsDeleted)
             {
-                return BadRequest("Неуспешно изтриване!");
+                return BadRequest(MessageConstant.DeleteFailed);
             }
 
             return RedirectToAction(nameof(Home));
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator, User")]
+        [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
         public async Task<IActionResult> PostComment([FromRoute] Guid Id, CommentViewModel model)
         {
             var commentInputModel = mapper.Map<PostCommentInputModel>(model);
@@ -145,14 +145,14 @@ namespace CookDelicious.Controllers
             return RedirectToAction(nameof(ForumPost), new { Id = Id });
         }
 
-        [Authorize(Roles = "Administrator, User")]
+        [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
         public async Task<IActionResult> DeletePostComment([FromRoute] Guid Id, [FromQuery] Guid postId)
         {
             var IsDeleted = await commentService.DeletePostComment(Id);
 
             if (!IsDeleted)
             {
-                return BadRequest("Неуспешно изтриване!");
+                return BadRequest(MessageConstant.DeleteFailed);
             }
 
             return RedirectToAction(nameof(ForumPost), new { Id = postId });

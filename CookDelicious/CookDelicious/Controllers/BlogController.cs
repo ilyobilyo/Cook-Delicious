@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Blog;
 using CookDelicious.Core.Models.Blog;
 using CookDelicious.Core.Models.Paiging;
@@ -27,7 +28,7 @@ namespace CookDelicious.Controllers
                 pageNumber = 1;
             }
 
-            int pageSize = 6;
+            int pageSize = PageConstants.BlogHomePageSize;
 
             var (blogPostsServiceModels, totalBlogPostsCount) = await blogService.GetAllSortBlogPostsForPageing(pageNumber, pageSize, blogPostCategory, sortMonth);
 

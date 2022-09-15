@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Controllers
 {
-    [Authorize(Roles = "Administrator, User")]
+    [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
     public class RecipeController : BaseController
     {
         private readonly IRecipeService recipeService;
@@ -39,7 +39,7 @@ namespace CookDelicious.Controllers
                 pageNumber = 1;
             }
 
-            int pageSize = 9;
+            int pageSize = PageConstants.RecipeAllPageSize;
 
             var sortServiceModel = mapper.Map<SortServiceModel>(sort.Sorting);
 
@@ -69,7 +69,7 @@ namespace CookDelicious.Controllers
                 pageNumber = 1;
             }
 
-            int pageSize = 9;
+            int pageSize = PageConstants.RecipeAllPageSize;
 
             (var recipesServiceModels, var totalCount) = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, dishType, category, dateAsc);
 
@@ -102,7 +102,7 @@ namespace CookDelicious.Controllers
         {
             if (!ModelState.IsValid)    
             {
-                ViewData[MessageConstant.ErrorMessage] = "Невярно попълнена информация!";
+                ViewData[MessageConstant.ErrorMessage] = RecipeConstants.RecipeInvalidInformation;
                 return View(model);
             }
 
@@ -121,7 +121,7 @@ namespace CookDelicious.Controllers
             }
             else
             {
-                ViewData[MessageConstant.SuccessMessage] = "Вие създадохте рецептата успешно!";
+                ViewData[MessageConstant.SuccessMessage] = RecipeConstants.RecipeSuccessfullyPublished;
                 return View(model);
             }
         }
@@ -134,7 +134,7 @@ namespace CookDelicious.Controllers
                 commentPage = 1;
             }
 
-            int pageSize = 5;
+            int pageSize = PageConstants.RecipeCommentPageSize;
 
             var serviceModel = await recipeService.GetRecipeForPost(Id);
 
@@ -157,7 +157,7 @@ namespace CookDelicious.Controllers
 
             var viewModel = mapper.Map<RatingViewModel>(serviceModel);
 
-            ViewData[MessageConstant.WarningMessage] = "Изберете звезда от 1 до 5 за успешен вод !";
+            ViewData[MessageConstant.WarningMessage] = RecipeConstants.RatingReferralMessage;
             return View(viewModel);
         }
 
@@ -168,11 +168,11 @@ namespace CookDelicious.Controllers
 
             if (await recipeService.IsRatingSet(ratingServiceModel))
             {
-                ViewData[MessageConstant.SuccessMessage] = "Вашият вот е успешен!";
+                ViewData[MessageConstant.SuccessMessage] = RecipeConstants.RatingSuccesfullyRate;
             }
             else
             {
-                ViewData[MessageConstant.ErrorMessage] = "Вашият вот не е успешен! Опитайте пак.";
+                ViewData[MessageConstant.ErrorMessage] = RecipeConstants.RatingFailedlRate;
             }
 
             var serviceModel = await recipeService.GetRecipeForSetRating(ratingServiceModel.Id);
@@ -183,7 +183,7 @@ namespace CookDelicious.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator, User")]
+        [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
         public async Task<IActionResult> PostComment([FromRoute] Guid Id, CommentViewModel model)
         {
             var commentServiceModel = mapper.Map<PostCommentInputModel>(model);
@@ -198,14 +198,14 @@ namespace CookDelicious.Controllers
             return RedirectToAction(nameof(RecipePost), new { Id = Id });
         }
 
-        [Authorize(Roles = "Administrator, User")]
+        [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
         public async Task<IActionResult> DeleteRecipeComment([FromRoute] Guid Id, [FromQuery] Guid recipeId)
         {
             var IsDeleted = await commentService.DeleteRecipeComment(Id);
 
             if (!IsDeleted)
             {
-                return BadRequest("Неуспешно изтриване!");
+                return BadRequest(MessageConstant.DeleteFailed);
             }
 
             return RedirectToAction(nameof(RecipePost), new { Id = recipeId });

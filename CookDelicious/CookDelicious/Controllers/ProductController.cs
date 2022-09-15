@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Product;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Controllers
 {
-    [Authorize(Roles = "Administrator, User")]
+    [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
     public class ProductController : BaseController
     {
         private readonly IProductService productService;
@@ -27,7 +28,7 @@ namespace CookDelicious.Controllers
                 pageNumber = 1;
             }
 
-            int pageSize = 9;
+            int pageSize = PageConstants.ProductAllPageSize;
 
             (var productsServiceModels,var totalCount) = await productService.GetAllProductsForPageing(pageNumber, pageSize);
 
