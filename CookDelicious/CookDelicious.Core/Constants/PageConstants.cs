@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CookDelicious.Core.Constants
+﻿namespace CookDelicious.Core.Constants
 {
     public static class PageConstants
     {
-        public static class AdminPage
-        {
-            public const int ManageUsersPageSize = 10;
-        }
+        public const int ManageUsersPageSize = 10;
+        public const int BlogHomePageSize = 6;
+        public const int ForumHomePageSize = 6;
+        public const int ForumCommentPageSize = 5;
+        public const int RecipeAllPageSize = 9;
+        public const int RecipeCommentPageSize = 5;
+        public const int ProductAllPageSize = 9;
     }
 }
