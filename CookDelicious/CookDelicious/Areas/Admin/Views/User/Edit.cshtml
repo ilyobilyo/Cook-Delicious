@@ -17,15 +17,15 @@
             </div>
             <hr />
             <div class="col-4">
-                    <a id="login-submit" asp-action="RecipeComments" asp-controller="User" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Recipe Comments</a>
-                    <a id="login-submit" asp-action="ForumComments" asp-controller="User" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Forum Comments</a>
+                    <a id="login-submit" asp-action="ForumPosts" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Forum Posts</a>
+                    <a id="login-submit" asp-action="RecipeComments" asp-controller="Recipe" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Recipe Comments</a>
+                    <a id="login-submit" asp-action="ForumComments" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Forum Comments</a>
             </div>
             <div class="row">&nbsp;</div>
             <div class="row">
                 <div class="col-4">
                     <button id="login-submit" type="submit" class="btn btn-primary btn-block">Submit</button>
                 </div>
-                <!-- /.col -->
             </div>
         </form>
     </div>
