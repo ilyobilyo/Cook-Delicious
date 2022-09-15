@@ -35,7 +35,7 @@ namespace CookDelicious.Areas.Admin.Controllers
             this.mapper = mapper;
         }
 
-        [Authorize(Roles = UserConstraints.Roles.Administrator)]
+        [Authorize(Roles = UserConstants.Roles.Administrator)]
         public async Task<IActionResult> ManageUsers(int pageNumber)
         {
             if (pageNumber == 0)
@@ -54,7 +54,7 @@ namespace CookDelicious.Areas.Admin.Controllers
             return View(pageingList);
         }
 
-        [Authorize(Roles = UserConstraints.Roles.Administrator)]
+        [Authorize(Roles = UserConstants.Roles.Administrator)]
         public async Task<IActionResult> Roles(string id)
         {
             var user = await userService.GetUserByIdRoles(id);
@@ -91,7 +91,7 @@ namespace CookDelicious.Areas.Admin.Controllers
             return Redirect("/Admin/User/ManageUsers");
         }
 
-        [Authorize(Roles = UserConstraints.Roles.Administrator)]
+        [Authorize(Roles = UserConstants.Roles.Administrator)]
         public async Task<IActionResult> Edit(string id)
         {
             var serviceModel = await userService.GetUserByIdEdit(id);
@@ -113,17 +113,17 @@ namespace CookDelicious.Areas.Admin.Controllers
 
             if (await userService.UpdateUser(serviceModel))
             {
-                ViewData[MessageConstant.SuccessMessage] = "Успешен запис!";
+                ViewData[MessageConstant.SuccessMessage] = MessageConstant.SuccessfulRecord;
             }
             else
             {
-                ViewData[MessageConstant.ErrorMessage] = "Възникна грешка!";
+                ViewData[MessageConstant.ErrorMessage] = MessageConstant.OccurredError;
             }
 
             return View(model);
         }
 
-        [Authorize(Roles = UserConstraints.Roles.Administrator)]
+        [Authorize(Roles = UserConstants.Roles.Administrator)]
         public async Task<IActionResult> CreateRole()
         {
             await roleManager.CreateAsync(new IdentityRole()
@@ -134,24 +134,6 @@ namespace CookDelicious.Areas.Admin.Controllers
             return Redirect("/");
         }
 
-        [Authorize(Roles = UserConstraints.Roles.Administrator)]
-        public async Task<IActionResult> RecipeComments([FromRoute] string id)
-        {
-            var commentsServiceModels = await commentService.GetRecipeComments(id);
-
-            var commentsViewModel = mapper.Map<List<AdminCommentViewModel>>(commentsServiceModels);
-
-            return View(commentsViewModel);
-        }
-
-        [Authorize(Roles = UserConstraints.Roles.Administrator)]
-        public async Task<IActionResult> ForumComments([FromRoute] string id)
-        {
-            var commentsServiceModels = await commentService.GetForumComments(id);
-
-            var commentsViewModel = mapper.Map<List<AdminCommentViewModel>>(commentsServiceModels);
-
-            return View(commentsViewModel);
-        }
+        
     }
 }
