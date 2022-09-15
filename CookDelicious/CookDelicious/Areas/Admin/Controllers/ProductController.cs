@@ -5,7 +5,6 @@ using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Models.Admin.Product;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Product;
-using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,7 +43,7 @@ namespace CookDelicious.Areas.Admin.Controllers
             }
             else
             {
-                ViewData[MessageConstant.SuccessMessage] = "Успешен запис";
+                ViewData[MessageConstant.SuccessMessage] = MessageConstant.SuccessfulRecord;
             }
 
             return View();

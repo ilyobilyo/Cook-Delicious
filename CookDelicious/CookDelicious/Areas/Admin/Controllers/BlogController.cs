@@ -43,7 +43,7 @@ namespace CookDelicious.Areas.Admin.Controllers
             }
             else
             {
-                ViewData[MessageConstant.SuccessMessage] = "Вие публикувахте поста успешно!";
+                ViewData[MessageConstant.SuccessMessage] = PostsConstants.PostSuccessfullyPublished;
             }
 
             var categories = await blogService.GetAllBlogPostCategoryNames();
@@ -72,7 +72,7 @@ namespace CookDelicious.Areas.Admin.Controllers
             }
             else
             {
-                ViewData[MessageConstant.SuccessMessage] = "Успешен запис";
+                ViewData[MessageConstant.SuccessMessage] = MessageConstant.SuccessfulRecord;
             }
 
             return View();
@@ -84,7 +84,7 @@ namespace CookDelicious.Areas.Admin.Controllers
 
             if (!IsDeleted)
             {
-                return BadRequest("Неуспешно изтриване!");
+                return BadRequest(MessageConstant.DeleteFailed);
             }
 
             return Redirect("/Blog/Home");

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Areas.Admin.Controllers
 {
-    [Authorize(Roles = UserConstraints.Roles.Administrator)]
+    [Authorize(Roles = UserConstants.Roles.Administrator)]
     [Area("Admin")]
     public class BaseController : Controller
     {

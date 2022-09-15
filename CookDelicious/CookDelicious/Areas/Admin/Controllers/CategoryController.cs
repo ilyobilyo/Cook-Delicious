@@ -38,7 +38,7 @@ namespace CookDelicious.Areas.Admin.Controllers
             }
             else
             {
-                ViewData[MessageConstant.SuccessMessage] = "Успешен запис";
+                ViewData[MessageConstant.SuccessMessage] = MessageConstant.SuccessfulRecord;
             }
 
             return View();
