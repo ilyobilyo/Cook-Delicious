@@ -1,6 +1,4 @@
-﻿using CookDelicious.Core.Models.Forum;
-using CookDelicious.Core.Models.Paiging;
-using CookDelicious.Core.Service.Models;
+﻿using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Forum;
 using CookDelicious.Models;
