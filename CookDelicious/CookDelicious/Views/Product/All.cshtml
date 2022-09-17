@@ -1,6 +1,6 @@
 ﻿@using CookDelicious.Core.Models.Paiging
 @using CookDelicious.Core.Models.Product
-@model PagingList<AllProductViewModel>
+@model PagingList<ProductViewModel>
 
 @{
     ViewData["Title"] = "Products";
@@ -21,9 +21,10 @@
                 <!-- Single Best Receipe Area -->
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="single-best-receipe-area mb-30">
+                        
                         <img src="~/img/bg-img/r1.jpg" alt="">
                         <div class="receipe-content">
-                            <a href="receipe-post.html">
+                            <a asp-action="ProductPost" asp-controller="Product" asp-route-id="@product.Id" >
                                 <h5>@product.Name</h5>
                             </a>
                         </div>

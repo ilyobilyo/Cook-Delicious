@@ -1,0 +1,56 @@
+﻿@using CookDelicious.Core.Models.Product
+@model ProductViewModel
+
+
+<div class="receipe-post-area section-padding-80">
+        <!-- Receipe Post Search -->
+        
+        <!-- Receipe Slider -->
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                        <div class="owl-stage ">
+                            <div class="owl-item cloned" style="width: 500px;">
+                                <img src="~/img/bg-img/@Model.ImageUrl" alt="">
+                                </div>
+                                </div>
+                           <div class="owl-dots">
+                           <div class="owl-dot">
+                           <span></span>
+                           </div>
+                           <div class="owl-dot active">
+                               <span></span>
+                           </div>
+                          <div class="owl-dot">
+                            <span></span>
+                            </div>
+                            </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Receipe Content Area -->
+        <div class="receipe-content-area">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-12 col-md-8">
+                        <div class="receipe-headline my-5">
+                            <div class="receipe-duration">
+                                <h6>Име: @Model.Name</h6>
+                                <h6>Вид продукт: @Model.Type</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <!-- Single Preparation Step -->
+                        <div class="single-preparation-step d-flex">
+                            <p>@Model.Description</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
