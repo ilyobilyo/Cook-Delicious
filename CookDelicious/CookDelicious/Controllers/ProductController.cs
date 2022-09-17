@@ -32,12 +32,20 @@ namespace CookDelicious.Controllers
 
             (var productsServiceModels,var totalCount) = await productService.GetAllProductsForPageing(pageNumber, pageSize);
 
-            var allProductsViewModels = mapper.Map<List<AllProductViewModel>>(productsServiceModels);
+            var allProductsViewModels = mapper.Map<List<ProductViewModel>>(productsServiceModels);
 
-            var pageList = new PagingList<AllProductViewModel>(allProductsViewModels, totalCount, pageNumber, pageSize);
+            var pageList = new PagingList<ProductViewModel>(allProductsViewModels, totalCount, pageNumber, pageSize);
 
             return View(pageList);
         }
 
+        public async Task<IActionResult> ProductPost([FromRoute] Guid id)
+        {
+            var product = await productService.GetProductById(id);
+
+            var productViewModel = mapper.Map<ProductViewModel>(product);
+
+            return View(productViewModel);
+        }
     }
 }
