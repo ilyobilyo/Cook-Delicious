@@ -21,7 +21,7 @@ namespace CookDelicious.Core.Services.Products
         {
             List<ErrorViewModel> errors = new List<ErrorViewModel>();
 
-            if (model == null || model.Name == null || model.Type == null)
+            if (model == null || model.Name == null || model.Type == null || model.Description == null)
             {
                 errors.Add(new ErrorViewModel() { Messages = RecipeConstants.AllFieldsAreRequired });
                 return errors;
@@ -37,6 +37,8 @@ namespace CookDelicious.Core.Services.Products
             {
                 Name = model.Name,
                 Type = model.Type,
+                ImageUrl = model.ImageUrl,
+                Description = model.Description
             };
 
             try
@@ -50,6 +52,17 @@ namespace CookDelicious.Core.Services.Products
             }
 
             return errors;
+        }
+
+        public async Task DeleteProduct(Guid id)
+        {
+            var productToDelete = await repo.All<Product>()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            productToDelete.IsDeleted = true;
+
+            await repo.SaveChangesAsync();
         }
 
         private async Task<bool> IsProductExists(CreateProductInputModel model)
