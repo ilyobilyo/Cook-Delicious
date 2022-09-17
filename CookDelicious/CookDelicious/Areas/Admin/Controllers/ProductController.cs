@@ -60,11 +60,27 @@ namespace CookDelicious.Areas.Admin.Controllers
 
             (var productsServiceModels, var totalCount) = await productService.GetAllProductsForPageing(pageNumber, pageSize);
 
-            var allProductsViewModels = mapper.Map<List<AllProductViewModel>>(productsServiceModels);
+            var allProductsViewModels = mapper.Map<List<ProductViewModel>>(productsServiceModels);
 
-            var pageList = new PagingList<AllProductViewModel>(allProductsViewModels, totalCount, pageNumber, pageSize);
+            var pageList = new PagingList<ProductViewModel>(allProductsViewModels, totalCount, pageNumber, pageSize);
 
             return View(pageList);
+        }
+
+        public async Task<IActionResult> ManageProducts()
+        {
+            var products = await productService.GetAllProducts();
+
+            var productsViewModel = mapper.Map<List<ProductViewModel>>(products);
+
+            return View(productsViewModel);
+        }
+
+        public async Task<IActionResult> DeleteProduct([FromRoute] Guid id)
+        {
+            await productServiceAdmin.DeleteProduct(id);
+
+            return Redirect("/");
         }
     }
 }
