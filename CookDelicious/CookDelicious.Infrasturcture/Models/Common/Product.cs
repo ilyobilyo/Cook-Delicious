@@ -19,6 +19,10 @@ namespace CookDelicious.Infrasturcture.Models.Common
         [MaxLength(50)]
         public string Type { get; set; }
 
+        public string? ImageUrl { get; set; }
+
+        public string? Description { get; set; }
+
         public bool? IsDeleted { get; set; } = false;
 
         public ICollection<RecipeProduct> RecipeProducts { get; set; }
