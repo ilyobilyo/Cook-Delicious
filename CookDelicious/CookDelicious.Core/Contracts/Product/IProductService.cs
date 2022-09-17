@@ -8,8 +8,9 @@ namespace CookDelicious.Core.Contracts.Product
     public interface IProductService
     {
         Task<IEnumerable<ProductServiceModel>> GetAllProducts();
-        Task<ICollection<RecipeProduct>> GetProductsForCreatingRecipe(string products, Guid recipeId);
+        Task<ICollection<RecipeProduct>> SetProductsForCreatingRecipe(string products, Guid recipeId);
         Task<IList<RecipeProductServiceModel>> GetProductsForRecipePost(Guid id);
         Task<(IEnumerable<ProductServiceModel>, int)> GetAllProductsForPageing(int pageNumber, int pageSize);
+        Task<ProductServiceModel> GetProductById(Guid id);
     }
 }

@@ -75,7 +75,7 @@ namespace CookDelicious.Core.Services.Recipes
                 PublishedOn = DateTime.Now,
             };
 
-            recipe.RecipeProducts = await productService.GetProductsForCreatingRecipe(model.Products, recipe.Id);
+            recipe.RecipeProducts = await productService.SetProductsForCreatingRecipe(model.Products, recipe.Id);
 
             var categories = await categoryService.GetAllCategoryNames();
 

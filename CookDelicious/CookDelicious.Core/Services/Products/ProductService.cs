@@ -45,7 +45,7 @@ namespace CookDelicious.Core.Services.Products
             return (itemsAsServiceModel, totalCount);
         }
 
-        public async Task<ICollection<RecipeProduct>> GetProductsForCreatingRecipe(string products, Guid recipeId)
+        public async Task<ICollection<RecipeProduct>> SetProductsForCreatingRecipe(string products, Guid recipeId)
         {
             var splitedProductsWithQuantity = products.Split(", ", StringSplitOptions.RemoveEmptyEntries);
             var splitedProductsNames = products.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -89,6 +89,15 @@ namespace CookDelicious.Core.Services.Products
             return recipeProducts;
         }
 
+        public async Task<ProductServiceModel> GetProductById(Guid id)
+        {
+            var product = await repo.All<Product>()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            return mapper.Map<ProductServiceModel>(product);
+        }
+
         public async Task<IList<RecipeProductServiceModel>> GetProductsForRecipePost(Guid id)
         {
             var recipeProducts = await repo.All<RecipeProduct>()
@@ -124,5 +133,7 @@ namespace CookDelicious.Core.Services.Products
             return await repo.All<Product>()
                 .AnyAsync(x => x.Name == name);
         }
+
+       
     }
 }
