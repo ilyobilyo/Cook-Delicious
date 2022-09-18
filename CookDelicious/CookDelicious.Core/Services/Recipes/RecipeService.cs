@@ -218,6 +218,7 @@ namespace CookDelicious.Core.Services.Recipes
                    .Include(x => x.DishType)
                    .Include(x => x.Catrgory)
                    .Include(x => x.Ratings)
+                   .Where(x => x.IsDeleted == false)
                    .OrderBy(x => x.PublishedOn.Date)
                    .Skip((pageNumber - 1) * pageSize)
                    .Take(pageSize)
@@ -229,6 +230,7 @@ namespace CookDelicious.Core.Services.Recipes
                    .Include(x => x.DishType)
                    .Include(x => x.Catrgory)
                    .Include(x => x.Ratings)
+                   .Where(x => x.IsDeleted == false)
                    .OrderByDescending(x => x.PublishedOn.Date)
                    .Skip((pageNumber - 1) * pageSize)
                    .Take(pageSize)
@@ -249,8 +251,8 @@ namespace CookDelicious.Core.Services.Recipes
                         .Include(x => x.DishType)
                         .Include(x => x.Catrgory)
                         .Include(x => x.Ratings)
-                        .Where(x => x.DishType.Name == dishType
-                        || x.Catrgory.Name == category)
+                        .Where(x => (x.DishType.Name == dishType
+                        || x.Catrgory.Name == category) && x.IsDeleted == false)
                          .OrderBy(x => x.PublishedOn.Date)
                         .Skip((pageNumber - 1) * pageSize)
                         .Take(pageSize)
@@ -262,8 +264,8 @@ namespace CookDelicious.Core.Services.Recipes
                         .Include(x => x.DishType)
                         .Include(x => x.Catrgory)
                         .Include(x => x.Ratings)
-                        .Where(x => x.DishType.Name == dishType
-                        || x.Catrgory.Name == category)
+                        .Where(x => (x.DishType.Name == dishType
+                        || x.Catrgory.Name == category) && x.IsDeleted == false)
                          .OrderByDescending(x => x.PublishedOn.Date)
                         .Skip((pageNumber - 1) * pageSize)
                         .Take(pageSize)
@@ -279,8 +281,8 @@ namespace CookDelicious.Core.Services.Recipes
                         .Include(x => x.DishType)
                         .Include(x => x.Catrgory)
                         .Include(x => x.Ratings)
-                        .Where(x => x.DishType.Name == dishType
-                        && x.Catrgory.Name == category)
+                        .Where(x => (x.DishType.Name == dishType
+                        && x.Catrgory.Name == category) && x.IsDeleted == false)
                          .OrderBy(x => x.PublishedOn.Date)
                         .Skip((pageNumber - 1) * pageSize)
                         .Take(pageSize)
@@ -292,8 +294,8 @@ namespace CookDelicious.Core.Services.Recipes
                         .Include(x => x.DishType)
                         .Include(x => x.Catrgory)
                         .Include(x => x.Ratings)
-                        .Where(x => x.DishType.Name == dishType
-                        && x.Catrgory.Name == category)
+                        .Where(x => (x.DishType.Name == dishType
+                        && x.Catrgory.Name == category) && x.IsDeleted == false)
                          .OrderByDescending(x => x.PublishedOn.Date)
                         .Skip((pageNumber - 1) * pageSize)
                         .Take(pageSize)
@@ -309,8 +311,8 @@ namespace CookDelicious.Core.Services.Recipes
         private async Task<int> GetRecipeTotalCountWithOneOfTheSortParameters(string dishType, string category)
         {
             return await repo.All<Recipe>()
-                .Where(x => x.DishType.Name == dishType
-                || x.Catrgory.Name == category)
+                .Where(x => (x.DishType.Name == dishType
+                || x.Catrgory.Name == category) && x.IsDeleted == false)
                 .CountAsync();
         }
 
@@ -318,7 +320,7 @@ namespace CookDelicious.Core.Services.Recipes
         {
             return await repo.All<Recipe>()
            .Where(x => x.DishType.Name == dishType
-           && x.Catrgory.Name == category)
+           && x.Catrgory.Name == category && x.IsDeleted == false)
            .CountAsync();
         }
 
