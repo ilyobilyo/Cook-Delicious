@@ -1,5 +1,7 @@
-﻿using CookDelicious.Core.Constants;
+﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
+using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Repositories;
@@ -11,10 +13,12 @@ namespace CookDelicious.Core.Services.Admin
     public class DishTypeServiceAdmin : IDishTypeServiceAdmin
     {
         private readonly IApplicationDbRepository repo;
+        private readonly IMapper mapper;
 
-        public DishTypeServiceAdmin(IApplicationDbRepository repo)
+        public DishTypeServiceAdmin(IApplicationDbRepository repo, IMapper mapper)
         {
             this.repo = repo;
+            this.mapper = mapper;
         }
 
         public async Task<ErrorViewModel> CreateDishType(CreateDishTypeInputModel model)
@@ -51,6 +55,26 @@ namespace CookDelicious.Core.Services.Admin
             }
 
             return error;
+        }
+
+        public async Task DeleteDishType(Guid id)
+        {
+            var dishTypeToDelete = await repo.All<DishType>()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            dishTypeToDelete.IsDeleted = true;
+
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<DishTypeServiceModel>> GetAllDishTypes()
+        {
+            var dishTypes = await repo.All<DishType>()
+                .Where(x => x.IsDeleted == false)
+                .ToListAsync();
+
+            return mapper.Map<IEnumerable<DishTypeServiceModel>>(dishTypes);
         }
 
         private async Task<bool> IsDishTypeExists(CreateDishTypeInputModel model)

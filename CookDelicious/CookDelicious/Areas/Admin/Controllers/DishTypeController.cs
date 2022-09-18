@@ -43,5 +43,21 @@ namespace CookDelicious.Areas.Admin.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> ManageDishTypes()
+        {
+            var categoriesServiceModel = await dishTypeService.GetAllDishTypes();
+
+            var categoriesViewModel = mapper.Map<List<DishTypeViewModel>>(categoriesServiceModel);
+
+            return View(categoriesViewModel);
+        }
+
+        public async Task<IActionResult> DeleteDishType([FromRoute] Guid id)
+        {
+            await dishTypeService.DeleteDishType(id);
+
+            return Redirect("/Admin/DishType/ManageDishTypes");
+        }
     }
 }
