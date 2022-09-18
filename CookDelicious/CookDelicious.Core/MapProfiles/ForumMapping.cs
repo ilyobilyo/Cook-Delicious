@@ -38,6 +38,7 @@ namespace CookDelicious.Core.MapProfiles
                 .ForMember(x => x.AuthorName, y => y.MapFrom(s => s.Author.UserName));
             CreateMap<ForumPostServiceModel, AllForumPostViewModel>()
                 .ForMember(x => x.AuthorName, y => y.MapFrom(s => s.Author.UserName));
+            CreateMap<PostCategoryServiceModel, PostCategoryViewModel>();
         }
     }
 }

@@ -81,5 +81,21 @@ namespace CookDelicious.Areas.Admin.Controllers
 
             return Redirect("/Admin/User/ManageUsers");
         }
+
+        public async Task<IActionResult> ManagePostCategories()
+        {
+            var blogPostCategoriesServiceModel = await forumService.GetAllForumPostCategories();
+
+            var blogPostCategoryViewModel = mapper.Map<List<PostCategoryViewModel>>(blogPostCategoriesServiceModel);
+
+            return View(blogPostCategoryViewModel);
+        }
+
+        public async Task<IActionResult> DeletePostCategory([FromRoute] Guid Id)
+        {
+            await forumService.DeleteForumPostCategory(Id);
+
+            return Redirect("/Admin/Forum/ManagePostCategories");
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace CookDelicious.Core.Contracts.Admin
         Task<ErrorViewModel> CreatePostCategory(CreatePostCategoryInputModel model);
         Task<IEnumerable<ForumPostServiceModel>> GetAllUserPosts(string id);
         Task DeletePost(Guid id);
+        Task<IEnumerable<PostCategoryServiceModel>> GetAllForumPostCategories();
+        Task DeleteForumPostCategory(Guid id);
     }
 }
