@@ -1,6 +1,8 @@
-﻿using CookDelicious.Core.Constants;
+﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Contracts.User;
+using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Blog;
 using CookDelicious.Infrasturcture.Repositories;
@@ -13,11 +15,15 @@ namespace CookDelicious.Core.Services.Admin
     {
         private readonly IApplicationDbRepository repo;
         private readonly IUserService userService;
+        private readonly IMapper mapper;
 
-        public BlogServiceAdmin(IApplicationDbRepository repo, IUserService userService)
+        public BlogServiceAdmin(IApplicationDbRepository repo,
+            IUserService userService,
+             IMapper mapper)
         {
             this.repo = repo;
             this.userService = userService;
+            this.mapper = mapper;
         }
 
         public async Task<ErrorViewModel> CreateBlogPost(CreateBlogPostInputModel inputModel, string username)
@@ -111,6 +117,26 @@ namespace CookDelicious.Core.Services.Admin
             }
 
             return isDeleted;
+        }
+
+        public async Task DeleteBlogPostCategory(Guid id)
+        {
+            var categoryToDelete = await repo.All<BlogPostCategory>()
+               .Where(x => x.Id == id)
+               .FirstOrDefaultAsync();
+
+            categoryToDelete.IsDeleted = true;
+
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<BlogPostCategoryServiceModel>> GetAllBlogPostCategories()
+        {
+            var categories = await repo.All<BlogPostCategory>()
+                .Where(x => x.IsDeleted == false)
+                .ToListAsync();
+            
+            return mapper.Map<IEnumerable<BlogPostCategoryServiceModel>>(categories);
         }
 
         public async Task<IList<string>> GetAllBlogPostCategoryNames()

@@ -1,4 +1,5 @@
-﻿using CookDelicious.Core.Service.Models.InputServiceModels;
+﻿using CookDelicious.Core.Service.Models;
+using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Models;
 
 namespace CookDelicious.Core.Contracts.Admin
@@ -9,5 +10,7 @@ namespace CookDelicious.Core.Contracts.Admin
         Task<IList<string>> GetAllBlogPostCategoryNames();
         Task<ErrorViewModel> CreateBlogPost(CreateBlogPostInputModel inputModel, string name);
         Task<bool> DeleteBlogPost(Guid id);
+        Task<IEnumerable<BlogPostCategoryServiceModel>> GetAllBlogPostCategories();
+        Task DeleteBlogPostCategory(Guid id);
     }
 }

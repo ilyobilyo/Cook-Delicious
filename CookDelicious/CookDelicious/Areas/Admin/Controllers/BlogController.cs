@@ -89,5 +89,21 @@ namespace CookDelicious.Areas.Admin.Controllers
 
             return Redirect("/Blog/Home");
         }
+
+        public async Task<IActionResult> ManageBlogPostCategories()
+        {
+            var blogPostCategoriesServiceModel = await blogService.GetAllBlogPostCategories();
+
+            var blogPostCategoryViewModel = mapper.Map<List<BlogPostCategoryViewModel>>(blogPostCategoriesServiceModel);
+
+            return View(blogPostCategoryViewModel);
+        }
+
+        public async Task<IActionResult> DeleteBlogPostCategory([FromRoute] Guid Id)
+        {
+            await blogService.DeleteBlogPostCategory(Id);
+
+            return Redirect("/Admin/Blog/ManageBlogPostCategories");
+        }
     }
 }
