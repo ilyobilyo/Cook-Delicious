@@ -1,5 +1,7 @@
-﻿using CookDelicious.Core.Constants;
+﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
+using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Common;
 using CookDelicious.Infrasturcture.Repositories;
@@ -11,10 +13,12 @@ namespace CookDelicious.Core.Services.Admin
     public class CategoryServiceAdmin : ICategoryServiceAdmin
     {
         private readonly IApplicationDbRepository repo;
+        private readonly IMapper mapper;
 
-        public CategoryServiceAdmin(IApplicationDbRepository repo)
+        public CategoryServiceAdmin(IApplicationDbRepository repo, IMapper mapper)
         {
             this.repo = repo;
+            this.mapper = mapper;
         }
 
         public async Task<ErrorViewModel> CreateCategory(CreateCategoryInputModel model)
@@ -51,6 +55,26 @@ namespace CookDelicious.Core.Services.Admin
             }
 
             return error;
+        }
+
+        public async Task DeleteCategory(Guid id)
+        {
+            var categoryToDelete = await repo.All<Category>()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            categoryToDelete.IsDeleted = true;
+
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<CategoryServiceModel>> GetAllCategories()
+        {
+            var categories = await repo.All<Category>()
+                .Where(x => x.IsDeleted == false)
+                .ToListAsync();
+
+            return mapper.Map<IEnumerable<CategoryServiceModel>>(categories);
         }
 
         private async Task<bool> IsCategoryExists(CreateCategoryInputModel model)

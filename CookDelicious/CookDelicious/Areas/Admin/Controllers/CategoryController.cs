@@ -43,5 +43,21 @@ namespace CookDelicious.Areas.Admin.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> ManageCategories()
+        {
+            var categoriesServiceModel = await categoryService.GetAllCategories();
+
+            var categoriesViewModel = mapper.Map<List<CategoryViewModel>>(categoriesServiceModel);
+
+            return View(categoriesViewModel);
+        }
+
+        public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
+        {
+            await categoryService.DeleteCategory(id);
+
+            return Redirect("/Admin/Category/ManageCategories");
+        }
     }
 }

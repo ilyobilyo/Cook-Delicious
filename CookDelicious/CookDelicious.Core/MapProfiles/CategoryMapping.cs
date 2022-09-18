@@ -12,6 +12,7 @@ namespace CookDelicious.Core.MapProfiles
         {
             CreateMap<Category, CategoryServiceModel>();
             CreateMap<AddCategoryViewModel, CreateCategoryInputModel>();
+            CreateMap<CategoryServiceModel, CategoryViewModel>();
         }
     }
 }
