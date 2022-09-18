@@ -54,7 +54,8 @@ builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<ICommentService, CommentService>()
     .AddScoped<ICommentServiceAdmin, CommentServiceAdmin>()
     .AddScoped<IBlogService, BlogService>()
-    .AddScoped<IBlogServiceAdmin, BlogServiceAdmin>();
+    .AddScoped<IBlogServiceAdmin, BlogServiceAdmin>()
+    .AddScoped<IRecipeServiceAdmin, RecipeServiceAdmin>();
 
 builder.Services.AddAutoMapper(typeof(RecipeMapping),
     typeof(UserMapping), 
