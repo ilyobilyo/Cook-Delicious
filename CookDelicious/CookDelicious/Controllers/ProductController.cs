@@ -3,7 +3,6 @@ using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Product;
-using CookDelicious.Core.Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
