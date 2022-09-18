@@ -16,6 +16,8 @@ namespace CookDelicious.Infrasturcture.Models.Blog
         [MaxLength(100)]
         public string Name { get; set; }
 
+        public bool? IsDeleted { get; set; } = false;
+
         public ICollection<BlogPost> BlogPosts { get; set; }
     }
 }
