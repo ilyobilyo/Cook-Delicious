@@ -17,6 +17,7 @@
             </div>
             <hr />
             <div class="col-4">
+                    <a id="login-submit" asp-action="UserRecipes" asp-controller="Recipe" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">User Recipes</a>
                     <a id="login-submit" asp-action="ForumPosts" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Forum Posts</a>
                     <a id="login-submit" asp-action="RecipeComments" asp-controller="Recipe" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Recipe Comments</a>
                     <a id="login-submit" asp-action="ForumComments" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Forum Comments</a>
