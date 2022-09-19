@@ -153,7 +153,7 @@ namespace CookDelicious.Controllers
 
         public async Task<IActionResult> Rating([FromRoute] Guid Id)
         {
-            var serviceModel = await recipeService.GetRecipeForSetRating(Id);
+            var serviceModel = await recipeService.GetById(Id);
 
             var viewModel = mapper.Map<RatingViewModel>(serviceModel);
 
@@ -175,7 +175,7 @@ namespace CookDelicious.Controllers
                 ViewData[MessageConstant.ErrorMessage] = RecipeConstants.RatingFailedlRate;
             }
 
-            var serviceModel = await recipeService.GetRecipeForSetRating(ratingServiceModel.Id);
+            var serviceModel = await recipeService.GetById(ratingServiceModel.Id);
 
             var viewModel = mapper.Map<RatingViewModel>(serviceModel);
 

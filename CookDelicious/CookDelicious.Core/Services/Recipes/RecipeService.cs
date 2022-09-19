@@ -117,10 +117,11 @@ namespace CookDelicious.Core.Services.Recipes
         }
 
 
-
-        public async Task<Recipe> GetById(Guid id)
+        public async Task<RecipeServiceModel> GetById(Guid id)
         {
-            return await repo.GetByIdAsync<Recipe>(id);
+            var recipe = await repo.GetByIdAsync<Recipe>(id);
+
+            return mapper.Map<RecipeServiceModel>(recipe);
         }
 
         public async Task<IEnumerable<RecipeCommentServiceModel>> GetRecipeCommentsPerPage(Guid Id, int commentPage, int pageSize)
@@ -150,20 +151,16 @@ namespace CookDelicious.Core.Services.Recipes
                .Where(x => x.Id == id)
                .FirstOrDefaultAsync();
 
+            if (recipe == null)
+            {
+                return null;
+            }
+
             var recipeServiceModel = mapper.Map<RecipeServiceModel>(recipe);
 
             recipeServiceModel.Category = mapper.Map<CategoryServiceModel>(recipe.Catrgory);
 
             return recipeServiceModel;
-        }
-
-        public async Task<RecipeServiceModel> GetRecipeForSetRating(Guid id)
-        {
-            var recipe = await repo.All<Recipe>()
-                .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
-
-            return mapper.Map<RecipeServiceModel>(recipe);
         }
 
         public async Task<bool> IsRatingSet(RatingSetServiceModel model)
