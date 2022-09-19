@@ -1,6 +1,4 @@
-﻿using CookDelicious.Infrasturcture.Models.Common;
-
-namespace CookDelicious.Core.Models.Recipe
+﻿namespace CookDelicious.Core.Models.Recipe
 {
     public class CreateRecipeViewModel
     {

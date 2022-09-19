@@ -125,7 +125,7 @@ namespace CookDelicious.Core.Services.Comments
                 return new ErrorViewModel() { Messages = CommentConstants.CommentMaxLength };
             }
 
-            var recipePost = await recipeService.GetById(id);
+            var recipePost = await repo.GetByIdAsync<Recipe>(id);
 
             var user = await userService.GetApplicationUserByUsername(model.AuthorName);
 

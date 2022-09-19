@@ -5,9 +5,11 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookDelicious", "CookDelicious\CookDelicious.csproj", "{8992E08D-8360-45FB-B586-2BF478CB655E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookDelicious.Core", "CookDelicious.Core\CookDelicious.Core.csproj", "{29BE6DF3-3C64-469B-8B91-61D45D11CD1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookDelicious.Core", "CookDelicious.Core\CookDelicious.Core.csproj", "{29BE6DF3-3C64-469B-8B91-61D45D11CD1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookDelicious.Infrasturcture", "CookDelicious.Infrasturcture\CookDelicious.Infrasturcture.csproj", "{1CB1ED1B-0711-4E5E-8AAD-F5C3E4905B8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookDelicious.Infrasturcture", "CookDelicious.Infrasturcture\CookDelicious.Infrasturcture.csproj", "{1CB1ED1B-0711-4E5E-8AAD-F5C3E4905B8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookDelicious.Tests", "CookDelicious.Tests\CookDelicious.Tests.csproj", "{3A60C30C-CF93-4497-8364-8FAC29DC2769}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{1CB1ED1B-0711-4E5E-8AAD-F5C3E4905B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CB1ED1B-0711-4E5E-8AAD-F5C3E4905B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CB1ED1B-0711-4E5E-8AAD-F5C3E4905B8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A60C30C-CF93-4497-8364-8FAC29DC2769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A60C30C-CF93-4497-8364-8FAC29DC2769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A60C30C-CF93-4497-8364-8FAC29DC2769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A60C30C-CF93-4497-8364-8FAC29DC2769}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
