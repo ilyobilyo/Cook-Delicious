@@ -11,5 +11,6 @@
         public const string AlreadyExist = "вече съществува!";
         public const string RequiredName = "Името е задължително";
         public const string DeleteFailed = "Неуспешно изтриване";
+        public const string InvalidSetRecipeProductErrorMessage = "Трябва да имате поне два прдукта! Разделете продуктите с ','(запетайка) + ' '(спейс) за правилен запис.";
     }
 }
