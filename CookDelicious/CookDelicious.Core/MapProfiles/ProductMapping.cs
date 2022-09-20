@@ -15,6 +15,7 @@ namespace CookDelicious.Core.MapProfiles
             CreateMap<ProductServiceModel, ProductViewModel>();
             CreateMap<RecipeProduct, RecipeProductServiceModel>();
             CreateMap<CreateProductViewModel, CreateProductInputModel>();
+            CreateMap<RecipeProductViewModel, CreateRecipeProductServiceModel>();
         }
     }
 }

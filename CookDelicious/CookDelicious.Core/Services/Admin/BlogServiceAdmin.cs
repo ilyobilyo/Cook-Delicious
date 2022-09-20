@@ -119,15 +119,26 @@ namespace CookDelicious.Core.Services.Admin
             return isDeleted;
         }
 
-        public async Task DeleteBlogPostCategory(Guid id)
+        public async Task<bool> DeleteBlogPostCategory(Guid id)
         {
+            var isDeleted = false;
+
             var categoryToDelete = await repo.All<BlogPostCategory>()
                .Where(x => x.Id == id)
                .FirstOrDefaultAsync();
 
+            if (categoryToDelete == null)
+            {
+                return isDeleted;
+            }
+
             categoryToDelete.IsDeleted = true;
 
+            isDeleted = true;
+
             await repo.SaveChangesAsync();
+
+            return isDeleted;
         }
 
         public async Task<IEnumerable<BlogPostCategoryServiceModel>> GetAllBlogPostCategories()

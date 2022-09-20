@@ -1,8 +1,5 @@
-﻿using CookDelicious.Core.Models.Recipe;
-using CookDelicious.Core.Models.Sorting;
-using CookDelicious.Core.Service.Models;
+﻿using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
-using CookDelicious.Infrasturcture.Models.Recipes;
 using CookDelicious.Models;
 
 namespace CookDelicious.Core.Contracts.Recipes

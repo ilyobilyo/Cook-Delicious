@@ -1,7 +1,5 @@
-﻿using CookDelicious.Core.Models.Product;
-using CookDelicious.Core.Service.Models;
+﻿using CookDelicious.Core.Service.Models;
 using CookDelicious.Infrasturcture.Models.Common;
-using CookDelicious.Models;
 
 namespace CookDelicious.Core.Contracts.Product
 {

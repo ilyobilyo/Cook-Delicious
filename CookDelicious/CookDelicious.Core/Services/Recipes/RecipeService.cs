@@ -58,6 +58,10 @@ namespace CookDelicious.Core.Services.Recipes
                 return error;
             }
 
+            var categories = await categoryService.GetAllCategoryNames();
+
+            model.Categories = categories;
+
             var dishType = await dishTypeService.GetDishTypeByName(model.DishType);
 
             var recipe = new Recipe()
@@ -75,11 +79,16 @@ namespace CookDelicious.Core.Services.Recipes
                 PublishedOn = DateTime.Now,
             };
 
-            recipe.RecipeProducts = await productService.SetProductsForCreatingRecipe(model.Products, recipe.Id);
+            try
+            {
+                recipe.RecipeProducts = await productService.SetProductsForCreatingRecipe(model.Products, recipe.Id);
+            }
+            catch (Exception e)
+            {
+                error.Messages = e.Message;
+                return error;
+            }
 
-            var categories = await categoryService.GetAllCategoryNames();
-
-            model.Categories = categories;
 
             try
             {

@@ -1,4 +1,6 @@
-﻿namespace CookDelicious.Core.Models.Recipe
+﻿using CookDelicious.Core.Models.Product;
+
+namespace CookDelicious.Core.Models.Recipe
 {
     public class CreateRecipeViewModel
     {

@@ -1,7 +1,6 @@
 ﻿using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Forum;
-using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Forum;
@@ -16,17 +15,14 @@ namespace CookDelicious.Core.Services.Comments
         private readonly IApplicationDbRepository repo;
         private readonly IForumService forumService;
         private readonly IUserService userService;
-        private readonly IRecipeService recipeService;
 
         public CommentService(IApplicationDbRepository repo,
             IForumService forumService,
-            IUserService userService,
-            IRecipeService recipeService)
+            IUserService userService)
         {
             this.repo = repo;
             this.forumService = forumService;
             this.userService = userService;
-            this.recipeService = recipeService;
         }
 
         public async Task<bool> DeletePostComment(Guid id)
@@ -81,17 +77,20 @@ namespace CookDelicious.Core.Services.Comments
             return isDeleted;
         }
         
-        public async Task<bool> PostCommentForPost(Guid id, PostCommentInputModel model)
+        public async Task<ErrorViewModel> PostCommentForPost(Guid id, PostCommentInputModel model)
         {
+            if (model.Content.Length > 200)
+            {
+                return new ErrorViewModel() { Messages = CommentConstants.CommentMaxLength };
+            }
+
             var forumPost = await forumService.GetById(id);
 
             var user = await userService.GetApplicationUserByUsername(model.AuthorName);
 
-            var IsPosted = false;
-
             if (forumPost == null || user == null)
             {
-                return IsPosted;
+                return new ErrorViewModel() { Messages = PostsConstants.InvalidRecipeOrUser };
             }
 
             var forumComment = new ForumComment()
@@ -108,14 +107,13 @@ namespace CookDelicious.Core.Services.Comments
             {
                 await repo.AddAsync(forumComment);
                 await repo.SaveChangesAsync();
-                IsPosted = true;
             }
             catch (Exception)
             {
-                return IsPosted;
+                return new ErrorViewModel() { Messages = MessageConstant.UnexpectedError };
             }
 
-            return IsPosted;
+            return null;
         }
 
         public async Task<ErrorViewModel> PostCommentForRecipe(Guid id, PostCommentInputModel model)

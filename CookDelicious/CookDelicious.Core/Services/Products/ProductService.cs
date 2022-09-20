@@ -47,8 +47,17 @@ namespace CookDelicious.Core.Services.Products
 
         public async Task<ICollection<RecipeProduct>> SetProductsForCreatingRecipe(string products, Guid recipeId)
         {
-            var splitedProductsWithQuantity = products.Split(", ", StringSplitOptions.RemoveEmptyEntries);
+            var validProducts = products.Replace(",", ", ");
+
+            var splitedProductsWithQuantity = validProducts.Split(", ", StringSplitOptions.RemoveEmptyEntries);
+
+            if (splitedProductsWithQuantity.Count() <= 1)
+            {
+                throw new ArgumentException(MessageConstant.InvalidSetRecipeProductErrorMessage);
+            }
+
             var splitedProductsNames = products.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
             var productDict = Enumerable.Range(0, splitedProductsNames.Length / 2).ToDictionary(i => splitedProductsNames[2 * i + 1] , i => splitedProductsNames[2 * i]);
 
             List<RecipeProduct> recipeProducts = new List<RecipeProduct>();
@@ -133,7 +142,5 @@ namespace CookDelicious.Core.Services.Products
             return await repo.All<Product>()
                 .AnyAsync(x => x.Name == name);
         }
-
-       
     }
 }

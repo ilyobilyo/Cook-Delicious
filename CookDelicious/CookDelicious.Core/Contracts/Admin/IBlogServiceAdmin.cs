@@ -11,6 +11,6 @@ namespace CookDelicious.Core.Contracts.Admin
         Task<ErrorViewModel> CreateBlogPost(CreateBlogPostInputModel inputModel, string name);
         Task<bool> DeleteBlogPost(Guid id);
         Task<IEnumerable<BlogPostCategoryServiceModel>> GetAllBlogPostCategories();
-        Task DeleteBlogPostCategory(Guid id);
+        Task<bool> DeleteBlogPostCategory(Guid id);
     }
 }
