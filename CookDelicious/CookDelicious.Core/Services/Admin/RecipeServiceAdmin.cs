@@ -18,15 +18,22 @@ namespace CookDelicious.Core.Services.Admin
             this.mapper = mapper;
         }
 
-        public async Task DeleteRecipe(Guid id)
+        public async Task<bool> DeleteRecipe(Guid id)
         {
             var recipeToDelete = await repo.All<Recipe>()
                .Where(x => x.Id == id)
                .FirstOrDefaultAsync();
 
+            if (recipeToDelete == null)
+            {
+                return false;
+            }
+
             recipeToDelete.IsDeleted = true;
 
             await repo.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<IEnumerable<RecipeServiceModel>> GetUserRecipes(string id)

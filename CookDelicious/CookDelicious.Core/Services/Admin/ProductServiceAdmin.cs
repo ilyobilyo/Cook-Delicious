@@ -17,20 +17,20 @@ namespace CookDelicious.Core.Services.Products
             this.repo = repo;
         }
 
-        public async Task<IList<ErrorViewModel>> CreateProduct(CreateProductInputModel model)
+        public async Task<ErrorViewModel> CreateProduct(CreateProductInputModel model)
         {
-            List<ErrorViewModel> errors = new List<ErrorViewModel>();
+            ErrorViewModel error = new ErrorViewModel();
 
             if (model == null || model.Name == null || model.Type == null || model.Description == null)
             {
-                errors.Add(new ErrorViewModel() { Messages = RecipeConstants.AllFieldsAreRequired });
-                return errors;
+                 return new ErrorViewModel() { Messages = RecipeConstants.AllFieldsAreRequired };
+               
             }
 
             if (await IsProductExists(model))
             {
-                errors.Add(new ErrorViewModel() { Messages = $"{model.Name} {MessageConstant.AlreadyExist}" });
-                return errors;
+                return new ErrorViewModel() { Messages = $"{model.Name} {MessageConstant.AlreadyExist}" };
+                
             }
 
             var product = new Product()
@@ -48,21 +48,28 @@ namespace CookDelicious.Core.Services.Products
             }
             catch (Exception)
             {
-                errors.Add(new ErrorViewModel() { Messages = RecipeConstants.UnexpectedErrorProduct });
+                return new ErrorViewModel() { Messages = RecipeConstants.UnexpectedErrorProduct };
             }
 
-            return errors;
+            return error;
         }
 
-        public async Task DeleteProduct(Guid id)
+        public async Task<bool> DeleteProduct(Guid id)
         {
             var productToDelete = await repo.All<Product>()
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
+            if (productToDelete == null)
+            {
+                return false;
+            }
+
             productToDelete.IsDeleted = true;
 
             await repo.SaveChangesAsync();
+
+            return true;
         }
 
         private async Task<bool> IsProductExists(CreateProductInputModel model)

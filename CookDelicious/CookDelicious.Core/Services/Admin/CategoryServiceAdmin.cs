@@ -57,15 +57,22 @@ namespace CookDelicious.Core.Services.Admin
             return error;
         }
 
-        public async Task DeleteCategory(Guid id)
+        public async Task<bool> DeleteCategory(Guid id)
         {
             var categoryToDelete = await repo.All<Category>()
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
+            if (categoryToDelete == null)
+            {
+                return false;
+            }
+
             categoryToDelete.IsDeleted = true;
 
             await repo.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<IEnumerable<CategoryServiceModel>> GetAllCategories()

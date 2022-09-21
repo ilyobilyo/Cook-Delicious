@@ -21,29 +21,43 @@ namespace CookDelicious.Core.Services.Admin
             this.mapper = mapper;
         }
 
-        public async Task DeleteRecipeComment(Guid id)
+        public async Task<bool> DeleteRecipeComment(Guid id)
         {
             var commentToDelete = await repo.All<RecipeComment>()
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
+            if (commentToDelete == null)
+            {
+                return false;
+            }
+
             await repo.DeleteAsync<RecipeComment>(commentToDelete.Id);
 
             await repo.SaveChangesAsync();
+
+            return true;
         }
 
-        public async Task DeleteForumComment(Guid id)
+        public async Task<bool> DeleteForumComment(Guid id)
         {
             var commentToDelete = await repo.All<ForumComment>()
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
+            if (commentToDelete == null)
+            {
+                return false;
+            }
+
             await repo.DeleteAsync<ForumComment>(commentToDelete.Id);
 
             await repo.SaveChangesAsync();
+
+            return true;
         }
 
-        public async Task<IEnumerable<ForumCommentServiceModel>> GetForumComments(string id)
+        public async Task<IEnumerable<ForumCommentServiceModel>> GetUserForumComments(string id)
         {
             var userForumComments = await repo.All<ForumComment>()
                 .Include(x => x.Author)
@@ -55,7 +69,7 @@ namespace CookDelicious.Core.Services.Admin
             return forumCommentsServiceModel;
         }
 
-        public async Task<IEnumerable<RecipeCommentServiceModel>> GetRecipeComments(string userId)
+        public async Task<IEnumerable<RecipeCommentServiceModel>> GetUserRecipeComments(string userId)
         {
             var userRecipeComments = await repo.All<RecipeComment>()
                 .Include(x => x.Author)

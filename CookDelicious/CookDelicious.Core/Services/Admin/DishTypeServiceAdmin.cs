@@ -57,15 +57,22 @@ namespace CookDelicious.Core.Services.Admin
             return error;
         }
 
-        public async Task DeleteDishType(Guid id)
+        public async Task<bool> DeleteDishType(Guid id)
         {
             var dishTypeToDelete = await repo.All<DishType>()
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
+            if (dishTypeToDelete == null)
+            {
+                return false;
+            }
+
             dishTypeToDelete.IsDeleted = true;
 
             await repo.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<IEnumerable<DishTypeServiceModel>> GetAllDishTypes()
