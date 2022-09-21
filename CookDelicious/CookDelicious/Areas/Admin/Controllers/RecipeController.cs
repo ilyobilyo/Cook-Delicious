@@ -31,7 +31,7 @@ namespace CookDelicious.Areas.Admin.Controllers
         [Authorize(Roles = UserConstants.Roles.Administrator)]
         public async Task<IActionResult> RecipeComments([FromRoute] string id)
         {
-            var commentsServiceModels = await commentService.GetRecipeComments(id);
+            var commentsServiceModels = await commentService.GetUserRecipeComments(id);
 
             var commentsViewModel = mapper.Map<List<AdminCommentViewModel>>(commentsServiceModels);
 

@@ -59,7 +59,7 @@ namespace CookDelicious.Areas.Admin.Controllers
         [Authorize(Roles = UserConstants.Roles.Administrator)]
         public async Task<IActionResult> ForumComments([FromRoute] string id)
         {
-            var commentsServiceModels = await commentService.GetForumComments(id);
+            var commentsServiceModels = await commentService.GetUserForumComments(id);
 
             var commentsViewModel = mapper.Map<List<AdminCommentViewModel>>(commentsServiceModels);
 
