@@ -4,61 +4,60 @@
 <link rel="stylesheet" href="~/css/comment.css">
 
 <div class="receipe-post-area section-padding-80">
-        <!-- Receipe Post Search -->
-        
-        <!-- Receipe Slider -->
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                   <div class="owl-stage ">
-                       <div class="owl-item cloned" style="width: 1100px; height: 500px;">
-                           <img src="~/img/blog-img/@Model.ImageUrl" alt="" style="width: 1100px; height: 500px;">
-                       </div>
-                   </div>
-                   <div class="owl-dots">
-                     <div class="owl-dot">
-                      <span></span>
-                     </div>
-                     <div class="owl-dot active">
-                          <span></span>
-                     </div>
-                     <div class="owl-dot">
-                       <span></span>
-                     </div>
-                   </div>
-                </div>
-            </div>
-        </div>
+	<!-- Receipe Post Search -->
+	<!-- Receipe Slider -->
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="owl-stage ">
+					<div class="owl-item cloned" style="width: 1100px; height: 500px;">
+						<img src="~/img/blog-img/@Model.ImageUrl" alt="" style="width: 1100px; height: 500px;">
+					</div>
+				</div>
+				<div class="owl-dots">
+					<div class="owl-dot">
+						<span></span>
+					</div>
+					<div class="owl-dot active">
+						<span></span>
+					</div>
+					<div class="owl-dot">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-        <!-- Receipe Content Area -->
-        <div class="receipe-content-area">
-            <div class="container">
+	<!-- Receipe Content Area -->
+	<div class="receipe-content-area">
+		<div class="container">
 
-                <div class="row">
-                    <div class="col-12 col-md-8">
-                        <div class="receipe-headline my-5">
-                            <span>@Model.DatePublishedOn @Model.MonthPublishedOn @Model.YearPublishedOn</span>
-                            <h1>@Model.Title</h1>
-                            @if(Model.AuthorName == User.Identity.Name)
-                        {
-                            <a asp-action="DeleteBlogPost" asp-controller="Blog" asp-area="Admin" class="custom-button" asp-route-id="@Model.Id">Delete Post</a>
-                        }
-                            <div class="receipe-duration">
-                                <h4>Автор: @Model.AuthorName</h4>
-                                <h4>Категория: @Model.CategoryName</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+			<div class="row">
+				<div class="col-12 col-md-8">
+					<div class="receipe-headline my-5">
+						<span>@Model.DatePublishedOn @Model.MonthPublishedOn @Model.YearPublishedOn</span>
+						<h1>@Model.Title</h1>
+						@if (Model.AuthorName == User.Identity.Name)
+						{
+							<a asp-action="DeleteBlogPost" asp-controller="Blog" asp-area="Admin" class="custom-button" asp-route-id="@Model.Id">Delete Post</a>
+						}
+						<div class="receipe-duration">
+							<h4>Автор: @Model.AuthorName</h4>
+							<h4>Категория: @Model.CategoryName</h4>
+						</div>
+					</div>
+				</div>
+			</div>
 
-                <div class="row">
-                    <div class="col-12 col-lg-8">
-                        <!-- Single Preparation Step -->
-                        <div class="single-preparation-step d-flex">
-                            <p style="word-wrap: break-word;">@Model.Content</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+			<div class="row">
+				<div class="col-12 col-lg-8">
+					<!-- Single Preparation Step -->
+					<div class="single-preparation-step d-flex">
+						<p style="word-wrap: break-word;">@Model.Content</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

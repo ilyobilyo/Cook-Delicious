@@ -3,41 +3,41 @@
 @model PagingList<ProductViewModel>
 
 @{
-    ViewData["Title"] = "Products";
+	ViewData["Title"] = "Products";
 }
 
 <section class="best-receipe-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <a asp-action="CreateProduct" class="btn delicious-btn btn-2 m-1">Create Product</a>
-                    <div class="section-heading">
-                        <h3>@ViewData["Title"]</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                @foreach(var product in Model)
-            {
-                <!-- Single Best Receipe Area -->
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-best-receipe-area mb-30">
-                        <img src="~/img/bg-img/r1.jpg" alt="">
-                        <div class="receipe-content">
-                            <a href="receipe-post.html">
-                                <h5>@product.Name</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            }
-            </div>
-            
-            @{
-              var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-              var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-            }
-            <a asp-action="All" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
-            <a asp-action="All" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
-        </div>
-    </section>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<a asp-action="CreateProduct" class="btn delicious-btn btn-2 m-1">Create Product</a>
+				<div class="section-heading">
+					<h3>@ViewData["Title"]</h3>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			@foreach (var product in Model)
+			{
+				<!-- Single Best Receipe Area -->
+				<div class="col-12 col-sm-6 col-lg-4">
+					<div class="single-best-receipe-area mb-30">
+						<img src="~/img/bg-img/r1.jpg" alt="">
+						<div class="receipe-content">
+							<a href="receipe-post.html">
+								<h5>@product.Name</h5>
+							</a>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+
+		@{
+			var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+			var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+		}
+		<a asp-action="All" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
+		<a asp-action="All" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+	</div>
+</section>

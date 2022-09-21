@@ -4,156 +4,155 @@
 
 
 <div class="receipe-post-area section-padding-80">
-        <!-- Receipe Post Search -->
-        
-        <!-- Receipe Slider -->
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                        <div class="owl-stage ">
-                            <div class="owl-item cloned" style="width: 500px;">
-                                <img src="~/img/bg-img/@Model.ImageUrl" alt="">
-                                </div>
-                                </div>
-                           <div class="owl-dots">
-                           <div class="owl-dot">
-                           <span></span>
-                           </div>
-                           <div class="owl-dot active">
-                               <span></span>
-                           </div>
-                          <div class="owl-dot">
-                            <span></span>
-                            </div>
-                            </div>
-                </div>
-            </div>
-        </div>
+	<!-- Receipe Post Search -->
+	<!-- Receipe Slider -->
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="owl-stage ">
+					<div class="owl-item cloned" style="width: 500px;">
+						<img src="~/img/bg-img/@Model.ImageUrl" alt="">
+					</div>
+				</div>
+				<div class="owl-dots">
+					<div class="owl-dot">
+						<span></span>
+					</div>
+					<div class="owl-dot active">
+						<span></span>
+					</div>
+					<div class="owl-dot">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-        <!-- Receipe Content Area -->
-        <div class="receipe-content-area">
-            <div class="container">
+	<!-- Receipe Content Area -->
+	<div class="receipe-content-area">
+		<div class="container">
 
-                <div class="row">
-                    <div class="col-12 col-md-8">
-                        <div class="receipe-headline my-5">
-                            <span>@Model.PublishedOn</span>
-                            <h2>@Model.Title</h2>
-                            <div class="receipe-duration">
-                                <h6>Време за приготвяне: @Model.CookingTime</h6>
-                            </div>
-                        </div>
-                    </div>
+			<div class="row">
+				<div class="col-12 col-md-8">
+					<div class="receipe-headline my-5">
+						<span>@Model.PublishedOn</span>
+						<h2>@Model.Title</h2>
+						<div class="receipe-duration">
+							<h6>Време за приготвяне: @Model.CookingTime</h6>
+						</div>
+					</div>
+				</div>
 
-                    <div class="col-12 col-md-4">
-                        <div class="receipe-ratings text-right my-5">
-                             @{
-                                    var emptyStars = 5 - Model.Rating;
-                                }
-                                @for(int i = 1; i <= Model.Rating; i++)
-                                {
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                }
-                                @for(int i = 1; i <= emptyStars; i++)
-                                {
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                }
-                            <form class="ratings custom-chekbox" method="get">
-                                <a id="rating-submit" type="submit" class="custom-button" asp-action="Rating" asp-controller="Recipe" asp-route-id="@Model.Id">Остави рейтинг</a>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+				<div class="col-12 col-md-4">
+					<div class="receipe-ratings text-right my-5">
+						@{
+							var emptyStars = 5 - Model.Rating;
+						}
+						@for (int i = 1; i <= Model.Rating; i++)
+						{
+							<i class="fa fa-star" aria-hidden="true"></i>
+						}
+						@for (int i = 1; i <= emptyStars; i++)
+						{
+							<i class="fa fa-star-o" aria-hidden="true"></i>
+						}
+						<form class="ratings custom-chekbox" method="get">
+							<a id="rating-submit" type="submit" class="custom-button" asp-action="Rating" asp-controller="Recipe" asp-route-id="@Model.Id">Остави рейтинг</a>
+						</form>
+					</div>
+				</div>
+			</div>
 
-                <div class="row">
-                    <div class="col-12 col-lg-8">
-                        <!-- Single Preparation Step -->
-                        <div class="single-preparation-step d-flex">
-                            <p>@Model.Description</p>
-                        </div>
-                    </div>
+			<div class="row">
+				<div class="col-12 col-lg-8">
+					<!-- Single Preparation Step -->
+					<div class="single-preparation-step d-flex">
+						<p>@Model.Description</p>
+					</div>
+				</div>
 
-                    <!-- Ingredients -->
-                    <div class="col-12 col-lg-4">
-                        <div class="ingredients">
-                            <h4>Ingredients</h4>
+				<!-- Ingredients -->
+				<div class="col-12 col-lg-4">
+					<div class="ingredients">
+						<h4>Ingredients</h4>
 
-                            @foreach(var product in Model.RecipeProducts)
-                            {
-                                <div class="custom-control">
-                                    <input type="text" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" >@product.Product @product.Quantity</label>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
+						@foreach (var product in Model.RecipeProducts)
+						{
+							<div class="custom-control">
+								<input type="text" class="custom-control-input" id="customCheck1">
+								<label class="custom-control-label">@product.Product @product.Quantity</label>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
 
-                <div class="row">
-                     <div class="col-12">
-                    @foreach(var comment in Model.Comments)
-                    {
-                        <div class="section-heading text-left">
-                                <div class="col-md-8">
-                                    <div class="card p-3">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                      <div class="user d-flex flex-row align-items-center">
-                                        <img src="~/img/blog-img/2.jpg" width="30" class="user-img rounded-circle mr-2">
-                                        <span><small class="font-weight-bold text-primary">@comment.AuthorName</small> <small class="font-weight-bold">@comment.Content</small></span>
-                                      </div>
-                                      <small>2 days ago</small>
-                                      </div>
-                                      <div class="action d-flex justify-content-between mt-2 align-items-center">
-                                        @if(Model.Author.UserName == User.Identity.Name)
-                                        {
-                                            <div class="reply px-4">
-                                                <a href="/Recipe/DeleteRecipeComment/@comment.Id?recipeId=@Model.Id" >Remove</a>
-                                            </div>
-                                        }
-                                      </div>
-                                    </div>
-                                </div>
-                         </div>
-                    }
-                     </div>
-                </div>
+			<div class="row">
+				<div class="col-12">
+					@foreach (var comment in Model.Comments)
+					{
+						<div class="section-heading text-left">
+							<div class="col-md-8">
+								<div class="card p-3">
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="user d-flex flex-row align-items-center">
+											<img src="~/img/blog-img/2.jpg" width="30" class="user-img rounded-circle mr-2">
+											<span><small class="font-weight-bold text-primary">@comment.AuthorName</small> <small class="font-weight-bold">@comment.Content</small></span>
+										</div>
+										<small>2 days ago</small>
+									</div>
+									<div class="action d-flex justify-content-between mt-2 align-items-center">
+										@if (Model.Author.UserName == User.Identity.Name)
+										{
+											<div class="reply px-4">
+												<a href="/Recipe/DeleteRecipeComment/@comment.Id?recipeId=@Model.Id">Remove</a>
+											</div>
+										}
+									</div>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
 
-                @{
-              var prevDisabled = !Model.Comments.HasPreviousPage ? "disabled" : "";
-              var nextDisabled = !Model.Comments.HasNextPage ? "disabled" : "";
-            }
-            <a asp-action="RecipePost" asp-route-commentPage="@(Model.Comments.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
-            <a asp-action="RecipePost" asp-route-commentPage="@(Model.Comments.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+			@{
+				var prevDisabled = !Model.Comments.HasPreviousPage ? "disabled" : "";
+				var nextDisabled = !Model.Comments.HasNextPage ? "disabled" : "";
+			}
+			<a asp-action="RecipePost" asp-route-commentPage="@(Model.Comments.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
+			<a asp-action="RecipePost" asp-route-commentPage="@(Model.Comments.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
 
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section-heading text-left">
-                            <h3>Leave a comment</h3>
-                        </div>
-                    </div>
-                </div>
+			<div class="row">
+				<div class="col-12">
+					<div class="section-heading text-left">
+						<h3>Leave a comment</h3>
+					</div>
+				</div>
+			</div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="contact-form-area">
-                            <form action="postComment" method="post">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <div class="row">
-                                    <div class="col-12 col-lg-6">
-                                        <input asp-for="Comment.AuthorName" name="AuthorName" type="hidden" class="form-control" id="name" value="@User.Identity.Name">
-                                    </div>
-                                    <div class="col-12">
-                                        <textarea name="Content" asp-for="Comment.Content" class="form-control" id="Content" cols="30" rows="5" aria-required="true" placeholder="Message"></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn delicious-btn mt-30" asp-route-id="@Model.Id" asp-action="PostComment" asp-controller="Recipe" type="submit">Post Comments</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+			<div class="row">
+				<div class="col-12">
+					<div class="contact-form-area">
+						<form action="postComment" method="post">
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+							<div class="row">
+								<div class="col-12 col-lg-6">
+									<input asp-for="Comment.AuthorName" name="AuthorName" type="hidden" class="form-control" id="name" value="@User.Identity.Name">
+								</div>
+								<div class="col-12">
+									<textarea name="Content" asp-for="Comment.Content" class="form-control" id="Content" cols="30" rows="5" aria-required="true" placeholder="Message"></textarea>
+								</div>
+								<div class="col-12">
+									<button class="btn delicious-btn mt-30" asp-route-id="@Model.Id" asp-action="PostComment" asp-controller="Recipe" type="submit">Post Comments</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

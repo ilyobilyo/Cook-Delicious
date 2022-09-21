@@ -1,213 +1,213 @@
 ﻿@{
-    ViewData["Title"] = "CookDelicious";
+	ViewData["Title"] = "CookDelicious";
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<!-- Title -->
+	<title>@ViewData["Title"]</title>
 
-    <!-- Title -->
-    <title>@ViewData["Title"]</title>
+	<!-- Favicon -->
+	<link rel="icon" href="~/img/core-img/favicon.ico">
 
-    <!-- Favicon -->
-    <link rel="icon" href="~/img/core-img/favicon.ico">
-
-    <!-- Core Stylesheet -->
-    <link rel="stylesheet" href="~/css/style.css">
-    <link rel="stylesheet" href="~/css/animate.css">
-    <link rel="stylesheet" href="~/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/css/classy-nav.min.css">
-    <link rel="stylesheet" href="~/css/custom-icon.css">
-    <link rel="stylesheet" href="~/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/css/magnific-popup.css">
-    <link rel="stylesheet" href="~/css/nice-select.min.css">
-    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/plugins/toastr/toastr.min.css">
-    @await RenderSectionAsync("Scripts", required: false)
+	<!-- Core Stylesheet -->
+	<link rel="stylesheet" href="~/css/style.css">
+	<link rel="stylesheet" href="~/css/animate.css">
+	<link rel="stylesheet" href="~/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/css/classy-nav.min.css">
+	<link rel="stylesheet" href="~/css/custom-icon.css">
+	<link rel="stylesheet" href="~/css/font-awesome.min.css">
+	<link rel="stylesheet" href="~/css/magnific-popup.css">
+	<link rel="stylesheet" href="~/css/nice-select.min.css">
+	<link rel="stylesheet" href="~/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="~/plugins/toastr/toastr.min.css">
+	@await RenderSectionAsync("Scripts", required: false)
 </head>
 
 <body>
-    
-    <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
 
-        <!-- Top Header Area -->
-        <div class="top-header-area">
-            <div class="container h-100">
-                <div class="row h-100 align-items-center justify-content-between">
-                    <!-- Breaking News -->
-                    <div class="col-12 col-sm-6">
-                        <div class="breaking-news">
-                            <div id="breakingNewsTicker" class="ticker">
-                                <ul>
-                                    <li><a href="/">Hello World!</a></li>
-                                    <li><a href="/">Welcome to Cook Delicious.</a></li>
-                                    <li><a href="/">Join our cooking community!</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+	<!-- ##### Header Area Start ##### -->
+	<header class="header-area">
 
-                    <!-- Top Social Info -->
-                    <div class="col-12 col-sm-6">
-                        <div class="top-social-info text-right">
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<!-- Top Header Area -->
+		<div class="top-header-area">
+			<div class="container h-100">
+				<div class="row h-100 align-items-center justify-content-between">
+					<!-- Breaking News -->
+					<div class="col-12 col-sm-6">
+						<div class="breaking-news">
+							<div id="breakingNewsTicker" class="ticker">
+								<ul>
+									<li><a href="/">Hello World!</a></li>
+									<li><a href="/">Welcome to Cook Delicious.</a></li>
+									<li><a href="/">Join our cooking community!</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
 
-        <!-- Navbar Area -->
-        <div class="delicious-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="deliciousNav">
+					<!-- Top Social Info -->
+					<div class="col-12 col-sm-6">
+						<div class="top-social-info text-right">
+							<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+							<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-                        <!-- Logo -->
-                        <a class="nav-brand" href="/"><img src="~/img/core-img/logo.png" alt=""></a>
+		<!-- Navbar Area -->
+		<div class="delicious-main-menu">
+			<div class="classy-nav-container breakpoint-off">
+				<div class="container">
+					<!-- Menu -->
+					<nav class="classy-navbar justify-content-between" id="deliciousNav">
 
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
+						<!-- Logo -->
+						<a class="nav-brand" href="/"><img src="~/img/core-img/logo.png" alt=""></a>
 
-                        <!-- Menu -->
-                        <div class="classy-menu">
+						<!-- Navbar Toggler -->
+						<div class="classy-navbar-toggler">
+							<span class="navbarToggler"><span></span><span></span><span></span></span>
+						</div>
 
-                            <!-- close btn -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
+						<!-- Menu -->
+						<div class="classy-menu">
 
-                            <!-- Nav Start -->
-                            <div class="classynav">
-                                <ul>
-                                    @if (User.Identity.IsAuthenticated)
-                                    {
-                                        <li class="active">
-                                            <a class="active" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
-                                        </li>
-                                        <li>
-						                    <a class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Всички" asp-route-category="Всички">Всички Рецепти</a>
-					                    </li>
-					                    <li>
-						                    <a class="active" asp-area="" asp-controller="User" asp-action="MyProfile">Моят Профил</a>
-					                    </li>
-                                        
-                                        <li><a href="/">Mega Menu</a>
-                                            <div class="megamenu">
-                                                <ul class="single-mega cn-col-4" >
-                                                    <li style="margin: 10px">
-						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Аламинути" asp-route-category="Всички">Аламинути</a>
-					                                </li>
-                                                    <li style="margin: 10px">
-						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Предястия" asp-route-category="Всички">Предястия</a>
-					                                </li>
-                                                    <li style="margin: 10px">
-						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Основни ястия" asp-route-category="Всички">Основни ястия</a>
-					                                </li>
-                                                    <li style="margin: 10px">
-						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Десерти" asp-route-category="Всички">Десерти</a>
-					                                </li>
-                                                    <li style="margin: 10px">
-						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Коктейли" asp-route-category="Всички">Коктейли</a>
-					                                </li>
-                                                    <li style="margin: 10px">
-						                                <a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Product" asp-action="All">Продукти</a>
-					                                </li>
-                                                </ul>
-                                                <ul class="single-mega cn-col-4">
-                                                    <li style="margin: 10px">
-                                                        <a style="font-size: 25px; color: #1c8314" class="active" asp-area="" asp-controller="Forum" asp-action="Home">Форум</a>
-                                                    </li>
-                                                    <li style="margin: 10px">
-                                                        <a style="font-size: 25px; color: #1c8314" class="active" asp-area="" asp-controller="Blog" asp-action="Home" asp-route-pageNumber="1">Блог</a>
-                                                    </li>
-                                                    <li style="margin: 10px">
-                                                        <a style="font-size: 25px; color: #1c8314" href="contact.html">Контакти</a>
-                                                    </li>
-                                                </ul>
-                                                <div class="single-mega cn-col-4" style="width: 900px">
-                                                    <div class="receipe-slider owl-carousel">
-                                                        <a  style="width: 900px; height: 300px" href="/"><img src="~/img/bg-img/bg3.jpg" alt=""></a>
-                                                        <a  style="width: 900px; height: 300px" href="/"><img src="~/img/bg-img/bg2.jpg" alt=""></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        @if (User.IsInRole("Administrator"))
-                                        {
-                                            <li>
-						                        <a class="active" asp-area="Admin" asp-controller="Home" asp-action="Index">Админ меню</a>
-					                        </li>
-                                        }
-                                        <li class="active">
-                                         <form class="active" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                            <button type="submit" class="custom-button">Изход</button>
-                                        </form>
-                                    </li>
-                                    }
-                                    else
-                                    {
-                                        <li>
-                                            <a class="active" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
-                                        </li>
-                                        <li>
-                                            <a class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Всички" asp-route-category="Всички">Всички рецепти</a>
-                                        </li>
-                                        <li>
-                                            <a class="active" asp-area="" asp-controller="Blog" asp-action="Home">Блог</a>
-                                        </li>
-                                        <li>
-                                            <a class="active" asp-area="" asp-controller="Forum" asp-action="Home">Форум</a>
-                                        </li>
-                                        <li  class="active">
-                                            <a class="active" href="/Identity/Account/Login">Вход</a>
-                                        </li>
-                                         <li  class="active">
-                                            <a class="active" href="/Identity/Account/Register">Регистрация</a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                            <!-- Nav End -->
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- ##### Header Area End ##### -->
-    @RenderBody()
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area">
-        <div class="container h-100">
-            <div class="row h-100">
-                <div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
-                    <!-- Footer Social Info -->
-                    <div class="footer-social-info text-right">
-                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                    </div>
-                    <!-- Footer Logo -->
-                    <div class="footer-logo">
-                        <a href="/"><img src="~/img/core-img/logo.png" alt=""></a>
-                    </div>
-                    <p>
-                        Copyright & copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+							<!-- close btn -->
+							<div class="classycloseIcon">
+								<div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+							</div>
+
+							<!-- Nav Start -->
+							<div class="classynav">
+								<ul>
+									@if (User.Identity.IsAuthenticated)
+									{
+										<li class="active">
+											<a class="active" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+										</li>
+										<li>
+											<a class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Всички" asp-route-category="Всички">Всички Рецепти</a>
+										</li>
+										<li>
+											<a class="active" asp-area="" asp-controller="User" asp-action="MyProfile">Моят Профил</a>
+										</li>
+
+										<li>
+											<a href="/">Mega Menu</a>
+											<div class="megamenu">
+												<ul class="single-mega cn-col-4">
+													<li style="margin: 10px">
+														<a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Аламинути" asp-route-category="Всички">Аламинути</a>
+													</li>
+													<li style="margin: 10px">
+														<a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Предястия" asp-route-category="Всички">Предястия</a>
+													</li>
+													<li style="margin: 10px">
+														<a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Основни ястия" asp-route-category="Всички">Основни ястия</a>
+													</li>
+													<li style="margin: 10px">
+														<a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Десерти" asp-route-category="Всички">Десерти</a>
+													</li>
+													<li style="margin: 10px">
+														<a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Коктейли" asp-route-category="Всички">Коктейли</a>
+													</li>
+													<li style="margin: 10px">
+														<a style="font-size: 25px; color: #36a12e" class="active" asp-area="" asp-controller="Product" asp-action="All">Продукти</a>
+													</li>
+												</ul>
+												<ul class="single-mega cn-col-4">
+													<li style="margin: 10px">
+														<a style="font-size: 25px; color: #1c8314" class="active" asp-area="" asp-controller="Forum" asp-action="Home">Форум</a>
+													</li>
+													<li style="margin: 10px">
+														<a style="font-size: 25px; color: #1c8314" class="active" asp-area="" asp-controller="Blog" asp-action="Home" asp-route-pageNumber="1">Блог</a>
+													</li>
+													<li style="margin: 10px">
+														<a style="font-size: 25px; color: #1c8314" href="contact.html">Контакти</a>
+													</li>
+												</ul>
+												<div class="single-mega cn-col-4" style="width: 900px">
+													<div class="receipe-slider owl-carousel">
+														<a style="width: 900px; height: 300px" href="/"><img src="~/img/bg-img/bg3.jpg" alt=""></a>
+														<a style="width: 900px; height: 300px" href="/"><img src="~/img/bg-img/bg2.jpg" alt=""></a>
+													</div>
+												</div>
+											</div>
+										</li>
+										@if (User.IsInRole("Administrator"))
+										{
+											<li>
+												<a class="active" asp-area="Admin" asp-controller="Home" asp-action="Index">Админ меню</a>
+											</li>
+										}
+										<li class="active">
+											<form class="active" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+												<button type="submit" class="custom-button">Изход</button>
+											</form>
+										</li>
+									}
+									else
+									{
+										<li>
+											<a class="active" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+										</li>
+										<li>
+											<a class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Всички" asp-route-category="Всички">Всички рецепти</a>
+										</li>
+										<li>
+											<a class="active" asp-area="" asp-controller="Blog" asp-action="Home">Блог</a>
+										</li>
+										<li>
+											<a class="active" asp-area="" asp-controller="Forum" asp-action="Home">Форум</a>
+										</li>
+										<li class="active">
+											<a class="active" href="/Identity/Account/Login">Вход</a>
+										</li>
+										<li class="active">
+											<a class="active" href="/Identity/Account/Register">Регистрация</a>
+										</li>
+									}
+								</ul>
+							</div>
+							<!-- Nav End -->
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- ##### Header Area End ##### -->
+	@RenderBody()
+	<!-- ##### Footer Area Start ##### -->
+	<footer class="footer-area">
+		<div class="container h-100">
+			<div class="row h-100">
+				<div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
+					<!-- Footer Social Info -->
+					<div class="footer-social-info text-right">
+						<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+						<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+					</div>
+					<!-- Footer Logo -->
+					<div class="footer-logo">
+						<a href="/"><img src="~/img/core-img/logo.png" alt=""></a>
+					</div>
+					<p>
+						Copyright & copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>
 <!-- jQuery -->

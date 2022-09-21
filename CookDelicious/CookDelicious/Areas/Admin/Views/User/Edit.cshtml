@@ -1,37 +1,37 @@
 ﻿@using CookDelicious.Core.Models.Admin
 @model UserEditViewModel
 @{
-    ViewData["Title"] = "User Edit";
+	ViewData["Title"] = "User Edit";
 }
 
 <div class="container">
-    <div class="row">
-    <div class="col-4">
-        <form id="edit" method="post">
-            <input type="hidden" name="Id" value="@Model.Id" />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <label asp-for="Username" class="form-label"></label>
-                <input asp-for="Username" class="form-control" aria-required="true" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <hr />
-            <div class="col-4">
-                    <a id="login-submit" asp-action="UserRecipes" asp-controller="Recipe" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">User Recipes</a>
-                    <a id="login-submit" asp-action="ForumPosts" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Forum Posts</a>
-                    <a id="login-submit" asp-action="RecipeComments" asp-controller="Recipe" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Recipe Comments</a>
-                    <a id="login-submit" asp-action="ForumComments" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Forum Comments</a>
-            </div>
-            <div class="row">&nbsp;</div>
-            <div class="row">
-                <div class="col-4">
-                    <button id="login-submit" type="submit" class="btn btn-primary btn-block">Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+	<div class="row">
+		<div class="col-4">
+			<form id="edit" method="post">
+				<input type="hidden" name="Id" value="@Model.Id" />
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="form-floating">
+					<label asp-for="Username" class="form-label"></label>
+					<input asp-for="Username" class="form-control" aria-required="true" />
+					<span asp-validation-for="Username" class="text-danger"></span>
+				</div>
+				<hr />
+				<div class="col-4">
+					<a id="login-submit" asp-action="UserRecipes" asp-controller="Recipe" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">User Recipes</a>
+					<a id="login-submit" asp-action="ForumPosts" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Forum Posts</a>
+					<a id="login-submit" asp-action="RecipeComments" asp-controller="Recipe" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Recipe Comments</a>
+					<a id="login-submit" asp-action="ForumComments" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Forum Comments</a>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-4">
+						<button id="login-submit" type="submit" class="btn btn-primary btn-block">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 
-    <partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />

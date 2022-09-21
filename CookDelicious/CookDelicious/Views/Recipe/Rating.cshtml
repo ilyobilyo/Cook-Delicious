@@ -2,59 +2,59 @@
 @model RatingViewModel
 
 <head>
-        <link rel="stylesheet" href="~/css/check-box.css">
-        <link rel="stylesheet" href="~/css/style.css">
+	<link rel="stylesheet" href="~/css/check-box.css">
+	<link rel="stylesheet" href="~/css/style.css">
 </head>
 
 
 
 <div class="blog-area section-padding-80">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-lg-8">
-                <div class="blog-posts-area">
-                    <div class="single-blog-area mb-80">
-                        <div class="blog-thumbnail">
-                            <img src="~/img/bg-img/@Model.ImageUrl" alt="" style="width: 400px;">
-                            <div class="post-date">
-                                <a href="/Recipe/RecipePost/@Model.Id"><span>@Model.DatePublishedOn</span>@Model.MonthPublishedOn <br> @Model.YearPublishedOn</a>
-                            </div>
-                        </div>
-                        <div class="receipe-ratings text-right my-5">
-                <form class="ratings custom-chekbox" method="post">
-                    <label class="custom-checkbox">
-                        <input type="checkbox" asp-for="RatingOneCheck" id="star 1" value="true"/>  
-                        <i class="fa fa-star checked" aria-hidden="true"></i>
-                        <i class="fa fa-star-o unchecked" aria-hidden="true"></i>
-                    </label>
-                    <label class="custom-checkbox">
-                        <input type="checkbox" asp-for="RatingTwoCheck" id="star 2" value="true"/>  
-                        <i class="fa fa-star checked" aria-hidden="true"></i>
-                        <i class="fa fa-star-o unchecked" aria-hidden="true"></i>
-                    </label>
-                    <label class="custom-checkbox">
-                        <input type="checkbox" asp-for="RatingThreeCheck" id="star 3" value="true"/>  
-                        <i class="fa fa-star checked" aria-hidden="true"></i>
-                        <i class="fa fa-star-o unchecked" aria-hidden="true"></i>
-                    </label>
-                    <label class="custom-checkbox">
-                        <input type="checkbox" asp-for="RatingFourCheck" id="star 4" value="true"/>  
-                        <i class="fa fa-star checked" aria-hidden="true"></i>
-                        <i class="fa fa-star-o unchecked" aria-hidden="true"></i>
-                    </label>
-                    <label class="custom-checkbox" for="star 5">
-                        <input type="checkbox" asp-for="RatingFiveCheck" id="star 5" value="true"/>  
-                        <i class="fa fa-star checked" aria-hidden="true"></i>
-                        <i class="fa fa-star-o unchecked" aria-hidden="true"></i>
-                    </label>
-                    <button id="rating-submit" type="submit" class="custom-button" href="/Recipe/RecipePost">Остави рейтинг</button>
-                </form>
-                    <a id="back" class="custom-button" href="/Recipe/RecipePost/@Model.Id">Върни се към рецептата</a>
-            </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-12 col-lg-8">
+				<div class="blog-posts-area">
+					<div class="single-blog-area mb-80">
+						<div class="blog-thumbnail">
+							<img src="~/img/bg-img/@Model.ImageUrl" alt="" style="width: 400px;">
+							<div class="post-date">
+								<a href="/Recipe/RecipePost/@Model.Id"><span>@Model.DatePublishedOn</span>@Model.MonthPublishedOn <br> @Model.YearPublishedOn</a>
+							</div>
+						</div>
+						<div class="receipe-ratings text-right my-5">
+							<form class="ratings custom-chekbox" method="post">
+								<label class="custom-checkbox">
+									<input type="checkbox" asp-for="RatingOneCheck" id="star 1" value="true" />
+									<i class="fa fa-star checked" aria-hidden="true"></i>
+									<i class="fa fa-star-o unchecked" aria-hidden="true"></i>
+								</label>
+								<label class="custom-checkbox">
+									<input type="checkbox" asp-for="RatingTwoCheck" id="star 2" value="true" />
+									<i class="fa fa-star checked" aria-hidden="true"></i>
+									<i class="fa fa-star-o unchecked" aria-hidden="true"></i>
+								</label>
+								<label class="custom-checkbox">
+									<input type="checkbox" asp-for="RatingThreeCheck" id="star 3" value="true" />
+									<i class="fa fa-star checked" aria-hidden="true"></i>
+									<i class="fa fa-star-o unchecked" aria-hidden="true"></i>
+								</label>
+								<label class="custom-checkbox">
+									<input type="checkbox" asp-for="RatingFourCheck" id="star 4" value="true" />
+									<i class="fa fa-star checked" aria-hidden="true"></i>
+									<i class="fa fa-star-o unchecked" aria-hidden="true"></i>
+								</label>
+								<label class="custom-checkbox" for="star 5">
+									<input type="checkbox" asp-for="RatingFiveCheck" id="star 5" value="true" />
+									<i class="fa fa-star checked" aria-hidden="true"></i>
+									<i class="fa fa-star-o unchecked" aria-hidden="true"></i>
+								</label>
+								<button id="rating-submit" type="submit" class="custom-button" href="/Recipe/RecipePost">Остави рейтинг</button>
+							</form>
+							<a id="back" class="custom-button" href="/Recipe/RecipePost/@Model.Id">Върни се към рецептата</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-            
+
