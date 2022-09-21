@@ -8,7 +8,7 @@ namespace CookDelicious.Core.Contracts.Admin
     {
         Task<ErrorViewModel> CreateDishType(CreateDishTypeInputModel model);
         Task<IEnumerable<DishTypeServiceModel>> GetAllDishTypes();
-        Task DeleteDishType(Guid id);
+        Task<bool> DeleteDishType(Guid id);
 
     }
 }

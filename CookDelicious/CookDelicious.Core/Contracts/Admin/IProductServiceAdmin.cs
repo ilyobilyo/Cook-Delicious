@@ -5,7 +5,7 @@ namespace CookDelicious.Core.Contracts.Admin.Product
 {
     public interface IProductServiceAdmin
     {
-        Task<IList<ErrorViewModel>> CreateProduct(CreateProductInputModel model);
-        Task DeleteProduct(Guid id);
+        Task<ErrorViewModel> CreateProduct(CreateProductInputModel model);
+        Task<bool> DeleteProduct(Guid id);
     }
 }

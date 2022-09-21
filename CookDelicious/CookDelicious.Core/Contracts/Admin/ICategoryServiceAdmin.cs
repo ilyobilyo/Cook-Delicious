@@ -8,6 +8,6 @@ namespace CookDelicious.Core.Contracts.Admin
     {
         Task<ErrorViewModel> CreateCategory(CreateCategoryInputModel model);
         Task<IEnumerable<CategoryServiceModel>> GetAllCategories();
-        Task DeleteCategory(Guid id);
+        Task<bool> DeleteCategory(Guid id);
     }
 }
