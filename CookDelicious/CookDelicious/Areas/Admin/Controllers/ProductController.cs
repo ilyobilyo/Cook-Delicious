@@ -37,9 +37,9 @@ namespace CookDelicious.Areas.Admin.Controllers
 
             var errors = await productServiceAdmin.CreateProduct(serviceModel);
 
-            if (errors.Count > 0)
+            if (errors.Messages != null)
             {
-                ViewData[MessageConstant.ErrorMessage] = string.Join(Environment.NewLine, errors.Select(x => x.Messages));
+                ViewData[MessageConstant.ErrorMessage] = errors.Messages;
             }
             else
             {
