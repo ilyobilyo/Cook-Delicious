@@ -69,6 +69,7 @@
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<input asp-for="ImageUrl" class="form-control" aria-required="true" />
+										<span asp-validation-for="ImageUrl" class="text-danger"></span>
 									</div>
 								</div>
 								<hr>
@@ -90,6 +91,7 @@
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<textarea asp-for="Description" rows="5" cols="60" class="form-control" aria-required="true" name="Description" id="Description"></textarea>
+										<span asp-validation-for="Description" class="text-danger"></span>
 									</div>
 								</div>
 								<hr>

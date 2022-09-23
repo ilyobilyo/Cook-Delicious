@@ -69,6 +69,7 @@
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<input asp-for="ImageUrl" class="form-control" aria-required="true" />
+										<span asp-validation-for="ImageUrl" class="text-danger"></span>
 									</div>
 								</div>
 								<hr>
@@ -102,7 +103,8 @@
 										<h6 class="mb-0">Cooking Time</h6>
 									</div>
 									<div class="col-sm-9 text-secondary">
-										<input type="datetime" asp-for="CookingTime" class="form-control" aria-required="true" />
+										<input type="text" asp-for="CookingTime" class="form-control" aria-required="true" />
+										<span asp-validation-for="CookingTime" class="text-danger"></span>
 									</div>
 								</div>
 								<hr>
@@ -112,6 +114,7 @@
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<input asp-for="Products" class="form-control" aria-required="true" />
+										<span asp-validation-for="Products" class="text-danger"></span>
 									</div>
 								</div>
 								<hr>
@@ -121,6 +124,7 @@
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<textarea asp-for="Description" rows="5" cols="60" class="form-control" aria-required="true" name="Description" id="Description"></textarea>
+										<span asp-validation-for="Description" class="text-danger"></span>
 									</div>
 								</div>
 								<hr>

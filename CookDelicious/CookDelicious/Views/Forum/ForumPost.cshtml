@@ -63,13 +63,13 @@
 				<div class="col-12">
 					@foreach (var comment in Model.Comments)
 					{
-						<div class="section-heading text-left">
-							<div class="col-md-8">
-								<div class="card p-3">
+						<div class="section-heading text-left" >
+							<div class="col-md-8" >
+								<div class="card p-3" >
 									<div class="d-flex justify-content-between align-items-center">
 										<div class="user d-flex flex-row align-items-center">
 											<img src="~/img/blog-img/2.jpg" width="30" class="user-img rounded-circle mr-2">
-											<span><small class="font-weight-bold text-primary">@comment.AuthorName</small> <small class="font-weight-bold">@comment.Content</small></span>
+											<span><small class="font-weight-bold text-primary">@comment.AuthorName</small> <small class="font-weight-bold" style="line-break: anywhere">@comment.Content</small></span>
 										</div>
 										<small>2 days ago</small>
 									</div>
@@ -106,14 +106,15 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="contact-form-area">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 						<form action="postComment" method="post">
-							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 							<div class="row">
 								<div class="col-12 col-lg-6">
 									<input asp-for="Comment.AuthorName" name="AuthorName" type="hidden" class="form-control" id="name" value="@User.Identity.Name">
 								</div>
 								<div class="col-12">
 									<textarea name="Content" asp-for="Comment.Content" class="form-control" id="Content" cols="30" rows="5" aria-required="true" placeholder="Message"></textarea>
+									<span asp-validation-for="@Model.Comment.Content" class="text-danger"></span>
 								</div>
 								<div class="col-12">
 									<button class="btn delicious-btn mt-30" asp-route-id="@Model.Id" asp-action="PostComment" asp-controller="Forum" type="submit">Post Comments</button>
