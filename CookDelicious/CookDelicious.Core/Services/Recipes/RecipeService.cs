@@ -103,15 +103,6 @@ namespace CookDelicious.Core.Services.Recipes
             return error;
         }
 
-        public async Task<(IEnumerable<RecipeServiceModel>, int)> GetSortRecipesForPageing(int pageNumber, int pageSize, SortServiceModel model)
-        {
-            (var sortRecipes, var totalCount) = await GetSortRecipes(pageNumber, pageSize, model.DishType, model.Category, model.Date);
-
-            var itemsAsServiceModel = mapper.Map<IEnumerable<RecipeServiceModel>>(sortRecipes);
-
-            return (itemsAsServiceModel, totalCount);
-        }
-
         public async Task<(IEnumerable<RecipeServiceModel>, int)> GetSortRecipesForPageing(int pageNumber,
             int pageSize,
             string dishType,
