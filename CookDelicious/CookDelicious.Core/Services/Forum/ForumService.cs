@@ -35,7 +35,7 @@ namespace CookDelicious.Core.Services.Forum
         {
             if (model.Title == null || model.Description == null)
             {
-                return new ErrorViewModel() { Messages = PostsConstants.RequiredTitleAndContent };
+                return new ErrorViewModel() { Messages = PostsConstants.RequiredTitleAndDescription };
             }
 
             var author = await userService.GetApplicationUserByUsername(Username);

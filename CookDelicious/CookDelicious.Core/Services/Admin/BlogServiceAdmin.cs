@@ -30,7 +30,7 @@ namespace CookDelicious.Core.Services.Admin
         {
             if (inputModel.Title == null || inputModel.Description == null)
             {
-                return new ErrorViewModel() { Messages = PostsConstants.RequiredTitleAndContent };
+                return new ErrorViewModel() { Messages = PostsConstants.RequiredTitle };
             }
 
             var author = await userService.GetApplicationUserByUsername(username);

@@ -81,7 +81,7 @@ namespace CookDelicious.Core.Services.Comments
         {
             if (model.Content.Length > 200)
             {
-                return new ErrorViewModel() { Messages = CommentConstants.CommentMaxLength };
+                return new ErrorViewModel() { Messages = CommentConstants.CommentContentLength };
             }
 
             var forumPost = await forumService.GetById(id);
@@ -120,7 +120,7 @@ namespace CookDelicious.Core.Services.Comments
         {
             if (model.Content.Length > 200)
             {
-                return new ErrorViewModel() { Messages = CommentConstants.CommentMaxLength };
+                return new ErrorViewModel() { Messages = CommentConstants.CommentContentLength };
             }
 
             var recipePost = await repo.GetByIdAsync<Recipe>(id);
