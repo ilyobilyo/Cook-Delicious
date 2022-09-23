@@ -7,6 +7,7 @@ using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Common.Categories;
 using CookDelicious.Core.Contracts.Common.DishTypes;
 using CookDelicious.Core.Contracts.Forum;
+using CookDelicious.Core.Contracts.Pageing;
 using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Contracts.User;
@@ -17,6 +18,7 @@ using CookDelicious.Core.Services.Comments;
 using CookDelicious.Core.Services.Common.Categories;
 using CookDelicious.Core.Services.Common.DishTypes;
 using CookDelicious.Core.Services.Forum;
+using CookDelicious.Core.Services.Pageing;
 using CookDelicious.Core.Services.Products;
 using CookDelicious.Core.Services.Recipes;
 using CookDelicious.Core.Services.User;
@@ -55,7 +57,8 @@ builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<ICommentServiceAdmin, CommentServiceAdmin>()
     .AddScoped<IBlogService, BlogService>()
     .AddScoped<IBlogServiceAdmin, BlogServiceAdmin>()
-    .AddScoped<IRecipeServiceAdmin, RecipeServiceAdmin>();
+    .AddScoped<IRecipeServiceAdmin, RecipeServiceAdmin>()
+    .AddScoped<IPageingService, PageingService>();
 
 builder.Services.AddAutoMapper(typeof(RecipeMapping),
     typeof(UserMapping), 
