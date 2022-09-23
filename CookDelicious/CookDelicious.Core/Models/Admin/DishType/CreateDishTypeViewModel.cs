@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CookDelicious.Core.Models.Admin.Category;
 
 namespace CookDelicious.Core.Models.Admin.DishType
 {
-    public class CreateDishTypeViewModel
+    public class CreateDishTypeViewModel : AddCategoryViewModel
     {
-        public string Name { get; set; }
     }
 }

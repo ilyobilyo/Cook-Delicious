@@ -2,7 +2,6 @@
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Product;
 using CookDelicious.Core.Service.Models;
-using CookDelicious.Infrasturcture.Models.Identity;
 
 namespace CookDelicious.Core.Models.Recipe
 {
