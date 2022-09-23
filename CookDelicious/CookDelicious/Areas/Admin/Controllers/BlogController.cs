@@ -3,6 +3,7 @@ using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Models.Admin.Blog;
 using CookDelicious.Core.Service.Models.InputServiceModels;
+using CookDelicious.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Areas.Admin.Controllers
@@ -33,6 +34,11 @@ namespace CookDelicious.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBlogPost(CreateBlogPostViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("_Error", new ErrorViewModel() { Messages = PostsConstants.RequiredTitleAndDescription });
+            }
+
             var inputModel = mapper.Map<CreateBlogPostInputModel>(model);
 
             var error = await blogService.CreateBlogPost(inputModel, User.Identity.Name);
@@ -61,6 +67,11 @@ namespace CookDelicious.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBlogPostCategory(CreateBlogPostCategoryViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("_Error", new ErrorViewModel() { Messages = MessageConstant.RequiredName });
+            }
+
             var inputModel = mapper.Map<CreateBlogPostCategoryInputModel>(model);
 
             var error = await blogService.CreateBlogPostCategory(inputModel);

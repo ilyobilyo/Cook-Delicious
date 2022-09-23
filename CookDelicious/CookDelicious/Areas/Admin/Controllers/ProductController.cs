@@ -6,6 +6,7 @@ using CookDelicious.Core.Models.Admin.Product;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Product;
 using CookDelicious.Core.Service.Models.InputServiceModels;
+using CookDelicious.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Areas.Admin.Controllers
@@ -33,6 +34,11 @@ namespace CookDelicious.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("_Error", new ErrorViewModel() { Messages = RecipeConstants.AllFieldsAreRequired });
+            }
+
             var serviceModel = mapper.Map<CreateProductInputModel>(model);
 
             var errors = await productServiceAdmin.CreateProduct(serviceModel);

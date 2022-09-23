@@ -4,6 +4,7 @@ using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Models.Admin.DishType;
 using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
+using CookDelicious.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Areas.Admin.Controllers
@@ -28,6 +29,11 @@ namespace CookDelicious.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CreateDishTypeViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("_Error", new ErrorViewModel() { Messages = MessageConstant.RequiredName });
+            }
+
             var serviceModel = mapper.Map<CreateDishTypeInputModel>(model);
 
             var error = await dishTypeService.CreateDishType(serviceModel);

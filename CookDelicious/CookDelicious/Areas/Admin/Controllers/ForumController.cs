@@ -4,6 +4,7 @@ using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Models.Admin.Comments;
 using CookDelicious.Core.Models.Admin.Forum;
 using CookDelicious.Core.Service.Models.InputServiceModels;
+using CookDelicious.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,11 @@ namespace CookDelicious.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePostCategory(CreatePostCategoryViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("_Error", new ErrorViewModel() { Messages = MessageConstant.RequiredName });
+            }
+
             var inputModel = mapper.Map<CreatePostCategoryInputModel>(model);
 
             var error = await forumService.CreatePostCategory(inputModel);
