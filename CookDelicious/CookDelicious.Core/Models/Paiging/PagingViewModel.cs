@@ -4,7 +4,7 @@ using CookDelicious.Core.Models.Sorting;
 
 namespace CookDelicious.Core.Models.Paiging
 {
-    public class RecipePagingViewModel
+    public class PagingViewModel
     {
         public PagingList<AllRecipeViewModel> PagedList { get; set; }
 

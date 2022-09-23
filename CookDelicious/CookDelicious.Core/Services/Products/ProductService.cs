@@ -32,7 +32,9 @@ namespace CookDelicious.Core.Services.Products
 
         public async Task<(IEnumerable<ProductServiceModel>, int)> GetAllProductsForPageing(int pageNumber, int pageSize)
         {
-            var totalCount = await repo.All<Product>().CountAsync();
+            var totalCount = await repo.All<Product>()
+                .Where(x => x.IsDeleted == false && x.Type != RecipeConstants.UnsetProductType)
+                .CountAsync();
 
             var items = await repo.All<Product>()
                 .Where(x => x.IsDeleted == false && x.Type != RecipeConstants.UnsetProductType)
