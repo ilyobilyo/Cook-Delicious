@@ -9,6 +9,7 @@ using CookDelicious.Core.Models.Recipe;
 using CookDelicious.Core.Models.Sorting;
 using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
+using CookDelicious.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -186,6 +187,11 @@ namespace CookDelicious.Controllers
         [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
         public async Task<IActionResult> PostComment([FromRoute] Guid Id, CommentViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("_Error", new ErrorViewModel() { Messages = CommentConstants.CommentContentLength });
+            }
+
             var commentServiceModel = mapper.Map<PostCommentInputModel>(model);
 
             var error = await commentService.PostCommentForRecipe(Id, commentServiceModel);

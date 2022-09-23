@@ -8,6 +8,7 @@ using CookDelicious.Core.Models.Forum;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Sorting;
 using CookDelicious.Core.Service.Models.InputServiceModels;
+using CookDelicious.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -76,6 +77,11 @@ namespace CookDelicious.Controllers
         [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
         public async Task<IActionResult> CreatePost(CreatePostViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("_Error", PostsConstants.InvalidPostData);
+            }
+
             var inputModel = mapper.Map<CreateForumPostInputModel>(model);
 
             var error = await forumService.CreatePost(inputModel, User.Identity.Name);
@@ -138,6 +144,11 @@ namespace CookDelicious.Controllers
         [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
         public async Task<IActionResult> PostComment([FromRoute] Guid Id, CommentViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("_Error", new ErrorViewModel() { Messages = CommentConstants.CommentContentLength });
+            }
+
             var commentInputModel = mapper.Map<PostCommentInputModel>(model);
 
             var error = await commentService.PostCommentForPost(Id, commentInputModel);

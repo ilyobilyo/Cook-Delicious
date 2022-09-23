@@ -3,6 +3,7 @@ using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Models.User;
 using CookDelicious.Core.Service.Models.InputServiceModels;
+using CookDelicious.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,7 +53,7 @@ namespace CookDelicious.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("_Error", new ErrorViewModel() { Messages = UserConstants.EmailAndUsernameRequired});
             }
 
             var inputModel = mapper.Map<UserEditProfileInputModel>(model);
