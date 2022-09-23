@@ -10,8 +10,8 @@ namespace CookDelicious.Core.Models.Comments
         [Required(ErrorMessage = UserConstants.InvalidAuthor)]
         public string AuthorName { get; set; }
 
-        [Required(ErrorMessage = CommentConstants.CommentContentMinimumLength)]
-        [StringLength(200, MinimumLength = 1, ErrorMessage = CommentConstants.CommentMaxLength)]
+        [Required(ErrorMessage = CommentConstants.CommentContentRequired)]
+        [StringLength(200, MinimumLength = 1, ErrorMessage = CommentConstants.CommentContentLength)]
         public string Content { get; set; }
     }
 }
