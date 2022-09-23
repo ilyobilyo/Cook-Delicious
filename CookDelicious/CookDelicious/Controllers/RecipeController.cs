@@ -2,11 +2,11 @@
 using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Common.Categories;
+using CookDelicious.Core.Contracts.Pageing;
 using CookDelicious.Core.Contracts.Recipes;
 using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Recipe;
-using CookDelicious.Core.Models.Sorting;
 using CookDelicious.Core.Service.Models;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Models;
@@ -22,38 +22,26 @@ namespace CookDelicious.Controllers
         private readonly ICategoryService categoryService;
         private readonly ICommentService commentService;
         private readonly IMapper mapper;
+        private readonly IPageingService pageingService;
 
-        public RecipeController(IRecipeService recipeService, ICategoryService categoryService, ICommentService commentService, IMapper mapper)
+        public RecipeController(IRecipeService recipeService,
+            ICategoryService categoryService,
+            ICommentService commentService,
+            IMapper mapper,
+            IPageingService pageingService)
         {
             this.recipeService = recipeService;
             this.categoryService = categoryService;
             this.commentService = commentService;
             this.mapper = mapper;
+            this.pageingService = pageingService;
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> All(int pageNumber, RecipePagingViewModel sort)
+        public async Task<IActionResult> All(int pageNumber, PagingViewModel sort)
         {
-            if (pageNumber == 0)
-            {
-                pageNumber = 1;
-            }
-
-            int pageSize = PageConstants.RecipeAllPageSize;
-
-            var sortServiceModel = mapper.Map<SortServiceModel>(sort.Sorting);
-
-            (var recipesServiceModels, var totalCount) = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, sortServiceModel);
-
-            var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesServiceModels);
-
-            var pagingViewModel = new RecipePagingViewModel()
-            {
-                PagedList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize),
-                Sorting = new SortRecipeViewModel() { DishType = sortServiceModel.DishType, Category = sortServiceModel.Category, Date = sortServiceModel.Date },
-                Categories = await categoryService.GetAllCategoryNames()
-            };
+            var pagingViewModel = await pageingService.GetRecipesPagedModel(pageNumber, sort);
 
             return View(pagingViewModel);
         }
@@ -65,23 +53,7 @@ namespace CookDelicious.Controllers
             [FromQuery] string category, 
             [FromQuery] bool dateAsc)
         {
-            if (pageNumber == 0)
-            {
-                pageNumber = 1;
-            }
-
-            int pageSize = PageConstants.RecipeAllPageSize;
-
-            (var recipesServiceModels, var totalCount) = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, dishType, category, dateAsc);
-
-            var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesServiceModels);
-
-            var pagingViewModel = new RecipePagingViewModel() 
-            { 
-                PagedList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize), 
-                Sorting = new SortRecipeViewModel() { DishType = dishType, Category = category, Date = dateAsc },
-                Categories = await categoryService.GetAllCategoryNames()
-            };
+            var pagingViewModel = await pageingService.GetRecipesPagedModel(pageNumber, dishType, category, dateAsc);
 
             return View(pagingViewModel);
         }
@@ -130,24 +102,7 @@ namespace CookDelicious.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RecipePost([FromRoute] Guid Id, int commentPage)
         {
-            if (commentPage == 0)
-            {
-                commentPage = 1;
-            }
-
-            int pageSize = PageConstants.RecipeCommentPageSize;
-
-            var serviceModel = await recipeService.GetRecipeForPost(Id);
-
-            var commentsServiceModel = await recipeService.GetRecipeCommentsPerPage(Id, commentPage, pageSize);
-
-            var commentsViewModel = mapper.Map<List<CommentViewModel>>(commentsServiceModel);
-
-            var commentsPagingList = new PagingList<CommentViewModel>(commentsViewModel, serviceModel.Comments.Count(), commentPage, pageSize);
-
-            var recipePostViewModel = mapper.Map<RecipePostViewModel>(serviceModel);
-
-            recipePostViewModel.Comments = commentsPagingList;
+            var recipePostViewModel = await pageingService.GetRecipePostPagedModel(Id, commentPage);
 
             return View(recipePostViewModel);
         }

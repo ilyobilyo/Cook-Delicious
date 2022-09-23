@@ -2,6 +2,7 @@
 using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Comments;
 using CookDelicious.Core.Contracts.Forum;
+using CookDelicious.Core.Contracts.Pageing;
 using CookDelicious.Core.Contracts.User;
 using CookDelicious.Core.Models.Comments;
 using CookDelicious.Core.Models.Forum;
@@ -19,43 +20,23 @@ namespace CookDelicious.Controllers
         private readonly IForumService forumService;
         private readonly ICommentService commentService;
         private readonly IMapper mapper;
+        private readonly IPageingService pageingService;
 
         public ForumController(IForumService forumService, 
             ICommentService commentService,
-            IMapper mapper)
+            IMapper mapper,
+            IPageingService pageingService)
         {
             this.forumService = forumService;
             this.commentService = commentService;
             this.mapper = mapper;
+            this.pageingService = pageingService;
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> Home(int pageNumber, string sortCategory = null)
         {
-            if (pageNumber == 0)
-            {
-                pageNumber = 1;
-            }
-
-            int pageSize = PageConstants.ForumHomePageSize;
-
-            var (postsServiceModels, totalPostsCount) = await forumService.GetAllSortPostsForPageing(pageNumber, pageSize, sortCategory);
-
-            var postsViewModel = mapper.Map<List<PostViewModel>>(postsServiceModels);
-
-            var postsPageingList = new PagingList<PostViewModel>(postsViewModel, totalPostsCount, pageNumber, pageSize);
-
-            var categories = await forumService.GetAllPostCategoryNames();
-
-            var archive = await forumService.GetArchive();
-
-            var model = new ForumHomeViewModel()
-            {
-                Categories = categories,
-                Posts = postsPageingList,
-                Archive = archive,
-                Sorting = new SortPostViewModel() { Category = sortCategory }
-            };
+            var model = await pageingService.GetForumHomePagedModel(pageNumber, sortCategory);
 
             return View(model);
         }
@@ -105,26 +86,9 @@ namespace CookDelicious.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ForumPost([FromRoute]Guid Id, int commentPage)
         {
-            if (commentPage == 0)
-            {
-                commentPage = 1;
-            }
+            var forumPostViewModel = await pageingService.GetForumPostPagedModel(Id, commentPage);
 
-            int pageSize = PageConstants.ForumCommentPageSize;
-
-            var post = await forumService.GetPostServiceModelById(Id);
-
-            var commentsPerPage = await forumService.GetCommentsPerPage(Id, commentPage, pageSize);
-
-            var commentsViewModels = mapper.Map<List<CommentViewModel>>(commentsPerPage);
-
-            var commentPageingList = new PagingList<CommentViewModel>(commentsViewModels, post.ForumComments.Count, commentPage, pageSize);
-
-            var forumPostrViewModel = mapper.Map<ForumPostViewModel>(post);
-
-            forumPostrViewModel.Comments = commentPageingList;
-
-            return View(forumPostrViewModel);
+            return View(forumPostViewModel);
         }
 
         [Authorize(Roles = $"{UserConstants.Roles.Administrator}, {UserConstants.Roles.User}")]
