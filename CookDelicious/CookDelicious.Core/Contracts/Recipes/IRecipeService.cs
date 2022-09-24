@@ -11,6 +11,6 @@ namespace CookDelicious.Core.Contracts.Recipes
         Task<bool> IsRatingSet(RatingSetServiceModel model);
         Task<RecipeServiceModel> GetById(Guid id);
         Task<IEnumerable<RecipeCommentServiceModel>> GetRecipeCommentsPerPage(Guid Id, int commentPage, int pageSize);
-        Task<(IEnumerable<RecipeServiceModel>, int)> GetSortRecipesForPageing(int pageNumber, int pageSize, string dishType, string category, bool orderByDateAsc);
+        Task<PagedListServiceModel<RecipeServiceModel>> GetSortRecipesForPageing(int pageNumber, int pageSize, string dishType, string category, bool orderByDateAsc);
     }
 }
