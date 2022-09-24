@@ -104,7 +104,7 @@ namespace CookDelicious.Core.Services.Forum
                 .ToListAsync();
         }
 
-        public async Task<(IEnumerable<ForumPostServiceModel>, int)> GetAllSortPostsForPageing(int pageNumber, int pageSize, string sortCategory)
+        public async Task<PagedListServiceModel<ForumPostServiceModel>> GetAllSortPostsForPageing(int pageNumber, int pageSize, string sortCategory)
         {
             var totalPostsCount = 0;
 
@@ -142,7 +142,13 @@ namespace CookDelicious.Core.Services.Forum
 
             var forumPostServiceModels = mapper.Map<IEnumerable<ForumPostServiceModel>>(posts);
 
-            return (forumPostServiceModels, totalPostsCount);
+            var forumPostsPagedListServiceModel = new PagedListServiceModel<ForumPostServiceModel>()
+            {
+                Items = forumPostServiceModels,
+                TotalCount = totalPostsCount,
+            };
+
+            return forumPostsPagedListServiceModel;
         }
 
         public async Task<IList<string>> GetArchive()

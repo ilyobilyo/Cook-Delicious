@@ -13,7 +13,6 @@ using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Product;
 using CookDelicious.Core.Models.Recipe;
 using CookDelicious.Core.Models.Sorting;
-using CookDelicious.Core.Service.Models;
 
 namespace CookDelicious.Core.Services.Pageing
 {
@@ -50,11 +49,11 @@ namespace CookDelicious.Core.Services.Pageing
 
             int pageSize = PageConstants.BlogHomePageSize;
 
-            var (blogPostsServiceModels, totalBlogPostsCount) = await blogService.GetAllSortBlogPostsForPageing(pageNumber, pageSize, blogPostCategory, sortMonth);
+            var blogPostsPagedListServiceModel = await blogService.GetAllSortBlogPostsForPageing(pageNumber, pageSize, blogPostCategory, sortMonth);
 
-            var blogPostsViewModel = mapper.Map<List<BlogPostViewModel>>(blogPostsServiceModels);
+            var blogPostsViewModel = mapper.Map<List<BlogPostViewModel>>(blogPostsPagedListServiceModel.Items);
 
-            var blogPostsPageingList = new PagingList<BlogPostViewModel>(blogPostsViewModel, totalBlogPostsCount, pageNumber, pageSize);
+            var blogPostsPageingList = new PagingList<BlogPostViewModel>(blogPostsViewModel, blogPostsPagedListServiceModel.TotalCount, pageNumber, pageSize);
 
             var categories = await blogService.GetBlogAllPostCategoryNames();
 
@@ -80,11 +79,11 @@ namespace CookDelicious.Core.Services.Pageing
 
             int pageSize = PageConstants.ForumHomePageSize;
 
-            var (postsServiceModels, totalPostsCount) = await forumService.GetAllSortPostsForPageing(pageNumber, pageSize, sortCategory);
+            var forumPostsPagedListServiceModel = await forumService.GetAllSortPostsForPageing(pageNumber, pageSize, sortCategory);
 
-            var postsViewModel = mapper.Map<List<PostViewModel>>(postsServiceModels);
+            var postsViewModel = mapper.Map<List<PostViewModel>>(forumPostsPagedListServiceModel.Items);
 
-            var postsPageingList = new PagingList<PostViewModel>(postsViewModel, totalPostsCount, pageNumber, pageSize);
+            var postsPageingList = new PagingList<PostViewModel>(postsViewModel, forumPostsPagedListServiceModel.TotalCount, pageNumber, pageSize);
 
             var categories = await forumService.GetAllPostCategoryNames();
 
@@ -134,11 +133,11 @@ namespace CookDelicious.Core.Services.Pageing
 
             int pageSize = PageConstants.ProductAllPageSize;
 
-            (var productsServiceModels, var totalCount) = await productService.GetAllProductsForPageing(pageNumber, pageSize);
+            var productsPagedListServiceModel = await productService.GetAllProductsForPageing(pageNumber, pageSize);
 
-            var allProductsViewModels = mapper.Map<List<ProductViewModel>>(productsServiceModels);
+            var allProductsViewModels = mapper.Map<List<ProductViewModel>>(productsPagedListServiceModel.Items);
 
-            var pageList = new PagingList<ProductViewModel>(allProductsViewModels, totalCount, pageNumber, pageSize);
+            var pageList = new PagingList<ProductViewModel>(allProductsViewModels, productsPagedListServiceModel.TotalCount, pageNumber, pageSize);
 
             return pageList;
         }
@@ -196,13 +195,13 @@ namespace CookDelicious.Core.Services.Pageing
 
             int pageSize = PageConstants.RecipeAllPageSize;
 
-            (var recipesServiceModels, var totalCount) = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, dishType, category, dateAsc);
+            var recipesPagedListServiceModel = await recipeService.GetSortRecipesForPageing(pageNumber, pageSize, dishType, category, dateAsc);
 
-            var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesServiceModels);
+            var recipesViewModel = mapper.Map<List<AllRecipeViewModel>>(recipesPagedListServiceModel.Items);
 
             var pagingViewModel = new PagingViewModel()
             {
-                PagedList = new PagingList<AllRecipeViewModel>(recipesViewModel, totalCount, pageNumber, pageSize),
+                PagedList = new PagingList<AllRecipeViewModel>(recipesViewModel, recipesPagedListServiceModel.TotalCount, pageNumber, pageSize),
                 Sorting = new SortRecipeViewModel() { DishType = dishType, Category = category, Date = dateAsc },
                 Categories = await categoryService.GetAllCategoryNames()
             };

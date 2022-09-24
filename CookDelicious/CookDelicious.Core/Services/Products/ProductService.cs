@@ -30,7 +30,7 @@ namespace CookDelicious.Core.Services.Products
             return mapper.Map<IEnumerable<ProductServiceModel>>(allProducts);
         }
 
-        public async Task<(IEnumerable<ProductServiceModel>, int)> GetAllProductsForPageing(int pageNumber, int pageSize)
+        public async Task<PagedListServiceModel<ProductServiceModel>> GetAllProductsForPageing(int pageNumber, int pageSize)
         {
             var totalCount = await repo.All<Product>()
                 .Where(x => x.IsDeleted == false && x.Type != RecipeConstants.UnsetProductType)
@@ -42,9 +42,15 @@ namespace CookDelicious.Core.Services.Products
                 .Take(pageSize)
                 .ToListAsync();
 
-            var itemsAsServiceModel = mapper.Map<IEnumerable<ProductServiceModel>>(items);
+            var productsAsServiceModel = mapper.Map<IEnumerable<ProductServiceModel>>(items);
 
-            return (itemsAsServiceModel, totalCount);
+            var productsPagedListServiceModel = new PagedListServiceModel<ProductServiceModel>()
+            {
+                Items = productsAsServiceModel,
+                TotalCount = totalCount
+            };
+
+            return productsPagedListServiceModel;
         }
 
         public async Task<ICollection<RecipeProduct>> SetProductsForCreatingRecipe(string products, Guid recipeId)

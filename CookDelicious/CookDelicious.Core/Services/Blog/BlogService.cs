@@ -18,7 +18,7 @@ namespace CookDelicious.Core.Services.BlogService
             this.mapper = mapper;
         }
 
-        public async Task<(IEnumerable<BlogPostServiceModel>, int)> GetAllSortBlogPostsForPageing(int pageNumber, int pageSize, string blogPostCategory, int? sortMonth)
+        public async Task<PagedListServiceModel<BlogPostServiceModel>> GetAllSortBlogPostsForPageing(int pageNumber, int pageSize, string blogPostCategory, int? sortMonth)
         {
             var totalBlogPostsCount = 0;
 
@@ -74,7 +74,13 @@ namespace CookDelicious.Core.Services.BlogService
 
             var blogPostServiceModels = mapper.Map<IEnumerable<BlogPostServiceModel>>(blogPosts);
 
-            return (blogPostServiceModels, totalBlogPostsCount);
+            var blogPostsPagedListServiceModel = new PagedListServiceModel<BlogPostServiceModel>()
+            {
+                Items = blogPostServiceModels,
+                TotalCount = totalBlogPostsCount,
+            };
+
+            return blogPostsPagedListServiceModel;
         }
 
         public async Task<IList<string>> GetBlogAllPostCategoryNames()
