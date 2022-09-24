@@ -24,6 +24,8 @@
 
         public DishTypeServiceModel DishType { get; set; }
 
+        public int RatingStars { get; set; }
+
         public bool? IsDeleted { get; set; }
 
         public IEnumerable<RatingServiceModel> Ratings { get; set; }
