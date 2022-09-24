@@ -32,7 +32,7 @@ namespace CookDelicious.Core.Services.Admin
             return await repo.GetByIdAsync<ApplicationUser>(id);
         }
 
-        public async Task<(IEnumerable<UserServiceModel>, int)> GetUsersPageingInManageUsers(int pageNumber, int pageSize)
+        public async Task<PagedListServiceModel<UserServiceModel>> GetUsersPageingInManageUsers(int pageNumber, int pageSize)
         {
             var totalCount = await repo.All<ApplicationUser>()
                  .CountAsync();
@@ -44,7 +44,13 @@ namespace CookDelicious.Core.Services.Admin
 
             var usersServiceModels = mapper.Map<IEnumerable<UserServiceModel>>(users);
 
-            return (usersServiceModels, totalCount);
+            var usersPagedListServiceModel = new PagedListServiceModel<UserServiceModel>()
+            {
+                Items = usersServiceModels,
+                TotalCount = totalCount
+            };
+
+            return usersPagedListServiceModel;
         }
 
         public async Task<bool> UpdateUser(UpdateUserInputModel model)
