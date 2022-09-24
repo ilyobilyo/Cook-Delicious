@@ -70,9 +70,9 @@
 							</a>
 							<div class="ratings">
 								@{
-									var emptyStars = 5 - recipe.Rating;
+									var emptyStars = 5 - recipe.RatingStars;
 								}
-								@for (int i = 1; i <= recipe.Rating; i++)
+								@for (int i = 1; i <= recipe.RatingStars; i++)
 								{
 									<i class="fa fa-star" aria-hidden="true"></i>
 								}

@@ -47,9 +47,9 @@
 				<div class="col-12 col-md-4">
 					<div class="receipe-ratings text-right my-5">
 						@{
-							var emptyStars = 5 - Model.Rating;
+							var emptyStars = 5 - Model.RatingStars;
 						}
-						@for (int i = 1; i <= Model.Rating; i++)
+						@for (int i = 1; i <= Model.RatingStars; i++)
 						{
 							<i class="fa fa-star" aria-hidden="true"></i>
 						}
