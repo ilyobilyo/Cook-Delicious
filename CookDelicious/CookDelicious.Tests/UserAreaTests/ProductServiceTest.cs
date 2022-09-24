@@ -56,11 +56,9 @@ namespace CookDelicious.Tests
         {
             var service = serviceProvider.GetService<IProductService>();
 
-            (var products, var totalCount) = await service.GetAllProductsForPageing(1, 3);
+            var products = await service.GetAllProductsForPageing(1, 3);
 
-            var productsList = products.ToList();
-
-            Assert.That(productsList.Count == 3 && totalCount == 5);
+            Assert.That(products.Items.Count() == 3 && products.TotalCount == 5);
         }
 
         [Test]

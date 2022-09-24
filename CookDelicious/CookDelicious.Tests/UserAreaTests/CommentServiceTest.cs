@@ -162,7 +162,7 @@ namespace CookDelicious.Tests
 
             var error = await service.PostCommentForRecipe(recipeId, inputModel);
 
-            Assert.That(error.Messages == CommentConstants.CommentMaxLength);
+            Assert.That(error.Messages == CommentConstants.CommentContentLength);
         }
 
         [Test]
@@ -234,7 +234,7 @@ namespace CookDelicious.Tests
 
             var error = await service.PostCommentForPost(forumId, inputModel);
 
-            Assert.That(error.Messages == CommentConstants.CommentMaxLength);
+            Assert.That(error.Messages == CommentConstants.CommentContentLength);
         }
 
 

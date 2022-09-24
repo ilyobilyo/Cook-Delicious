@@ -1,4 +1,5 @@
 using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Common.Categories;
 using CookDelicious.Core.Contracts.Common.DishTypes;
 using CookDelicious.Core.Contracts.Product;
@@ -95,7 +96,7 @@ namespace CookDelicious.Tests
 
             var error = await service.CreateRecipe(viewModel);
 
-            Assert.That(error.Messages == "Невалиден автор.Пробвайте пак!");
+            Assert.That(error.Messages == UserConstants.InvalidAuthor);
         }
 
         [Test]
@@ -117,46 +118,9 @@ namespace CookDelicious.Tests
 
             var error = await service.CreateRecipe(viewModel);
 
-            Assert.That(error.Messages == "Категорията не съществува!");
+            Assert.That(error.Messages == RecipeConstants.CategoryDoesNotExist);
         }
 
-        [Test]
-        public async Task SucceedSortRecipesWithSortServiceModel()
-        {
-            var sortModel = new SortServiceModel()
-            {
-                Category = "TestCategory",
-                DishType = "TestDishType",
-                Date = false,
-            };
-
-            var service = serviceProvider.GetService<IRecipeService>();
-
-            (var recipes, var totalCount) = await service.GetSortRecipesForPageing(1, 9, sortModel);
-
-            var recipesList = recipes.ToList();
-
-            Assert.That(recipesList.Count > 0 && totalCount > 0);
-        }
-
-        [Test]
-        public async Task SucceedSortRecipesWithSortServiceModelWithInvalidParameters()
-        {
-            var sortModel = new SortServiceModel()
-            {
-                Category = "asdasd",
-                DishType = "sdgf sdf",
-                Date = false,
-            };
-
-            var service = serviceProvider.GetService<IRecipeService>();
-
-            (var recipes, var totalCount) = await service.GetSortRecipesForPageing(1, 9, sortModel);
-
-            var recipesList = recipes.ToList();
-
-            Assert.That(recipesList.Count == 0 && totalCount == 0);
-        }
 
         [Test]
         public async Task SucceedSortRecipesWithVariables()
@@ -167,11 +131,9 @@ namespace CookDelicious.Tests
 
             var service = serviceProvider.GetService<IRecipeService>();
 
-            (var recipes, var totalCount) = await service.GetSortRecipesForPageing(1, 9, dishType, category, orderByDateAsc);
+            var recipes = await service.GetSortRecipesForPageing(1, 9, dishType, category, orderByDateAsc);
 
-            var recipesList = recipes.ToList();
-
-            Assert.That(recipesList.Count > 0 && totalCount > 0);
+            Assert.That(recipes.Items.Count() > 0 && recipes.TotalCount > 0);
         }
 
         [Test]
@@ -183,11 +145,9 @@ namespace CookDelicious.Tests
 
             var service = serviceProvider.GetService<IRecipeService>();
 
-            (var recipes, var totalCount) = await service.GetSortRecipesForPageing(1, 9, dishType, category, orderByDateAsc);
+            var recipes = await service.GetSortRecipesForPageing(1, 9, dishType, category, orderByDateAsc);
 
-            var recipesList = recipes.ToList();
-
-            Assert.That(recipesList.Count == 0 && totalCount == 0);
+            Assert.That(recipes.Items.Count() == 0 && recipes.TotalCount == 0);
         }
 
         [Test]
@@ -301,24 +261,6 @@ namespace CookDelicious.Tests
             Assert.That(recipe == false);
         }
 
-        [Test]
-        public async Task TestPageingForRecipes()
-        {
-            var sortModel = new SortServiceModel()
-            {
-                Category = "TestCategory",
-                DishType = "TestDishType",
-                Date = false,
-            };
-
-            var service = serviceProvider.GetService<IRecipeService>();
-
-            (var recipes, var totalCount) = await service.GetSortRecipesForPageing(1, 5, sortModel);
-
-            var recipesList = recipes.ToList();
-
-            Assert.That(recipesList.Count == 5 && totalCount == 6);
-        }
 
         [Test]
         public async Task TestPageingForRecipeComments()

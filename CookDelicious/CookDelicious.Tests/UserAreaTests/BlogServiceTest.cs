@@ -46,11 +46,9 @@ namespace CookDelicious.Tests
 
             var service = serviceProvider.GetService<IBlogService>();
 
-            (var post, var totalCount) = await service.GetAllSortBlogPostsForPageing(pageNumber, pageSize, blogPostCategory, sortMonth);
+            var posts = await service.GetAllSortBlogPostsForPageing(pageNumber, pageSize, blogPostCategory, sortMonth);
 
-            var postList = post.ToList();
-
-            Assert.That(postList.Count == 2 && totalCount == 3);
+            Assert.That(posts.Items.Count() == 2 && posts.TotalCount == 3);
         }
 
         [Test]
@@ -63,11 +61,9 @@ namespace CookDelicious.Tests
 
             var service = serviceProvider.GetService<IBlogService>();
 
-            (var post, var totalCount) = await service.GetAllSortBlogPostsForPageing(pageNumber, pageSize, blogPostCategory, sortMonth);
+            var posts = await service.GetAllSortBlogPostsForPageing(pageNumber, pageSize, blogPostCategory, sortMonth);
 
-            var postList = post.ToList();
-
-            Assert.That(postList.Count == 2 && totalCount == 3);
+            Assert.That(posts.Items.Count() == 2 && posts.TotalCount == 3);
         }
 
         [Test]
@@ -80,11 +76,9 @@ namespace CookDelicious.Tests
 
             var service = serviceProvider.GetService<IBlogService>();
 
-            (var post, var totalCount) = await service.GetAllSortBlogPostsForPageing(pageNumber, pageSize, blogPostCategory, sortMonth);
+            var posts = await service.GetAllSortBlogPostsForPageing(pageNumber, pageSize, blogPostCategory, sortMonth);
 
-            var postList = post.ToList();
-
-            Assert.That(postList.Count == 2 && totalCount == 6);
+            Assert.That(posts.Items.Count() == 2 && posts.TotalCount == 6);
         }
 
         [Test]

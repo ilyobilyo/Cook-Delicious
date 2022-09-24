@@ -116,11 +116,9 @@ namespace CookDelicious.Tests.AdminAreaTests
 
             var service = serviceProvider.GetService<IUserServiceAdmin>();
 
-            (var users, var totalcount) = await service.GetUsersPageingInManageUsers(pageNumber, pageSize);
+            var users = await service.GetUsersPageingInManageUsers(pageNumber, pageSize);
 
-            var usersList = users.ToList();
-
-            Assert.That(usersList.Count == 2 && totalcount == 3);
+            Assert.That(users.Items.Count() == 2 && users.TotalCount == 3);
         }
 
         [Test]

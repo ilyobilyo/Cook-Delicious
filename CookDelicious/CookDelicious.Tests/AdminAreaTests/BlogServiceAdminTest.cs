@@ -79,7 +79,7 @@ namespace CookDelicious.Tests.AdminAreaTests
 
             var error = await service.CreateBlogPost(inputModel, username);
 
-            Assert.That(error.Messages == PostsConstants.RequiredTitleAndContent);
+            Assert.That(error.Messages == PostsConstants.RequiredTitleAndDescription);
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace CookDelicious.Tests.AdminAreaTests
 
             var error = await service.CreateBlogPost(inputModel, username);
 
-            Assert.That(error.Messages == PostsConstants.RequiredTitleAndContent);
+            Assert.That(error.Messages == PostsConstants.RequiredTitleAndDescription);
         }
 
         [Test]

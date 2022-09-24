@@ -106,7 +106,7 @@ namespace CookDelicious.Tests
 
             var error = await service.CreatePost(model, username);
 
-            Assert.That(error.Messages == PostsConstants.RequiredTitleAndContent);
+            Assert.That(error.Messages == PostsConstants.RequiredTitleAndDescription);
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace CookDelicious.Tests
 
             var error = await service.CreatePost(model, username);
 
-            Assert.That(error.Messages == PostsConstants.RequiredTitleAndContent);
+            Assert.That(error.Messages == PostsConstants.RequiredTitleAndDescription);
         }
 
         [Test]
@@ -193,11 +193,9 @@ namespace CookDelicious.Tests
 
             string sortCategory = "TestPostCategory";
 
-            (var posts, var totalCount) = await service.GetAllSortPostsForPageing(1, 6, sortCategory);
+            var posts = await service.GetAllSortPostsForPageing(1, 6, sortCategory);
 
-            var postsList = posts.ToList();
-
-            Assert.That(postsList.Count > 0 && totalCount > 0);
+            Assert.That(posts.Items.Count() > 0 && posts.TotalCount > 0);
         }
 
         [Test]
@@ -207,11 +205,9 @@ namespace CookDelicious.Tests
 
             string sortCategory = "asd";
 
-            (var posts, var totalCount) = await service.GetAllSortPostsForPageing(1, 6, sortCategory);
+            var posts = await service.GetAllSortPostsForPageing(1, 6, sortCategory);
 
-            var postsList = posts.ToList();
-
-            Assert.That(postsList.Count == 0 && totalCount == 0);
+            Assert.That(posts.Items.Count() == 0 && posts.TotalCount == 0);
         }
 
         [Test]
@@ -283,11 +279,9 @@ namespace CookDelicious.Tests
 
             string sortCategory = "TestPostCategory";
 
-            (var posts, var totalCount) = await service.GetAllSortPostsForPageing(1, 5, sortCategory);
+            var posts = await service.GetAllSortPostsForPageing(1, 5, sortCategory);
 
-            var postsList = posts.ToList();
-
-            Assert.That(postsList.Count == 5 && totalCount == 6);
+            Assert.That(posts.Items.Count() == 5 && posts.TotalCount == 6);
         }
 
         [Test]
