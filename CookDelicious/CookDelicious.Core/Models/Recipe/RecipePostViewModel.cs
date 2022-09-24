@@ -30,20 +30,7 @@ namespace CookDelicious.Core.Models.Recipe
 
         public string CookingTime { get; set; }
 
-        public int Rating
-        {
-            get
-            {
-                if (Ratings.Count > 0)
-                {
-                    return (int)Math.Round(Ratings.Average(x => x.RatingDigit)); ;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
+        public int RatingStars { get; set; }
 
         public ICollection<RatingViewModel> Ratings { get; set; }
 
