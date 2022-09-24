@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin.Product;
+using CookDelicious.Core.Contracts.Pageing;
 using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Models.Admin.Product;
 using CookDelicious.Core.Models.Paiging;
@@ -16,14 +17,17 @@ namespace CookDelicious.Areas.Admin.Controllers
         private readonly IProductServiceAdmin productServiceAdmin;
         private readonly IProductService productService;
         private readonly IMapper mapper;
+        private readonly IPageingService pageingService;
 
         public ProductController(IProductServiceAdmin productServiceAdmin,
             IProductService productService,
-            IMapper mapper)
+            IMapper mapper,
+             IPageingService pageingService)
         {
             this.productServiceAdmin = productServiceAdmin;
             this.productService = productService;
             this.mapper = mapper;
+            this.pageingService = pageingService;
         }
 
         public IActionResult CreateProduct()
@@ -57,18 +61,7 @@ namespace CookDelicious.Areas.Admin.Controllers
 
         public async Task<IActionResult> All(int pageNumber)
         {
-            if (pageNumber == 0)
-            {
-                pageNumber = 1;
-            }
-
-            int pageSize = 9;
-
-            (var productsServiceModels, var totalCount) = await productService.GetAllProductsForPageing(pageNumber, pageSize);
-
-            var allProductsViewModels = mapper.Map<List<ProductViewModel>>(productsServiceModels);
-
-            var pageList = new PagingList<ProductViewModel>(allProductsViewModels, totalCount, pageNumber, pageSize);
+            var pageList = await pageingService.GetProductsPagedModel(pageNumber);
 
             return View(pageList);
         }

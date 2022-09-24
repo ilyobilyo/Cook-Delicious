@@ -2,7 +2,6 @@
 using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Models.Admin;
-using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Infrasturcture.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -19,35 +18,27 @@ namespace CookDelicious.Areas.Admin.Controllers
         private readonly IUserServiceAdmin userService;
         private readonly ICommentServiceAdmin commentService;
         private readonly IMapper mapper;
+        private readonly IPageingServiceAdmin pageingService;
 
         public UserController(RoleManager<IdentityRole> roleManager,
             IUserServiceAdmin userService,
             UserManager<ApplicationUser> userManager,
             ICommentServiceAdmin commentService,
-            IMapper mapper)
+            IMapper mapper,
+            IPageingServiceAdmin pageingService)
         {
             this.roleManager = roleManager;
             this.userService = userService;
             this.userManager = userManager;
             this.commentService = commentService;
             this.mapper = mapper;
+            this.pageingService = pageingService;
         }
 
         [Authorize(Roles = UserConstants.Roles.Administrator)]
         public async Task<IActionResult> ManageUsers(int pageNumber)
         {
-            if (pageNumber == 0)
-            {
-                pageNumber = 1;
-            }
-
-            int pageSize = 2;
-
-            (var usersServiceModels, var totalCount) = await userService.GetUsersPageingInManageUsers(pageNumber, pageSize);
-
-            var usersViewModel = mapper.Map<List<UserListViewModel>>(usersServiceModels);
-
-            var pageingList = new PagingList<UserListViewModel>(usersViewModel, totalCount, pageNumber, pageSize);
+            var pageingList = await pageingService.GetAllUsersForManegment(pageNumber);
 
             return View(pageingList);
         }
