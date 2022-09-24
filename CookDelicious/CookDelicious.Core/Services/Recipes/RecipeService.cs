@@ -103,17 +103,28 @@ namespace CookDelicious.Core.Services.Recipes
             return error;
         }
 
-        public async Task<(IEnumerable<RecipeServiceModel>, int)> GetSortRecipesForPageing(int pageNumber,
+        public async Task<PagedListServiceModel<RecipeServiceModel>> GetSortRecipesForPageing(int pageNumber,
             int pageSize,
             string dishType,
             string category,
             bool orderByDateAsc)
         {
-            (var sortRecipes, var totalCount) = await GetSortRecipes(pageNumber, pageSize, dishType, category, orderByDateAsc);
+            var recipesPagedListDataModel = await GetSortRecipes(pageNumber, pageSize, dishType, category, orderByDateAsc);
 
-            var itemsAsServiceModel = mapper.Map<IEnumerable<RecipeServiceModel>>(sortRecipes);
+            var recipesAsServiceModel = mapper.Map<IEnumerable<RecipeServiceModel>>(recipesPagedListDataModel.Items);
 
-            return (itemsAsServiceModel, totalCount);
+            foreach (var recipe in recipesAsServiceModel)
+            {
+                recipe.RatingStars = CalculateRatingStars(recipe);
+            }
+
+            var recipesPagedListServiceModel = new PagedListServiceModel<RecipeServiceModel>()
+            {
+                Items = recipesAsServiceModel,
+                TotalCount = recipesPagedListDataModel.TotalCount
+            };
+
+            return recipesPagedListServiceModel;
         }
 
 
@@ -158,6 +169,8 @@ namespace CookDelicious.Core.Services.Recipes
 
             var recipeServiceModel = mapper.Map<RecipeServiceModel>(recipe);
 
+            recipeServiceModel.RatingStars = CalculateRatingStars(recipeServiceModel);
+
             recipeServiceModel.Category = mapper.Map<CategoryServiceModel>(recipe.Catrgory);
 
             return recipeServiceModel;
@@ -192,9 +205,7 @@ namespace CookDelicious.Core.Services.Recipes
             return true;
         }
 
-
-
-        private async Task<(IEnumerable<Recipe>, int)> GetSortRecipes(int pageNumber,
+        private async Task<PagedListServiceModel<Recipe>> GetSortRecipes(int pageNumber,
             int pageSize,
             string dishType,
             string category,
@@ -302,7 +313,13 @@ namespace CookDelicious.Core.Services.Recipes
                 }
             }
 
-            return (items, totalCount);
+            var recipesPagedListDataModel = new PagedListServiceModel<Recipe>()
+            {
+                Items = items,
+                TotalCount = totalCount
+            };
+
+            return recipesPagedListDataModel;
         }
 
         private async Task<int> GetRecipeTotalCountWithOneOfTheSortParameters(string dishType, string category)
@@ -347,6 +364,17 @@ namespace CookDelicious.Core.Services.Recipes
             }
 
             return digit;
+        }
+        private int CalculateRatingStars(RecipeServiceModel recipe)
+        {
+            if (recipe.Ratings.Count() > 0)
+            {
+                return (int)Math.Round(recipe.Ratings.Average(x => x.RatingDigit));
+            }
+            else
+            {
+                return 0;
+            }
         }
 
     }
