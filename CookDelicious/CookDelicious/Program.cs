@@ -1,5 +1,4 @@
 using CookDelicious.Core.Constants;
-using CookDelicious.Core.Contracts;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Contracts.Admin.Product;
 using CookDelicious.Core.Contracts.Blog;
@@ -58,7 +57,8 @@ builder.Services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>()
     .AddScoped<IBlogService, BlogService>()
     .AddScoped<IBlogServiceAdmin, BlogServiceAdmin>()
     .AddScoped<IRecipeServiceAdmin, RecipeServiceAdmin>()
-    .AddScoped<IPageingService, PageingService>();
+    .AddScoped<IPageingService, PageingService>()
+    .AddScoped<IPageingServiceAdmin, PageingServiceAdmin>();
 
 builder.Services.AddAutoMapper(typeof(RecipeMapping),
     typeof(UserMapping), 
