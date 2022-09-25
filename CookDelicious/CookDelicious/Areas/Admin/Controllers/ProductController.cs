@@ -4,7 +4,6 @@ using CookDelicious.Core.Contracts.Admin.Product;
 using CookDelicious.Core.Contracts.Pageing;
 using CookDelicious.Core.Contracts.Product;
 using CookDelicious.Core.Models.Admin.Product;
-using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Product;
 using CookDelicious.Core.Service.Models.InputServiceModels;
 using CookDelicious.Models;
@@ -45,11 +44,11 @@ namespace CookDelicious.Areas.Admin.Controllers
 
             var serviceModel = mapper.Map<CreateProductInputModel>(model);
 
-            var errors = await productServiceAdmin.CreateProduct(serviceModel);
+            var error = await productServiceAdmin.CreateProduct(serviceModel);
 
-            if (errors.Messages != null)
+            if (error != null)
             {
-                ViewData[MessageConstant.ErrorMessage] = errors.Messages;
+                ViewData[MessageConstant.ErrorMessage] = error;
             }
             else
             {

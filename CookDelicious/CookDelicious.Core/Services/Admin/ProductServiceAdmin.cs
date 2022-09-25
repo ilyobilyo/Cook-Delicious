@@ -17,19 +17,19 @@ namespace CookDelicious.Core.Services.Products
             this.repo = repo;
         }
 
-        public async Task<ErrorViewModel> CreateProduct(CreateProductInputModel model)
+        public async Task<string> CreateProduct(CreateProductInputModel model)
         {
             ErrorViewModel error = new ErrorViewModel();
 
             if (model == null || model.Name == null || model.Type == null || model.Description == null)
             {
-                 return new ErrorViewModel() { Messages = RecipeConstants.AllFieldsAreRequired };
+                 return  RecipeConstants.AllFieldsAreRequired ;
                
             }
 
             if (await IsProductExists(model))
             {
-                return new ErrorViewModel() { Messages = $"{model.Name} {MessageConstant.AlreadyExist}" };
+                return $"{model.Name} {MessageConstant.AlreadyExist}";
                 
             }
 
@@ -48,10 +48,10 @@ namespace CookDelicious.Core.Services.Products
             }
             catch (Exception)
             {
-                return new ErrorViewModel() { Messages = RecipeConstants.UnexpectedErrorProduct };
+                return RecipeConstants.UnexpectedErrorProduct;
             }
 
-            return error;
+            return null;
         }
 
         public async Task<bool> DeleteProduct(Guid id)
