@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CookDelicious.Api.Models;
 using CookDelicious.Core.Models.Admin.Blog;
 using CookDelicious.Core.Models.Blog;
 using CookDelicious.Core.Service.Models;
@@ -22,6 +23,9 @@ namespace CookDelicious.Core.MapProfiles
             CreateMap<CreateBlogPostViewModel, CreateBlogPostInputModel>();
             CreateMap<CreateBlogPostCategoryViewModel, CreateBlogPostCategoryInputModel>();
             CreateMap<BlogPostCategoryServiceModel, BlogPostCategoryViewModel>();
+            CreateMap<BlogPostServiceModel, AllBlogPostResponseModel>()
+                .ForMember(x => x.Author, y => y.MapFrom(s => s.Author.UserName))
+                .ForMember(x => x.BlogPostCategory, y => y.MapFrom(s => s.BlogPostCategory.Name));
         }
     }
 }
