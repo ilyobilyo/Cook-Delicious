@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CookDelicious.Api</name>
+    </assembly>
+    <members>
+        <member name="M:CookDelicious.Api.Controllers.BlogController.GetAllBlogPosts(CookDelicious.Api.Models.AllBlogPostRequestModel)">
+            <summary>
+            Get blog posts per page. Can sort blog posts by month(1 - 12) and category("Ресторанти", "Фаст фууд", "Храни и напитки", "Веган", "Събития и лайвстайл", "Некатегоризирани")
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CookDelicious.Api.Controllers.ProductController.GetAll">
+            <summary>
+            Get All Specific Products
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CookDelicious.Api.Controllers.ProductController.CreateProduct(CookDelicious.Core.Service.Models.InputServiceModels.CreateProductInputModel)">
+            <summary>
+            Create a Specific Product
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
