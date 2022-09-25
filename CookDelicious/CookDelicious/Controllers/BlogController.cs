@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Blog;
 using CookDelicious.Core.Contracts.Pageing;
 using CookDelicious.Core.Models.Blog;
-using CookDelicious.Core.Models.Paiging;
-using CookDelicious.Core.Models.Sorting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
