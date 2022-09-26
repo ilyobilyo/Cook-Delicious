@@ -3,6 +3,7 @@ using CookDelicious.Core.Models.Forum;
 using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Product;
 using CookDelicious.Core.Models.Recipe;
+using CookDelicious.Core.View.Models.Home;
 
 namespace CookDelicious.Core.Contracts.Pageing
 {
@@ -13,6 +14,7 @@ namespace CookDelicious.Core.Contracts.Pageing
         Task<ForumPostViewModel> GetForumPostPagedModel(Guid id, int commentPage);
         Task<PagingList<ProductViewModel>> GetProductsPagedModel(int pageNumber);
         Task<PagingViewModel> GetRecipesPagedModel(int pageNumber, PagingViewModel sort);
+        Task<HomeViewModel> GetRecipesForHomePage();
         Task<PagingViewModel> GetRecipesPagedModel(int pageNumber, string dishType, string category, bool dateAsc);
         Task<RecipePostViewModel> GetRecipePostPagedModel(Guid id, int commentPage);
     }

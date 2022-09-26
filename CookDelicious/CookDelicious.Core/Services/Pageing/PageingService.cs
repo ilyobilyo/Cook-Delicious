@@ -13,6 +13,8 @@ using CookDelicious.Core.Models.Paiging;
 using CookDelicious.Core.Models.Product;
 using CookDelicious.Core.Models.Recipe;
 using CookDelicious.Core.Models.Sorting;
+using CookDelicious.Core.View.Models.Home;
+using CookDelicious.Core.View.Models.Recipe;
 
 namespace CookDelicious.Core.Services.Pageing
 {
@@ -164,6 +166,33 @@ namespace CookDelicious.Core.Services.Pageing
             recipePostViewModel.Comments = commentsPagingList;
 
             return recipePostViewModel;
+        }
+
+        public async Task<HomeViewModel> GetRecipesForHomePage()
+        {
+            int lastAddedRecipesCount = PageConstants.LastAddedRecipesCount;
+            int bestRecipesCount = PageConstants.BestRecipesCount;
+
+            var topRecipeServiceModel = await recipeService.GetTopRecipe();
+
+            var lastAddedRecipesServiceModels = await recipeService.GetLastAddedRecipes(lastAddedRecipesCount);
+
+            var bestRecipes = await recipeService.GetBestRecipes(bestRecipesCount);
+
+            var topRecipeViewModel = mapper.Map<HomeRecipeViewModel>(topRecipeServiceModel);
+
+            var lastAddedRecipesViewModels = mapper.Map<List<HomeRecipeViewModel>>(lastAddedRecipesServiceModels);
+
+            var bestRecipesViewModels = mapper.Map<List<AllRecipeViewModel>>(bestRecipes);
+
+            var homeViewModel = new HomeViewModel()
+            {
+                TopRecipe = topRecipeViewModel,
+                BestRecipes = bestRecipesViewModels,
+                LastAddedRecipes = lastAddedRecipesViewModels
+            };
+
+            return homeViewModel;
         }
 
         public async Task<PagingViewModel> GetRecipesPagedModel(int pageNumber, PagingViewModel sort)
