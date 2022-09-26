@@ -20,7 +20,7 @@
 
         public Guid CategoryId { get; set; }
 
-        public CategoryServiceModel Category { get; set; }
+        public CategoryServiceModel Catrgory { get; set; }
 
         public DishTypeServiceModel DishType { get; set; }
 
