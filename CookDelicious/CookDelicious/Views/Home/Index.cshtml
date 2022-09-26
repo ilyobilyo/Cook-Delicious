@@ -1,6 +1,11 @@
-﻿@{
+﻿@using CookDelicious.Core.View.Models.Home
+@model HomeViewModel
+
+@{
 	ViewData["Title"] = "Home Page";
 }
+
+<link rel="stylesheet" href="~/css/style.css">
 
 <section class="hero-area">
 	<div class="hero-slides owl-carousel">
@@ -10,9 +15,9 @@
 				<div class="row h-100 align-items-center">
 					<div class="col-12 col-md-9 col-lg-7 col-xl-6">
 						<div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
-							<h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade Burger</h2>
-							<p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu varius.</p>
-							<a href="#" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Receipe</a>
+							<h2 data-animation="fadeInUp" data-delay="300ms">@Model.TopRecipe.Title</h2>
+							<p data-animation="fadeInUp" data-delay="700ms">Добре дошли в най-добрият сайт за готвачи. Тук можете да намерите много вкусни и лесни рецепти. Разгледайте нашата топ рецепта като натиснете бутона. Няма да съжалявате :)</p>
+							<a asp-action="RecipePost" asp-controller="Recipe" asp-route-Id="@Model.TopRecipe.Id" asp-route-commentPage="1" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Виж топ рецептата</a>
 						</div>
 					</div>
 				</div>
@@ -25,9 +30,9 @@
 				<div class="row h-100 align-items-center">
 					<div class="col-12 col-md-9 col-lg-7 col-xl-6">
 						<div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
-							<h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade Burger</h2>
-							<p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu varius.</p>
-							<a href="#" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Receipe</a>
+							<h2 data-animation="fadeInUp" data-delay="300ms">Cook Delicious Блог</h2>
+							<p data-animation="fadeInUp" data-delay="700ms">Посетете и нашият блог. Тук можете да откриете важни и полезни постове за здравословна или вкусна храна, или просто развлекателни постове за храненето</p>
+							<a asp-action="Home" asp-controller="Blog" asp-route-pageNumber="1" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Към Блог</a>
 						</div>
 					</div>
 				</div>
@@ -40,9 +45,9 @@
 				<div class="row h-100 align-items-center">
 					<div class="col-12 col-md-9 col-lg-7 col-xl-6">
 						<div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
-							<h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade Burger</h2>
-							<p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu varius.</p>
-							<a href="#" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Receipe</a>
+							<h2 data-animation="fadeInUp" data-delay="300ms">Cook Delicious Форум</h2>
+							<p data-animation="fadeInUp" data-delay="700ms">Посетете и нашият форум. Консултирайте се с различни хора за готвене, продукти и вичко свързано с храната в нашият Форум</p>
+							<a asp-action="Home" asp-controller="Forum" asp-route-pageNumber="1" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Към Форум</a>
 						</div>
 					</div>
 				</div>
@@ -56,29 +61,20 @@
 	<div class="container">
 		<div class="row">
 			<!-- Top Catagory Area -->
+			@foreach(var lasAddedRecipe in Model.LastAddedRecipes)
+			{
 			<div class="col-12 col-lg-6">
 				<div class="single-top-catagory">
-					<img src="~/img/bg-img/bg2.jpg" alt="">
+					<img src="~/img/bg-img/@lasAddedRecipe.ImageUrl" alt="" style="width: 570px; height: 330px">
 					<!-- Content -->
 					<div class="top-cta-content">
-						<h3>Strawberry Cake</h3>
-						<h6>Simple &amp; Delicios</h6>
-						<a href="receipe-post.html" class="btn delicious-btn">See Full Receipe</a>
+						<h3>@lasAddedRecipe.Title</h3>
+						<h6>Последно добавени рецепти</h6>
+						<a asp-action="RecipePost" asp-controller="Recipe" asp-route-Id="@lasAddedRecipe.Id" asp-route-commentPage="1" class="btn delicious-btn">Виж пълната рецепта</a>
 					</div>
 				</div>
 			</div>
-			<!-- Top Catagory Area -->
-			<div class="col-12 col-lg-6">
-				<div class="single-top-catagory">
-					<img src="~/img/bg-img/bg3.jpg" alt="">
-					<!-- Content -->
-					<div class="top-cta-content">
-						<h3>Chinesse Noodles</h3>
-						<h6>Simple &amp; Delicios</h6>
-						<a href="receipe-post.html" class="btn delicious-btn">See Full Receipe</a>
-					</div>
-				</div>
-			</div>
+			}
 		</div>
 	</div>
 </section>
@@ -89,125 +85,39 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="section-heading">
-					<h3>The best Receipies</h3>
+					<h3>Най-добри рецепти</h3>
 				</div>
 			</div>
 		</div>
 
 		<div class="row">
 			<!-- Single Best Receipe Area -->
+			@foreach(var recipe in Model.BestRecipes)
+			{
 			<div class="col-12 col-sm-6 col-lg-4">
 				<div class="single-best-receipe-area mb-30">
-					<img src="~/img/bg-img/r1.jpg" alt="">
+					<img src="~/img/bg-img/@recipe.ImageUrl" alt="" style="width: 350px; height: 304px">
 					<div class="receipe-content">
-						<a href="receipe-post.html">
-							<h5>Sushi Easy Receipy</h5>
+						<a asp-action="RecipePost" asp-controller="Recipe" asp-route-Id="@recipe.Id" asp-route-commentPage="1">
+							<h5>@recipe.Title</h5>
 						</a>
 						<div class="ratings">
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star-o" aria-hidden="true"></i>
+								@{
+									var emptyStars = 5 - recipe.RatingStars;
+								}
+								@for (int i = 1; i <= recipe.RatingStars; i++)
+								{
+									<i class="fa fa-star" aria-hidden="true"></i>
+								}
+								@for (int i = 1; i <= emptyStars; i++)
+								{
+									<i class="fa fa-star-o" aria-hidden="true"></i>
+								}
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<!-- Single Best Receipe Area -->
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="single-best-receipe-area mb-30">
-					<img src="~/img/bg-img/r2.jpg" alt="">
-					<div class="receipe-content">
-						<a href="receipe-post.html">
-							<h5>Homemade Burger</h5>
-						</a>
-						<div class="ratings">
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star-o" aria-hidden="true"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Single Best Receipe Area -->
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="single-best-receipe-area mb-30">
-					<img src="~/img/bg-img/r3.jpg" alt="">
-					<div class="receipe-content">
-						<a href="receipe-post.html">
-							<h5>Vegan Smoothie</h5>
-						</a>
-						<div class="ratings">
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star-o" aria-hidden="true"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Single Best Receipe Area -->
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="single-best-receipe-area mb-30">
-					<img src="~/img/bg-img/r4.jpg" alt="">
-					<div class="receipe-content">
-						<a href="receipe-post.html">
-							<h5>Calabasa soup</h5>
-						</a>
-						<div class="ratings">
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star-o" aria-hidden="true"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Single Best Receipe Area -->
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="single-best-receipe-area mb-30">
-					<img src="~/img/bg-img/r5.jpg" alt="">
-					<div class="receipe-content">
-						<a href="receipe-post.html">
-							<h5>Homemade Breakfast</h5>
-						</a>
-						<div class="ratings">
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star-o" aria-hidden="true"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Single Best Receipe Area -->
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="single-best-receipe-area mb-30">
-					<img src="~/img/bg-img/r6.jpg" alt="">
-					<div class="receipe-content">
-						<a href="receipe-post.html">
-							<h5>Healthy Fruit Desert</h5>
-						</a>
-						<div class="ratings">
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star" aria-hidden="true"></i>
-							<i class="fa fa-star-o" aria-hidden="true"></i>
-						</div>
-					</div>
-				</div>
-			</div>
+			}
 		</div>
 	</div>
 </section>
