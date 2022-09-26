@@ -1,8 +1,7 @@
-﻿using CookDelicious.Core.Constants;
+﻿using CookDelicious.Core.Contracts.Pageing;
 using CookDelicious.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace CookDelicious.Controllers
 {
@@ -10,16 +9,21 @@ namespace CookDelicious.Controllers
     public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IPageingService pageingService;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger,
+            IPageingService pageingService)
         {
             _logger = logger;
+            this.pageingService = pageingService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var homeModel = await pageingService.GetRecipesForHomePage();
 
-            return View();
+            return View(homeModel);
         }
 
         public IActionResult Privacy()
