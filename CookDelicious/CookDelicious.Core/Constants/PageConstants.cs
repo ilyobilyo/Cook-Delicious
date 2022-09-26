@@ -9,5 +9,7 @@
         public const int RecipeAllPageSize = 9;
         public const int RecipeCommentPageSize = 5;
         public const int ProductAllPageSize = 9;
+        public const int LastAddedRecipesCount = 2;
+        public const int BestRecipesCount = 9;
     }
 }
