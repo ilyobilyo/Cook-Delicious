@@ -4,7 +4,7 @@
         <name>CookDelicious.Api</name>
     </assembly>
     <members>
-        <member name="M:CookDelicious.Api.Controllers.BlogController.GetAllBlogPosts(CookDelicious.Api.Models.AllBlogPostRequestModel)">
+        <member name="M:CookDelicious.Api.Controllers.BlogController.GetAllBlogPosts(CookDelicious.Core.Api.Models.AllBlogPostRequestModel)">
             <summary>
             Get blog posts per page. Can sort blog posts by month(1 - 12) and category("Ресторанти", "Фаст фууд", "Храни и напитки", "Веган", "Събития и лайвстайл", "Некатегоризирани")
             </summary>
@@ -22,6 +22,20 @@
             Create a Specific Product
             </summary>
             <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CookDelicious.Api.Controllers.RecipeController.GetBestRecipes(System.Int32)">
+            <summary>
+            Get best recipes from Cook Delicious
+            </summary>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CookDelicious.Api.Controllers.RecipeController.LastAddedRecipes(System.Int32)">
+            <summary>
+            Get last added recipes from Cook Delicious
+            </summary>
+            <param name="count"></param>
             <returns></returns>
         </member>
     </members>
