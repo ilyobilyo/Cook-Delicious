@@ -12,5 +12,8 @@ namespace CookDelicious.Core.Contracts.Recipes
         Task<RecipeServiceModel> GetById(Guid id);
         Task<IEnumerable<RecipeCommentServiceModel>> GetRecipeCommentsPerPage(Guid Id, int commentPage, int pageSize);
         Task<PagedListServiceModel<RecipeServiceModel>> GetSortRecipesForPageing(int pageNumber, int pageSize, string dishType, string category, bool orderByDateAsc);
+        Task<RecipeServiceModel> GetTopRecipe();
+        Task<IEnumerable<RecipeServiceModel>> GetLastAddedRecipes(int lastAddedRecipesCount);
+        Task<IEnumerable<RecipeServiceModel>> GetBestRecipes(int bestRecipesCount);
     }
 }

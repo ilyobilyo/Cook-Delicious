@@ -171,7 +171,7 @@ namespace CookDelicious.Core.Services.Recipes
 
             recipeServiceModel.RatingStars = CalculateRatingStars(recipeServiceModel);
 
-            recipeServiceModel.Category = mapper.Map<CategoryServiceModel>(recipe.Catrgory);
+            recipeServiceModel.Catrgory = mapper.Map<CategoryServiceModel>(recipe.Catrgory);
 
             return recipeServiceModel;
         }
@@ -204,6 +204,51 @@ namespace CookDelicious.Core.Services.Recipes
 
             return true;
         }
+
+        public async Task<RecipeServiceModel> GetTopRecipe()
+        {
+            var recipe = await repo.All<Recipe>()
+                .Include(x => x.Ratings)
+                .Where(x => x.Ratings.Average(d => d.RatingDigit) == 5)
+                .FirstOrDefaultAsync();
+
+            return mapper.Map<RecipeServiceModel>(recipe);
+        }
+
+
+        public async Task<IEnumerable<RecipeServiceModel>> GetBestRecipes(int bestRecipesCount)
+        {
+            var recipes = await repo.All<Recipe>()
+                .Include(x => x.Author)
+                .Include(x => x.DishType)
+                .Include(x => x.Catrgory)
+                .Include(x => x.RecipeProducts)
+                .ThenInclude(s => s.Product)
+                 .Include(x => x.Ratings)
+                 .Where(x => x.Ratings.Average(d => d.RatingDigit) >= 4.5)
+                 .Take(bestRecipesCount)
+                 .ToListAsync();
+
+            var recipesServiceMoels =  mapper.Map<IEnumerable<RecipeServiceModel>>(recipes);
+
+            foreach (var recipe in recipesServiceMoels)
+            {
+                recipe.RatingStars = CalculateRatingStars(recipe);
+            }
+
+            return recipesServiceMoels;
+        }
+
+        public async Task<IEnumerable<RecipeServiceModel>> GetLastAddedRecipes(int lastAddedRecipesCount)
+        {
+            var lastAddedRecipes = await repo.All<Recipe>()
+                .OrderByDescending(x => x.PublishedOn.Date)
+                .Take(lastAddedRecipesCount)
+                .ToListAsync();
+
+            return mapper.Map<IEnumerable<RecipeServiceModel>>(lastAddedRecipes);
+        }
+
 
         private async Task<PagedListServiceModel<Recipe>> GetSortRecipes(int pageNumber,
             int pageSize,
@@ -322,6 +367,7 @@ namespace CookDelicious.Core.Services.Recipes
             return recipesPagedListDataModel;
         }
 
+        
         private async Task<int> GetRecipeTotalCountWithOneOfTheSortParameters(string dishType, string category)
         {
             return await repo.All<Recipe>()
