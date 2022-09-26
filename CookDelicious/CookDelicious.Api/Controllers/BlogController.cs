@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CookDelicious.Api.Models;
+using CookDelicious.Core.Api.Models;
 using CookDelicious.Core.Contracts.Blog;
 using Microsoft.AspNetCore.Mvc;
 
