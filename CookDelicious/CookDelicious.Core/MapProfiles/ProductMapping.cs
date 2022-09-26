@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CookDelicious.Core.Api.Models;
 using CookDelicious.Core.Models.Admin.Product;
 using CookDelicious.Core.Models.Product;
 using CookDelicious.Core.Service.Models;
@@ -16,6 +17,8 @@ namespace CookDelicious.Core.MapProfiles
             CreateMap<RecipeProduct, RecipeProductServiceModel>();
             CreateMap<CreateProductViewModel, CreateProductInputModel>();
             CreateMap<RecipeProductViewModel, CreateRecipeProductServiceModel>();
+            CreateMap<RecipeProductServiceModel, RecipeProductResponseModel>()
+                .ForMember(x => x.ProductName, y => y.MapFrom(s => s.Product.Name));
         }
     }
 }
