@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace CookDelicious.Api.Models
+namespace CookDelicious.Core.Api.Models
 {
     public class AllBlogPostRequestModel
     {
