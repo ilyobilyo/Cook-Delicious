@@ -5,13 +5,12 @@
 - Template URL: colorlib.com
 - Version: 1.0.0
 
-*/
+
 /* :: 1.0 Import Fonts */
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i");
 /* :: 2.0 Import All CSS */
 @import url(css/bootstrap.min.css);
 @import url(css/owl.carousel.min.css);
-@import url(css/animate.css);
 @import url(css/magnific-popup.css);
 @import url(css/font-awesome.min.css);
 @import url(css/custom-icon.css);
