@@ -51,7 +51,7 @@ namespace CookDelicious.Tests.AdminAreaTests
 
             var error = await service.CreateProduct(inputModel);
 
-            Assert.That(error.Messages == null);
+            Assert.That(error == null);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace CookDelicious.Tests.AdminAreaTests
 
             var error = await service.CreateProduct(inputModel);
 
-            Assert.That(error.Messages == RecipeConstants.AllFieldsAreRequired);
+            Assert.That(error == RecipeConstants.AllFieldsAreRequired);
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace CookDelicious.Tests.AdminAreaTests
 
             var error = await service.CreateProduct(inputModel);
 
-            Assert.That(error.Messages == RecipeConstants.AllFieldsAreRequired);
+            Assert.That(error == RecipeConstants.AllFieldsAreRequired);
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace CookDelicious.Tests.AdminAreaTests
 
             var error = await service.CreateProduct(inputModel);
 
-            Assert.That(error.Messages == RecipeConstants.AllFieldsAreRequired);
+            Assert.That(error == RecipeConstants.AllFieldsAreRequired);
         }
 
         [Test]
@@ -123,7 +123,7 @@ namespace CookDelicious.Tests.AdminAreaTests
 
             var error = await service.CreateProduct(inputModel);
 
-            Assert.That(error.Messages == $"{inputModel.Name} {MessageConstant.AlreadyExist}");
+            Assert.That(error == $"{inputModel.Name} {MessageConstant.AlreadyExist}");
         }
 
         [Test]

@@ -216,7 +216,7 @@ namespace CookDelicious.Tests
                 Author = user,
                 AuthorId = user.Id,
                 CategoryId = category.Id,
-                Catrgory = category,
+                Category = category,
                 CookingTime = "10 min",
                 Description = "Test Description",
                 DishType = dishType,
