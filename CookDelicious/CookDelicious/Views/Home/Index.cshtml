@@ -61,19 +61,19 @@
 	<div class="container">
 		<div class="row">
 			<!-- Top Catagory Area -->
-			@foreach(var lasAddedRecipe in Model.LastAddedRecipes)
+			@foreach (var lasAddedRecipe in Model.LastAddedRecipes)
 			{
-			<div class="col-12 col-lg-6">
-				<div class="single-top-catagory">
-					<img src="~/img/bg-img/@lasAddedRecipe.ImageUrl" alt="" style="width: 570px; height: 330px">
-					<!-- Content -->
-					<div class="top-cta-content">
-						<h3>@lasAddedRecipe.Title</h3>
-						<h6>Последно добавени рецепти</h6>
-						<a asp-action="RecipePost" asp-controller="Recipe" asp-route-Id="@lasAddedRecipe.Id" asp-route-commentPage="1" class="btn delicious-btn">Виж пълната рецепта</a>
+				<div class="col-12 col-lg-6">
+					<div class="single-top-catagory">
+						<img src="~/img/bg-img/@lasAddedRecipe.ImageUrl" alt="" style="width: 570px; height: 330px">
+						<!-- Content -->
+						<div class="top-cta-content">
+							<h3>@lasAddedRecipe.Title</h3>
+							<h6>Последно добавени рецепти</h6>
+							<a asp-action="RecipePost" asp-controller="Recipe" asp-route-Id="@lasAddedRecipe.Id" asp-route-commentPage="1" class="btn delicious-btn">Виж пълната рецепта</a>
+						</div>
 					</div>
 				</div>
-			</div>
 			}
 		</div>
 	</div>
@@ -92,16 +92,16 @@
 
 		<div class="row">
 			<!-- Single Best Receipe Area -->
-			@foreach(var recipe in Model.BestRecipes)
+			@foreach (var recipe in Model.BestRecipes)
 			{
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="single-best-receipe-area mb-30">
-					<img src="~/img/bg-img/@recipe.ImageUrl" alt="" style="width: 350px; height: 304px">
-					<div class="receipe-content">
-						<a asp-action="RecipePost" asp-controller="Recipe" asp-route-Id="@recipe.Id" asp-route-commentPage="1">
-							<h5>@recipe.Title</h5>
-						</a>
-						<div class="ratings">
+				<div class="col-12 col-sm-6 col-lg-4">
+					<div class="single-best-receipe-area mb-30">
+						<img src="~/img/bg-img/@recipe.ImageUrl" alt="" style="width: 350px; height: 304px">
+						<div class="receipe-content">
+							<a asp-action="RecipePost" asp-controller="Recipe" asp-route-Id="@recipe.Id" asp-route-commentPage="1">
+								<h5>@recipe.Title</h5>
+							</a>
+							<div class="ratings">
 								@{
 									var emptyStars = 5 - recipe.RatingStars;
 								}
@@ -113,10 +113,10 @@
 								{
 									<i class="fa fa-star-o" aria-hidden="true"></i>
 								}
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 			}
 		</div>
 	</div>
