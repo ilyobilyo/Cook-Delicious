@@ -242,6 +242,7 @@ namespace CookDelicious.Core.Services.Recipes
         public async Task<IEnumerable<RecipeServiceModel>> GetLastAddedRecipes(int lastAddedRecipesCount)
         {
             var lastAddedRecipes = await repo.All<Recipe>()
+                .Include(x => x.Catrgory)
                 .OrderByDescending(x => x.PublishedOn.Date)
                 .Take(lastAddedRecipesCount)
                 .ToListAsync();

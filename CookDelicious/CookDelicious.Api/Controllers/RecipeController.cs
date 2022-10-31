@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/Recipe")]
     [ApiController]
     public class RecipeController : ControllerBase
     {
@@ -26,7 +26,7 @@ namespace CookDelicious.Api.Controllers
         /// <param name="count"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("BestRecipes")]
+        [Route("BestRecipes/{count:int}")]
         [Produces("application/json")]
         [ProducesResponseType(200, StatusCode = StatusCodes.Status200OK, Type = typeof(List<BestRecipesResponseModel>))]
         public async Task<IActionResult> GetBestRecipes(int count)
@@ -44,7 +44,7 @@ namespace CookDelicious.Api.Controllers
         /// <param name="count"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("LastAddedRecipes")]
+        [Route("LastAddedRecipes/{count:int}")]
         [Produces("application/json")]
         [ProducesResponseType(200, StatusCode = StatusCodes.Status200OK, Type = typeof(List<LastAddedRecipesResponseModel>))]
         public async Task<IActionResult> LastAddedRecipes(int count)

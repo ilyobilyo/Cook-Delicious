@@ -44,7 +44,8 @@ namespace CookDelicious.Core.MapProfiles
                 .ForMember(x => x.AuthorName, y => y.MapFrom(s => s.Author.UserName))
                 .ForMember(x => x.Catrgory, y => y.MapFrom(s => s.Catrgory.Name))
                 .ForMember(x => x.DishType, y => y.MapFrom(s => s.DishType.Name));
-            CreateMap<RecipeServiceModel, LastAddedRecipesResponseModel>();
+            CreateMap<RecipeServiceModel, LastAddedRecipesResponseModel>()
+                .ForMember(x => x.Category, y => y.MapFrom(s => s.Catrgory.Name));
         }
     }
 }
