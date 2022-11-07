@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Product")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -24,7 +24,7 @@ namespace CookDelicious.Api.Controllers
         /// Get All Specific Products
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("GetAll")]
         [Produces("application/json")]
         [ProducesResponseType(200, StatusCode = StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductServiceModel>))]
         public async Task<IActionResult> GetAll()
@@ -39,7 +39,7 @@ namespace CookDelicious.Api.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("Create")]
         [Produces("application/json")]
         [ProducesResponseType(200, StatusCode = StatusCodes.Status200OK, Type = typeof(CreateProductInputModel))]
         [ProducesResponseType(400, StatusCode = StatusCodes.Status400BadRequest, Type = typeof(string))]

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CookDelicious.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/Blog")]
     [ApiController]
     public class BlogController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace CookDelicious.Api.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("GetAllPosts")]
         [Produces("application/json")]
         [ProducesResponseType(200, StatusCode = StatusCodes.Status200OK, Type = typeof(List<AllBlogPostResponseModel>))]
         public async Task<IActionResult> GetAllBlogPosts(AllBlogPostRequestModel model)
