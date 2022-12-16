@@ -19,23 +19,22 @@
 			<!-- Breadcrumb -->
 			<nav aria-label="breadcrumb" class="main-breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="/Admin/">Home</a></li>
-					<li class="breadcrumb-item"><a href="/Admin/DishType/Add">Add DishType</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Add DishType</li>
+					<li class="breadcrumb-item"><a href="/Admin/">Начало</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Създай вид ястие</li>
 				</ol>
 			</nav>
 			<!-- /Breadcrumb -->
 			<div class="row gutters-sm">
 			</div>
 			<div class="col-md-8">
-				<h2>Add DishType</h2>
+				<h2>Създай вид ястие</h2>
 				<form id="addDishType" method="post">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<div class="card mb-3">
 						<div class="card-body">
 							<div class="row">
 								<div class="col-sm-3">
-									<h6 class="mb-0">Dish Type Name</h6>
+									<h6 class="mb-0">Име на вид ястие</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
 									<input asp-for="Name" class="form-control" aria-required="true" />
@@ -46,7 +45,7 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<button id="login-submit" type="submit" class="btn btn-info " href="Admin/DishType/Add">Create</button>
+							<button id="login-submit" type="submit" class="btn btn-info " href="Admin/DishType/Add">Създай</button>
 						</div>
 					</div>
 				</form>

@@ -19,23 +19,22 @@
 			<!-- Breadcrumb -->
 			<nav aria-label="breadcrumb" class="main-breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="/Admin">Home</a></li>
-					<li class="breadcrumb-item"><a href="/Admin/Forum/CreatePostCategory">PostCategories</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Create Post Category</li>
+					<li class="breadcrumb-item"><a href="/Admin">Начало</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Създай категория за форум публикация</li>
 				</ol>
 			</nav>
 			<!-- /Breadcrumb -->
 			<div class="row gutters-sm">
 			</div>
 			<div class="col-md-8">
-				<h2>Create Product</h2>
+				<h2>Създай категория за форум публикация</h2>
 				<form id="createPostCategroy" method="post">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<div class="card mb-3">
 						<div class="card-body">
 							<div class="row">
 								<div class="col-sm-3">
-									<h6 class="mb-0">Product Name</h6>
+									<h6 class="mb-0">Име на категория</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
 									<input asp-for="Name" type="text" class="form-control" aria-required="true" />
@@ -46,7 +45,7 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<button id="login-submit" type="submit" class="btn btn-info " href="/Admin/Forum/CreatePostCategory">Create</button>
+							<button id="login-submit" type="submit" class="btn btn-info " href="/Admin/Forum/CreatePostCategory">Създай</button>
 						</div>
 					</div>
 				</form>

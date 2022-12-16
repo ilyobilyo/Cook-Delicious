@@ -96,12 +96,9 @@
 										<li>
 											<a class="active" asp-area="" asp-controller="Recipe" asp-action="All" asp-route-dishType="Всички" asp-route-category="Всички">Всички Рецепти</a>
 										</li>
-										<li>
-											<a class="active" asp-area="" asp-controller="User" asp-action="MyProfile">Моят Профил</a>
-										</li>
 
 										<li>
-											<a href="/">Mega Menu</a>
+											<a href="/">Меню</a>
 											<div class="megamenu">
 												<ul class="single-mega cn-col-4">
 													<li style="margin: 10px">
@@ -134,13 +131,16 @@
 														<a style="font-size: 25px; color: #1c8314" href="contact.html">Контакти</a>
 													</li>
 												</ul>
-												<div class="single-mega cn-col-4" style="width: 900px">
+												<div class="single-mega cn-col-4" style="width: 700px">
 													<div class="receipe-slider owl-carousel">
-														<a style="width: 900px; height: 300px" href="/"><img src="~/img/bg-img/bg3.jpg" alt=""></a>
-														<a style="width: 900px; height: 300px" href="/"><img src="~/img/bg-img/bg2.jpg" alt=""></a>
+														<a style="width: 700px; height: 300px" href="/"><img src="~/img/bg-img/bg3.jpg" alt=""></a>
+														<a style="width: 700px; height: 300px" href="/"><img src="~/img/bg-img/bg2.jpg" alt=""></a>
 													</div>
 												</div>
 											</div>
+										</li>
+										<li>
+											<a class="active" asp-area="" asp-controller="User" asp-action="MyProfile">Моят Профил</a>
 										</li>
 										@if (User.IsInRole("Administrator"))
 										{

@@ -18,9 +18,9 @@
 			<!-- Breadcrumb -->
 			<nav aria-label="breadcrumb" class="main-breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="/">Home</a></li>
-					<li class="breadcrumb-item"><a href="/User/Profile">User</a></li>
-					<li class="breadcrumb-item active" aria-current="page">User Profile</li>
+					<li class="breadcrumb-item"><a href="/">Начало</a></li>
+					<li class="breadcrumb-item"><a href="/User/MyProfile">Моят профил</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Редактирай профил</li>
 				</ol>
 			</nav>
 			<!-- /Breadcrumb -->
@@ -30,12 +30,11 @@
 					<div class="card">
 						<div class="card-body">
 							<div class="d-flex flex-column align-items-center text-center">
-								<img src="~/img/profile-img/@Model.ImageUrl" alt="Admin" class="rounded-circle" width="150">
+								<img src="~/img/profile-img/@Model.ImageUrl" alt="Липсва снимка" class="rounded-circle" width="150">
 								<div class="mt-3">
 									<h4>@Model.Username</h4>
 									<p class="text-secondary mb-1">@Model.Job</p>
 									<p class="text-muted font-size-sm">@Model.Town</p>
-									<button class="btn btn-primary">Message</button>
 								</div>
 							</div>
 						</div>
@@ -59,7 +58,7 @@
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">FirstName</h6>
+										<h6 class="mb-0">Име</h6>
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<input asp-for="FirstName" class="form-control" aria-required="true" />
@@ -68,7 +67,7 @@
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">LastName</h6>
+										<h6 class="mb-0">Фамилия</h6>
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<input asp-for="LastName" class="form-control" aria-required="true" />
@@ -77,7 +76,7 @@
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Email</h6>
+										<h6 class="mb-0">Имейл</h6>
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<input asp-for="Email" class="form-control" aria-required="true" />
@@ -87,7 +86,7 @@
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Town</h6>
+										<h6 class="mb-0">Град</h6>
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<input asp-for="Town" class="form-control" aria-required="true" />
@@ -96,7 +95,7 @@
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Current Job</h6>
+										<h6 class="mb-0">Настояща работа</h6>
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<input asp-for="Job" class="form-control" aria-required="true" />
@@ -105,7 +104,7 @@
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Address</h6>
+										<h6 class="mb-0">Адрес</h6>
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<input asp-for="Address" class="form-control" aria-required="true" />
@@ -114,7 +113,7 @@
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">ImageUrl</h6>
+										<h6 class="mb-0">Url на снимка</h6>
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<input asp-for="ImageUrl" class="form-control" aria-required="true" />
@@ -123,7 +122,7 @@
 								<hr>
 								<div class="row">
 									<div class="col-sm-12">
-										<button id="login-submit" type="submit" class="btn btn-info " href="/User/Profile">Done</button>
+										<button id="login-submit" type="submit" class="btn btn-info " href="/User/Profile">Готово</button>
 									</div>
 								</div>
 							</div>

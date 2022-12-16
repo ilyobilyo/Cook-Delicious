@@ -19,23 +19,22 @@
 			<!-- Breadcrumb -->
 			<nav aria-label="breadcrumb" class="main-breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="/Admin">Home</a></li>
-					<li class="breadcrumb-item"><a href="/Admin/Product/All">Products</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Create Product</li>
+					<li class="breadcrumb-item"><a href="/Admin">Начало</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Създай продукт</li>
 				</ol>
 			</nav>
 			<!-- /Breadcrumb -->
 			<div class="row gutters-sm">
 			</div>
 			<div class="col-md-8">
-				<h2>Create Product</h2>
+				<h2>Създай продукт</h2>
 				<form id="editPforile" method="post">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<div class="card mb-3">
 						<div class="card-body">
 							<div class="row">
 								<div class="col-sm-3">
-									<h6 class="mb-0">Product Name</h6>
+									<h6 class="mb-0">Име на продукта</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
 									<input asp-for="Name" class="form-control" aria-required="true" />
@@ -45,17 +44,17 @@
 							<hr>
 							<div class="row">
 								<div class="col-sm-3">
-									<h6 class="mb-0">Product Type</h6>
+									<h6 class="mb-0">Тип на продукта</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
-									<input asp-for="Type" class="form-control" aria-required="true" />
+									<input asp-for="Type" class="form-control" aria-required="true" placeholder="пример: Плод/Зеленчук"/>
 									<span asp-validation-for="Type" class="text-danger"></span>
 								</div>
 							</div>
 							<hr>
 							<div class="row">
 								<div class="col-sm-3">
-									<h6 class="mb-0">ImageUrl</h6>
+									<h6 class="mb-0">Url на снимка</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
 									<input asp-for="ImageUrl" class="form-control" aria-required="true" />
@@ -65,7 +64,7 @@
 							<hr>
 							<div class="row">
 								<div class="col-sm-3">
-									<h6 class="mb-0">Description</h6>
+									<h6 class="mb-0">Описание</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
 									<textarea asp-for="Description" rows="5" cols="60" class="form-control" aria-required="true" name="Description" id="Description"></textarea>
@@ -76,7 +75,7 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<button id="login-submit" type="submit" class="btn btn-info " href="/Product/All">Create</button>
+							<button id="login-submit" type="submit" class="btn btn-info " href="/Product/All">Създай</button>
 						</div>
 					</div>
 				</form>

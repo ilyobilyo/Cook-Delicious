@@ -40,7 +40,7 @@ namespace CookDelicious.Core.Services.Admin
         {
             var userRecipes = await repo.All<Recipe>()
                 .Include(x => x.Author)
-                .Where(x => x.AuthorId == id)
+                .Where(x => x.AuthorId == id && x.IsDeleted == false)
                 .ToListAsync();
 
             return mapper.Map<IEnumerable<RecipeServiceModel>>(userRecipes);

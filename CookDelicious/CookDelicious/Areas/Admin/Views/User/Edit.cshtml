@@ -16,18 +16,19 @@
 					<span asp-validation-for="Username" class="text-danger"></span>
 				</div>
 				<hr />
-				<div class="col-4">
-					<a id="login-submit" asp-action="UserRecipes" asp-controller="Recipe" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">User Recipes</a>
-					<a id="login-submit" asp-action="ForumPosts" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Forum Posts</a>
-					<a id="login-submit" asp-action="RecipeComments" asp-controller="Recipe" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Recipe Comments</a>
-					<a id="login-submit" asp-action="ForumComments" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 160px">Forum Comments</a>
-				</div>
-				<div class="row">&nbsp;</div>
 				<div class="row">
 					<div class="col-4">
-						<button id="login-submit" type="submit" class="btn btn-primary btn-block">Submit</button>
+						<button id="login-submit" type="submit" class="btn btn-primary btn-block" style="width: 200px">Редактирай Username</button>
 					</div>
 				</div>
+				<hr />
+				<div class="col-4">
+					<a id="login-submit" asp-action="UserRecipes" asp-controller="Recipe" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 290px">Рецепти на потребител</a>
+					<a id="login-submit" asp-action="ForumPosts" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 290px">Форум публикаций на потребител</a>
+					<a id="login-submit" asp-action="RecipeComments" asp-controller="Recipe" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 290px">Коментари под рецепти</a>
+					<a id="login-submit" asp-action="ForumComments" asp-controller="Forum" asp-route-id="@Model.Id" class="btn btn-primary btn-block" style="width: 290px">Коментари под форум публикации</a>
+				</div>
+				<div class="row">&nbsp;</div>
 			</form>
 		</div>
 	</div>

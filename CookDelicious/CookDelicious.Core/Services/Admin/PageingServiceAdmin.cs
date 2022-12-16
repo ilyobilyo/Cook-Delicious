@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CookDelicious.Core.Constants;
 using CookDelicious.Core.Contracts.Admin;
 using CookDelicious.Core.Models.Admin;
 using CookDelicious.Core.Models.Paiging;
@@ -24,7 +25,7 @@ namespace CookDelicious.Core.Services.Admin
                 pageNumber = 1;
             }
 
-            int pageSize = 2;
+            int pageSize = PageConstants.ManageUsersPageSize;
 
             var usersPagedListServiceModels = await userService.GetUsersPageingInManageUsers(pageNumber, pageSize);
 
