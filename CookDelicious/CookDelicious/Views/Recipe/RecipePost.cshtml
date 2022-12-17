@@ -11,7 +11,7 @@
 			<div class="col-12">
 				<div class="owl-stage ">
 					<div class="owl-item cloned" style="width: 500px;">
-						<img src="~/img/bg-img/@Model.ImageUrl" alt="">
+						<img src="~/img/bg-img/@Model.ImageUrl" alt="Липсва снимка">
 					</div>
 				</div>
 				<div class="owl-dots">
@@ -75,7 +75,7 @@
 				<!-- Ingredients -->
 				<div class="col-12 col-lg-4">
 					<div class="ingredients">
-						<h4>Ingredients</h4>
+						<h4>Необходими продукти</h4>
 
 						@foreach (var product in Model.RecipeProducts)
 						{
@@ -100,13 +100,12 @@
 											<img src="~/img/blog-img/2.jpg" width="30" class="user-img rounded-circle mr-2">
 											<span><small class="font-weight-bold text-primary">@comment.AuthorName</small> <small class="font-weight-bold">@comment.Content</small></span>
 										</div>
-										<small>2 days ago</small>
 									</div>
 									<div class="action d-flex justify-content-between mt-2 align-items-center">
 										@if (Model.Author.UserName == User.Identity.Name)
 										{
 											<div class="reply px-4">
-												<a href="/Recipe/DeleteRecipeComment/@comment.Id?recipeId=@Model.Id">Remove</a>
+												<a href="/Recipe/DeleteRecipeComment/@comment.Id?recipeId=@Model.Id">Изтрий</a>
 											</div>
 										}
 									</div>
@@ -121,14 +120,14 @@
 				var prevDisabled = !Model.Comments.HasPreviousPage ? "disabled" : "";
 				var nextDisabled = !Model.Comments.HasNextPage ? "disabled" : "";
 			}
-			<a asp-action="RecipePost" asp-route-commentPage="@(Model.Comments.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
-			<a asp-action="RecipePost" asp-route-commentPage="@(Model.Comments.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+			<a asp-action="RecipePost" asp-route-commentPage="@(Model.Comments.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Следваща страница</a>
+			<a asp-action="RecipePost" asp-route-commentPage="@(Model.Comments.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Предишна страница</a>
 
 
 			<div class="row">
 				<div class="col-12">
 					<div class="section-heading text-left">
-						<h3>Leave a comment</h3>
+						<h3>Остави коментар</h3>
 					</div>
 				</div>
 			</div>
@@ -143,10 +142,10 @@
 									<input asp-for="Comment.AuthorName" name="AuthorName" type="hidden" class="form-control" id="name" value="@User.Identity.Name">
 								</div>
 								<div class="col-12">
-									<textarea name="Content" asp-for="Comment.Content" class="form-control" id="Content" cols="30" rows="5" aria-required="true" placeholder="Message"></textarea>
+									<textarea name="Content" asp-for="Comment.Content" class="form-control" id="Content" cols="30" rows="5" aria-required="true" placeholder="Съобщение"></textarea>
 								</div>
 								<div class="col-12">
-									<button class="btn delicious-btn mt-30" asp-route-id="@Model.Id" asp-action="PostComment" asp-controller="Recipe" type="submit">Post Comments</button>
+									<button class="btn delicious-btn mt-30" asp-route-id="@Model.Id" asp-action="PostComment" asp-controller="Recipe" type="submit">Коментирай</button>
 								</div>
 							</div>
 						</form>

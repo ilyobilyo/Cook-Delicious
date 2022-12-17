@@ -34,12 +34,12 @@
 								<div class="blog-content">
 									<a href="/Blog/BlogPost/@post.Id" class="post-title">@post.Title</a>
 									<div class="meta-data">
-										by <a href="/User/UserProfile?AuthorName=@post.AuthorName">@post.AuthorName</a> in @post.CategoryName
+										от <a href="/User/UserProfile?AuthorName=@post.AuthorName">@post.AuthorName</a> в @post.CategoryName
 									</div>
 									<div class="limit">
 										<p style="word-wrap: break-word; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@post.Content</p>
 									</div>
-									<a href="/Blog/BlogPost/@post.Id" class="btn delicious-btn mt-30">Read More</a>
+									<a href="/Blog/BlogPost/@post.Id" class="btn delicious-btn mt-30">Прочети публикацията</a>
 								</div>
 
 							</div>
@@ -60,7 +60,7 @@
 
 						<!-- Widget -->
 						<div class="single-widget mb-80">
-							<h6>Archive</h6>
+							<h6>Архив</h6>
 							<ul class="list">
 								@foreach (var archive in Model.Archive)
 								{
@@ -71,7 +71,7 @@
 
 						<!-- Widget -->
 						<div class="single-widget mb-80">
-							<h6>Categories</h6>
+							<h6>Категории</h6>
 							<ul class="list">
 								@foreach (var category in Model.Categories)
 								{
@@ -87,8 +87,7 @@
 								<h4>Nothing is better than going home to family and eating good food and relaxing</h4>
 								<p>John Smith</p>
 								<div class="date-comments d-flex justify-content-between">
-									<div class="date">January 04, 2018</div>
-									<div class="comments">2 Comments</div>
+									<div class="date">January 04, 2021</div>
 								</div>
 							</div>
 						</div>
@@ -103,8 +102,8 @@
 				var blogPostCategory = Model.Sorting.Category;
 				var sortMonth = Model.Sorting.Month;
 			}
-			<a asp-action="Home" asp-route-blogPostCategory="@blogPostCategory" asp-route-sortMonth="@sortMonth" asp-route-pageNumber="@(Model.Posts.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
-			<a asp-action="Home" asp-route-blogPostCategory="@blogPostCategory" asp-route-sortMonth="@sortMonth" asp-route-pageNumber="@(Model.Posts.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+			<a asp-action="Home" asp-route-blogPostCategory="@blogPostCategory" asp-route-sortMonth="@sortMonth" asp-route-pageNumber="@(Model.Posts.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Предишна страница</a>
+			<a asp-action="Home" asp-route-blogPostCategory="@blogPostCategory" asp-route-sortMonth="@sortMonth" asp-route-pageNumber="@(Model.Posts.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Следваща страница</a>
 		</div>
 
 	</div>

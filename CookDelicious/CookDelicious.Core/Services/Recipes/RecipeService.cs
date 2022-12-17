@@ -264,7 +264,7 @@ namespace CookDelicious.Core.Services.Recipes
             if (dishType == RecipeConstants.DefaultSortDishType && category == RecipeConstants.DefaultSortCategory)
             {
                 totalCount = await repo.All<Recipe>()
-               .CountAsync();
+               .CountAsync(x => x.IsDeleted == false);
 
                 if (orderByDateAsc)
                 {

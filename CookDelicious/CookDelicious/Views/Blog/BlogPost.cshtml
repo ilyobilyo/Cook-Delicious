@@ -40,7 +40,7 @@
 						<h1>@Model.Title</h1>
 						@if (Model.AuthorName == User.Identity.Name)
 						{
-							<a asp-action="DeleteBlogPost" asp-controller="Blog" asp-area="Admin" class="custom-button" asp-route-id="@Model.Id">Delete Post</a>
+							<a asp-action="DeleteBlogPost" asp-controller="Blog" asp-area="Admin" class="custom-button" asp-route-id="@Model.Id">Изтрий публикацията</a>
 						}
 						<div class="receipe-duration">
 							<h4>Автор: @Model.AuthorName</h4>

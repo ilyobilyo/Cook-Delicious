@@ -4,7 +4,7 @@
 @model PagingViewModel
 
 @{
-	ViewData["Title"] = "Recipes";
+	ViewData["Title"] = "Рецепти";
 }
 
 <link rel="stylesheet" href="~/css/style.css">
@@ -40,7 +40,7 @@
 						<input class="col-sm-9  text-secondary" asp-for="Sorting.Date" type="checkbox" aria-hidden="true">
 					</div>
 					<div class="col-12 col-lg-3">
-						<button id="goToRecipes" type="submit" class="btn delicious-btn">Search</button>
+						<button id="goToRecipes" type="submit" class="btn delicious-btn">Търси</button>
 					</div>
 				</div>
 			</form>
@@ -94,7 +94,7 @@
 			var category = Model.Sorting.Category;
 			var dateAsc = Model.Sorting.Date;
 		}
-		<a asp-action="All" asp-route-dishType="@dishType" asp-route-category="@category" asp-route-dateAsc="@dateAsc" asp-route-pageNumber="@(Model.PagedList.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
-		<a asp-action="All" asp-route-dishType="@dishType" asp-route-category="@category" asp-route-dateAsc="@dateAsc" asp-route-pageNumber="@(Model.PagedList.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+		<a asp-action="All" asp-route-dishType="@dishType" asp-route-category="@category" asp-route-dateAsc="@dateAsc" asp-route-pageNumber="@(Model.PagedList.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Предишна страница</a>
+		<a asp-action="All" asp-route-dishType="@dishType" asp-route-category="@category" asp-route-dateAsc="@dateAsc" asp-route-pageNumber="@(Model.PagedList.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Следваща страница</a>
 	</div>
 </section>

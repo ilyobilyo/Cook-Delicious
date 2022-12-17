@@ -40,7 +40,7 @@
 						<h1>@Model.Title</h1>
 						@if (Model.AuthorName == User.Identity.Name)
 						{
-							<a asp-action="DeletePost" asp-controller="Forum" class="custom-button" asp-route-id="@Model.Id">Delete Post</a>
+							<a asp-action="DeletePost" asp-controller="Forum" class="custom-button" asp-route-id="@Model.Id">Изтрий публикацията</a>
 						}
 						<div class="receipe-duration">
 							<h4>Автор: @Model.AuthorName</h4>
@@ -71,13 +71,12 @@
 											<img src="~/img/blog-img/2.jpg" width="30" class="user-img rounded-circle mr-2">
 											<span><small class="font-weight-bold text-primary">@comment.AuthorName</small> <small class="font-weight-bold" style="line-break: anywhere">@comment.Content</small></span>
 										</div>
-										<small>2 days ago</small>
 									</div>
 									<div class="action d-flex justify-content-between mt-2 align-items-center">
 										@if (Model.AuthorName == User.Identity.Name)
 										{
 											<div class="reply px-4">
-												<a href="/Forum/DeletePostComment/@comment.Id?postId=@Model.Id">Remove</a>
+												<a href="/Forum/DeletePostComment/@comment.Id?postId=@Model.Id">Изтрий</a>
 											</div>
 										}
 									</div>
@@ -92,13 +91,14 @@
 				var prevDisabled = !Model.Comments.HasPreviousPage ? "disabled" : "";
 				var nextDisabled = !Model.Comments.HasNextPage ? "disabled" : "";
 			}
-			<a asp-action="ForumPost" asp-route-commentPage="@(Model.Comments.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
-			<a asp-action="ForumPost" asp-route-commentPage="@(Model.Comments.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+
+			<a asp-action="ForumPost" asp-route-commentPage="@(Model.Comments.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Предишна страница</a>
+			<a asp-action="ForumPost" asp-route-commentPage="@(Model.Comments.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Следваща страница</a>
 
 			<div class="row">
 				<div class="col-12">
 					<div class="section-heading text-left">
-						<h3>Leave a comment</h3>
+						<h3>Остави коментар</h3>
 					</div>
 				</div>
 			</div>
@@ -113,11 +113,11 @@
 									<input asp-for="Comment.AuthorName" name="AuthorName" type="hidden" class="form-control" id="name" value="@User.Identity.Name">
 								</div>
 								<div class="col-12">
-									<textarea name="Content" asp-for="Comment.Content" class="form-control" id="Content" cols="30" rows="5" aria-required="true" placeholder="Message"></textarea>
+									<textarea name="Content" asp-for="Comment.Content" class="form-control" id="Content" cols="30" rows="5" aria-required="true" placeholder="Съобщение"></textarea>
 									<span asp-validation-for="@Model.Comment.Content" class="text-danger"></span>
 								</div>
 								<div class="col-12">
-									<button class="btn delicious-btn mt-30" asp-route-id="@Model.Id" asp-action="PostComment" asp-controller="Forum" type="submit">Post Comments</button>
+									<button class="btn delicious-btn mt-30" asp-route-id="@Model.Id" asp-action="PostComment" asp-controller="Forum" type="submit">Коментирай</button>
 								</div>
 							</div>
 						</form>

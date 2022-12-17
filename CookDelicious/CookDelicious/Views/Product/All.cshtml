@@ -3,7 +3,7 @@
 @model PagingList<ProductViewModel>
 
 @{
-	ViewData["Title"] = "Products";
+	ViewData["Title"] = "Продукти";
 }
 
 <section class="best-receipe-area">
@@ -37,7 +37,7 @@
 			var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
 			var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 		}
-		<a asp-action="All" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Previous</a>
-		<a asp-action="All" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Next</a>
+		<a asp-action="All" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn delicious-btn btn-4 m-1 @prevDisabled">Предишна страница</a>
+		<a asp-action="All" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn delicious-btn btn-4 m-1 @nextDisabled">Следваща страница</a>
 	</div>
 </section>
