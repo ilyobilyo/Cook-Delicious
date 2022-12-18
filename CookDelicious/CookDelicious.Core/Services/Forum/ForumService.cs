@@ -120,6 +120,7 @@ namespace CookDelicious.Core.Services.Forum
                    .Include(x => x.Author)
                    .Include(x => x.PostCategory)
                    .Where(x => x.IsDeleted == false)
+                   .OrderByDescending(x => x.PublishedOn.Date)
                    .Skip((pageNumber - 1) * pageSize)
                    .Take(pageSize)
                    .ToListAsync();
@@ -135,6 +136,7 @@ namespace CookDelicious.Core.Services.Forum
                   .Include(x => x.Author)
                   .Include(x => x.PostCategory)
                   .Where(x => x.IsDeleted == false && x.PostCategory.Name == sortCategory)
+                  .OrderByDescending(x => x.PublishedOn.Date)
                   .Skip((pageNumber - 1) * pageSize)
                   .Take(pageSize)
                   .ToListAsync();

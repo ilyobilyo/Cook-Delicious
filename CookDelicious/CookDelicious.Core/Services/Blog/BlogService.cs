@@ -34,6 +34,7 @@ namespace CookDelicious.Core.Services.BlogService
                    .Include(x => x.Author)
                    .Include(x => x.BlogPostCategory)
                    .Where(x => x.IsDeleted == false)
+                   .OrderByDescending(x => x.PublishedOn.Date)
                    .Skip((pageNumber - 1) * pageSize)
                    .Take(pageSize)
                    .ToListAsync();
@@ -51,6 +52,7 @@ namespace CookDelicious.Core.Services.BlogService
                       .Include(x => x.Author)
                       .Include(x => x.BlogPostCategory)
                       .Where(x => x.IsDeleted == false && x.BlogPostCategory.Name == blogPostCategory)
+                      .OrderByDescending(x => x.PublishedOn.Date)
                       .Skip((pageNumber - 1) * pageSize)
                       .Take(pageSize)
                       .ToListAsync();
@@ -65,6 +67,7 @@ namespace CookDelicious.Core.Services.BlogService
                       .Include(x => x.Author)
                       .Include(x => x.BlogPostCategory)
                       .Where(x => x.IsDeleted == false && x.PublishedOn.Month == sortMonth)
+                      .OrderByDescending(x => x.PublishedOn.Date)
                       .Skip((pageNumber - 1) * pageSize)
                       .Take(pageSize)
                       .ToListAsync();
